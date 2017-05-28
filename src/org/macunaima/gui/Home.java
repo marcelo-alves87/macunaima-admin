@@ -4,16 +4,26 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import javax.swing.border.EtchedBorder;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 
 public class Home extends JFrame {
 
@@ -22,6 +32,8 @@ public class Home extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextField textField;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -94,6 +106,99 @@ public class Home extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Empresas", null, panel_3, null);
+		panel_3.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_3.add(panel_6, BorderLayout.NORTH);
+		panel_6.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_1 = new JLabel("Empresas");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setForeground(Color.ORANGE);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		panel_6.add(lblNewLabel_1, BorderLayout.NORTH);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBorder(new EmptyBorder(30, 0, 0, 0));
+		panel_6.add(panel_7, BorderLayout.CENTER);
+		
+		JPanel panel_8 = new JPanel();
+		panel_8.setToolTipText("Pesquisar");
+		panel_8.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		panel_7.add(panel_8);
+		
+		textField = new JTextField();
+		textField.setToolTipText("Pesquisar");
+		panel_8.add(textField);
+		textField.setColumns(30);
+		
+		JButton btnNewButton_4 = new JButton("");
+		btnNewButton_4.setToolTipText("Pesquisar");
+		btnNewButton_4.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\search-loop-12.png"));
+		panel_8.add(btnNewButton_4);
+		
+		JButton btnNewButton_3 = new JButton("");
+		btnNewButton_3.setToolTipText("Nova Empresa");
+		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_empresa_12.png"));
+		panel_7.add(btnNewButton_3);
+		
+		JPanel panel_9 = new JPanel();
+		panel_9.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_6.add(panel_9, BorderLayout.SOUTH);
+		
+		//headers for the table
+        String[] columns = new String[] {
+            "Id", "Name", "Hourly Rate", "Part Time"
+        };
+         
+        //actual data for the table in a 2d array
+        Object[][] data = new Object[][] {
+            {1, "John", 40.0, false },
+            {2, "Rambo", 70.0, false },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {42, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {3, "Zorro", 60.0, true },
+            {40, "Zorro", 60.0, true },
+        };
+        //create table with data
+        table = new JTable(data, columns);
+        JScrollPane scrollPane = new JScrollPane(table);
+        panel_9.add(scrollPane);
+         
 		
 		JPanel panel_5 = new JPanel();
 		tabbedPane.addTab("Clientes", null, panel_5, null);
