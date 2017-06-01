@@ -1,39 +1,45 @@
 package org.macunaima.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Toolkit;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
+
+import org.macunaima.application.Application;
+import org.macunaima.gui.ui.ColunaLaranja;
+import org.macunaima.gui.ui.HomePanel;
+import org.macunaima.gui.ui.Logomarca;
 
 public class Home extends JFrame {
+
+	private class HomeEventListener implements EventListener {
+
+		@Override
+		public void createHomePanel() {
+			Application homeApplication = Application.getDefaultHomeApplication();
+			HomePanel homePanel = new HomePanel();
+			homeApplication.setDisplay(homePanel);
+			components.put("empresas", homeApplication);
+		}
+
+	}
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTable table;
+	private Map<String, Application> components;
+	private JTabbedPane tabbedPane;
+	private EventListener eventListener;
 
 	/**
 	 * Launch the application.
@@ -53,10 +59,18 @@ public class Home extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws ClassNotFoundException
 	 */
-	public Home() {
+	public Home() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			UnsupportedLookAndFeelException {
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		setTitle("Macuna\u00EDma Restaurante e Pizzaria");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon2.png"));
+		setIconImage(
+				Toolkit.getDefaultToolkit().getImage("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon2.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setBounds(100, 100, 450, 300);
@@ -64,147 +78,35 @@ public class Home extends JFrame {
 		contentPane.setBorder(new EmptyBorder(50, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\logo.png"));
-		contentPane.add(lblNewLabel, BorderLayout.NORTH);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(239, 51, 3));
-		contentPane.add(panel, BorderLayout.WEST);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(239, 51, 3));
-		contentPane.add(panel_1, BorderLayout.EAST);
-		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		components = new HashMap<String, Application>();
+		eventListener = new HomeEventListener();
+		addNorth();
+
+		addWest();
+
+		addEast();
+
+		addCenter();
+	}
+
+	private void addCenter() {
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new EmptyBorder(100, 0, 0, 0));
-		tabbedPane.addTab("Página Inicial", null, panel_2, null);
-		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JButton btnNewButton = new JButton("Empresas");
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\empresa.png"));
-		btnNewButton.setHorizontalTextPosition(JButton.CENTER);
-		btnNewButton.setVerticalTextPosition(JButton.BOTTOM);
-		panel_2.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Clientes");
-		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\users.png"));
-		btnNewButton_1.setHorizontalTextPosition(JButton.CENTER);
-		btnNewButton_1.setVerticalTextPosition(JButton.BOTTOM);
-		panel_2.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Relat\u00F3rios");
-		btnNewButton_2.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\relatorios.png"));
-		btnNewButton_2.setHorizontalTextPosition(JButton.CENTER);
-		btnNewButton_2.setVerticalTextPosition(JButton.BOTTOM);
-		panel_2.add(btnNewButton_2);
-		
-		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("Empresas", null, panel_3, null);
-		panel_3.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel_6 = new JPanel();
-		panel_6.setBorder(new EmptyBorder(0, 0, 0, 0));
-		panel_3.add(panel_6, BorderLayout.NORTH);
-		panel_6.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel_1 = new JLabel("Empresas");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setForeground(Color.ORANGE);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		panel_6.add(lblNewLabel_1, BorderLayout.NORTH);
-		
-		JPanel panel_7 = new JPanel();
-		panel_7.setBorder(new EmptyBorder(30, 0, 0, 0));
-		panel_6.add(panel_7, BorderLayout.CENTER);
-		
-		JPanel panel_8 = new JPanel();
-		panel_8.setToolTipText("Pesquisar");
-		panel_8.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
-		panel_7.add(panel_8);
-		
-		textField = new JTextField();
-		textField.setToolTipText("Pesquisar");
-		panel_8.add(textField);
-		textField.setColumns(30);
-		
-		JButton btnNewButton_4 = new JButton("");
-		btnNewButton_4.setToolTipText("Pesquisar");
-		btnNewButton_4.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\search-loop-12.png"));
-		panel_8.add(btnNewButton_4);
-		
-		JButton btnNewButton_3 = new JButton("");
-		btnNewButton_3.setToolTipText("Nova Empresa");
-		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_empresa_12.png"));
-		panel_7.add(btnNewButton_3);
-		
-		JPanel panel_9 = new JPanel();
-		panel_9.setBorder(new EmptyBorder(0, 0, 0, 0));
-		panel_6.add(panel_9, BorderLayout.SOUTH);
-		
-		//headers for the table
-        String[] columns = new String[] {
-            "Id", "Name", "Hourly Rate", "Part Time"
-        };
-         
-        //actual data for the table in a 2d array
-        Object[][] data = new Object[][] {
-            {1, "John", 40.0, false },
-            {2, "Rambo", 70.0, false },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {42, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {3, "Zorro", 60.0, true },
-            {40, "Zorro", 60.0, true },
-        };
-        //create table with data
-        table = new JTable(data, columns);
-        JScrollPane scrollPane = new JScrollPane(table);
-        panel_9.add(scrollPane);
-         
-		
-		JPanel panel_5 = new JPanel();
-		tabbedPane.addTab("Clientes", null, panel_5, null);
-		
-		JPanel panel_4 = new JPanel();
-		tabbedPane.addTab("Relatórios", null, panel_4, null);
+		eventListener.createHomePanel();
+		tabbedPane.addTab("Página Inicial", null, components.get("empresas").getDisplay().getContent(), null);
+
+	}
+
+	private void addEast() {
+		contentPane.add(new ColunaLaranja(), BorderLayout.EAST);
+	}
+
+	private void addWest() {
+		contentPane.add(new ColunaLaranja(), BorderLayout.WEST);
+	}
+
+	private void addNorth() {
+		contentPane.add(new Logomarca(), BorderLayout.NORTH);
 	}
 
 }
