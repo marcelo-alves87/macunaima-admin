@@ -1,9 +1,9 @@
 package org.macunaima.application;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.AbstractButton;
+import javax.swing.JButton;
 
 import org.macunaima.gui.EventListener;
 
@@ -11,44 +11,19 @@ public class HomeApplication implements Application {
 
 	public interface HomeDisplay extends Display {
 
-		AbstractButton getEmpresasButton();
+		JButton getEmpresasButton();
 	}
 
 	private HomeDisplay display;
 	private EventListener eventListener;
 
-
 	private void bind() {
-		this.display.getEmpresasButton().addMouseListener(new MouseListener() {
-
+		this.display.getEmpresasButton().addActionListener(new ActionListener() {
+			
 			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				System.out.println("a");
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				System.out.println("b");
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				System.out.println("c");
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				System.out.println("d");
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("e");
-
+			public void actionPerformed(ActionEvent e) {
+				eventListener.goToEmpresasPanel();
+				
 			}
 		});
 

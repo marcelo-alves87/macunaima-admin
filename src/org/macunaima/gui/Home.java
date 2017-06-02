@@ -14,7 +14,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import org.macunaima.application.Application;
+import org.macunaima.application.TabbedPaneApplication;
 import org.macunaima.gui.ui.ColunaLaranja;
+import org.macunaima.gui.ui.DefaultTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
 
@@ -24,11 +26,26 @@ public class Home extends JFrame {
 
 		@Override
 		public void createHomePanel() {
-			Application homeApplication = Application.getDefaultHomeApplication();
+			Application homeApplication = Application.getHomeApplication();
 			HomePanel homePanel = new HomePanel();
 			homeApplication.setDisplay(homePanel);
-			components.put("empresas", homeApplication);
+			components.put("home", homeApplication);
 		}
+
+		@Override
+		public void createEmpresasPanel() {
+			Application empresasApplication = Application.getEmpresasApplication();
+			
+			
+		}
+
+		@Override
+		public void goToEmpresasPanel() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
 
 	}
 
@@ -93,8 +110,18 @@ public class Home extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		eventListener.createHomePanel();
-		tabbedPane.addTab("Página Inicial", null, components.get("empresas").getDisplay().getContent(), null);
-
+		
+		addToTabbedPane("Início", "home", false);
+	}
+	
+	private void addToTabbedPane(String title, String componentName, boolean withCloseButtton) {
+		tabbedPane.addTab(title, null, components.get(componentName).getDisplay().getContent(), null);
+		int index = tabbedPane.indexOfTab(title);
+		
+		DefaultTabPanel defaultTabPanel = new DefaultTabPanel(title, tabbedPane, withCloseButtton);
+		TabbedPaneApplication tabbedPaneApplication = new TabbedPaneApplication(defaultTabPanel);
+		tabbedPaneApplication.bind();
+		tabbedPane.setTabComponentAt(index, defaultTabPanel);
 	}
 
 	private void addEast() {

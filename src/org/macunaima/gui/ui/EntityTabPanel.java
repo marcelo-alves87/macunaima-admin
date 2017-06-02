@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -21,8 +22,8 @@ public class EntityTabPanel extends DefaultTabPanel implements Display {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public EntityTabPanel(String name, String newEmpresaName, String newEmpresaIconPath) {
-		super(name);
+	public EntityTabPanel(String name, JTabbedPane jTabbedPane, String newEmpresaName, String newEmpresaIconPath) {
+		super(name, jTabbedPane, true);
 
 		// headers for the table
 		String[] columns = new String[] { "Id", "Name", "Hourly Rate", "Part Time" };
