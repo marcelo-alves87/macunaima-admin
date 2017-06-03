@@ -17,6 +17,7 @@ import org.macunaima.application.Application;
 import org.macunaima.application.TabbedPaneApplication;
 import org.macunaima.gui.ui.ColunaLaranja;
 import org.macunaima.gui.ui.DefaultTabPanel;
+import org.macunaima.gui.ui.EntityTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
 
@@ -29,23 +30,30 @@ public class Home extends JFrame {
 			Application homeApplication = Application.getHomeApplication();
 			HomePanel homePanel = new HomePanel();
 			homeApplication.setDisplay(homePanel);
+			homeApplication.setEventListener(eventListener);
 			components.put("home", homeApplication);
 		}
 
-		@Override
-		public void createEmpresasPanel() {
+		private void createEmpresasPanel() {
 			Application empresasApplication = Application.getEmpresasApplication();
-			
-			
+			EntityTabPanel empresasTabPanel = new EntityTabPanel("Empresas", "Nova Empresa",
+					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_empresa_12.png");
+			empresasApplication.setDisplay(empresasTabPanel);
+			empresasApplication.setEventListener(eventListener);
+			components.put("empresas", empresasApplication);
 		}
 
 		@Override
 		public void goToEmpresasPanel() {
-			// TODO Auto-generated method stub
-			
+			Application empresasApplication = components.get("empresas");
+			if (empresasApplication == null) {
+				createEmpresasPanel();
+				empresasApplication = components.get("empresas");
+			}
+			addToTabbedPane("Empresas", "empresas", true);
+			tabbedPane.setSelectedComponent(empresasApplication.getDisplay().getContent());
+
 		}
-		
-		
 
 	}
 
@@ -110,16 +118,17 @@ public class Home extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		eventListener.createHomePanel();
-		
+
 		addToTabbedPane("Início", "home", false);
 	}
-	
+
 	private void addToTabbedPane(String title, String componentName, boolean withCloseButtton) {
 		tabbedPane.addTab(title, null, components.get(componentName).getDisplay().getContent(), null);
 		int index = tabbedPane.indexOfTab(title);
-		
+
 		DefaultTabPanel defaultTabPanel = new DefaultTabPanel(title, tabbedPane, withCloseButtton);
-		TabbedPaneApplication tabbedPaneApplication = new TabbedPaneApplication(defaultTabPanel);
+		TabbedPaneApplication tabbedPaneApplication = new TabbedPaneApplication(defaultTabPanel,
+				components.get(componentName).getDisplay().getContent());
 		tabbedPaneApplication.bind();
 		tabbedPane.setTabComponentAt(index, defaultTabPanel);
 	}

@@ -40,4 +40,10 @@ public class HomeApplication implements Application {
 		bind();
 	}
 
+	@Override
+	public void setEventListener(EventListener eventListener) {
+		this.eventListener = eventListener;
+		
+	}
+
 }

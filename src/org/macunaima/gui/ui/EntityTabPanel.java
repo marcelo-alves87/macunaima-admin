@@ -7,24 +7,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import org.macunaima.application.Display;
+import org.macunaima.application.EmpresasApplication.EmpresasDisplay;
 
-public class EntityTabPanel extends DefaultTabPanel implements Display {
+public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public EntityTabPanel(String name, JTabbedPane jTabbedPane, String newEmpresaName, String newEmpresaIconPath) {
-		super(name, jTabbedPane, true);
-
+	public EntityTabPanel(String name, String newEmpresaName, String newEmpresaIconPath) {
 		// headers for the table
 		String[] columns = new String[] { "Id", "Name", "Hourly Rate", "Part Time" };
 
@@ -44,6 +41,7 @@ public class EntityTabPanel extends DefaultTabPanel implements Display {
 				{ 42, "Zorro", 60.0, true }, { 3, "Zorro", 60.0, true }, { 3, "Zorro", 60.0, true },
 				{ 40, "Zorro", 60.0, true }, };
 
+		setLayout(new BorderLayout());
 		JPanel panel_7 = new JPanel();
 		add(panel_7, BorderLayout.CENTER);
 		panel_7.setBorder(new EmptyBorder(30, 0, 0, 0));

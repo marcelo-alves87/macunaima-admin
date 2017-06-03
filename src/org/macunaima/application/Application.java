@@ -1,5 +1,7 @@
 package org.macunaima.application;
 
+import org.macunaima.gui.EventListener;
+
 public interface Application {
 
 	public static Application getHomeApplication() {
@@ -13,5 +15,7 @@ public interface Application {
 	Display getDisplay();
 
 	void setDisplay(Display display);
+	
+	void setEventListener(EventListener eventListener);
 
 }

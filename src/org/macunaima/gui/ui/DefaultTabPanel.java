@@ -1,5 +1,6 @@
 package org.macunaima.gui.ui;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -56,8 +57,9 @@ public class DefaultTabPanel extends JPanel implements TabbedPaneApplication.Dis
 	}
 
 	@Override
-	public void close() {
-		tabbedPane.remove(tabbedPane.getSelectedComponent());
+	public void close(Component component) {
+		tabbedPane.remove(component);
+		
 	}
 
 }
