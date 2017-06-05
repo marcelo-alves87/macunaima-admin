@@ -34,6 +34,7 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 		columns.add("Nome da Empresa");
 		columns.add("Desconto a Crédito");
 		columns.add("Desconto à vista");
+		columns.add("Id");
 
 		// actual data for the table in a 2d array
 		data = new Vector<Empresa>();
@@ -67,6 +68,8 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 		panel_9.setBorder(new EmptyBorder(0, 0, 0, 0));
 		// create table with data
 		table = new JTable(data, columns);
+		table.setDefaultEditor(Object.class, null);
+		table.removeColumn(table.getColumnModel().getColumn(3));
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_9.add(scrollPane);
 
@@ -82,7 +85,7 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 		return searchButton;
 	}
 
-	@Override
+	@Override	
 	public String getSearchText() {
 		return searchText.getText();
 	}
@@ -92,14 +95,20 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 		tableModel.setRowCount(0);
 		for (int i = 0; i < empresas.size(); i++) {
-			String[] data = new String[3];
+			String[] data = new String[4];
 			data[0] = empresas.get(i).getNome();
 			data[1] = empresas.get(i).getDescontoCredito();
 			data[2] = empresas.get(i).getDescontoAVista();
+			data[3] = empresas.get(i).getId();
 			tableModel.addRow(data);
 		}
 		table.setModel(tableModel);
 		tableModel.fireTableDataChanged();
+	}
+
+	@Override
+	public JTable getJTable() {
+		return table;
 	}
 
 }
