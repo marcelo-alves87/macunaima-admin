@@ -1,15 +1,19 @@
 package org.macunaima.gui.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import org.macunaima.application.EmpresasApplication.EmpresasDisplay;
 import org.macunaima.domain.Empresa;
 
-public class EntityTabPanel extends JPanel implements EmpresasDisplay {
+public class EntityListTabPanel extends JPanel implements EmpresasDisplay {
 
 	/**
 	 * 
@@ -27,13 +31,14 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 	private JTextField searchText;
 	private Vector<Empresa> data;
 	private JTable table;
+	private JButton novaEmpresaButton;
 
-	public EntityTabPanel(String name, String newEmpresaName, String newEmpresaIconPath) {
+	public EntityListTabPanel(String name, String newEmpresaName, String newEmpresaIconPath) {
 		// headers for the table
 		Vector<String> columns = new Vector<String>();
 		columns.add("Nome da Empresa");
 		columns.add("Desconto a Crédito");
-		columns.add("Desconto à vista");
+		columns.add("Desconto à Vista");
 		columns.add("Id");
 
 		// actual data for the table in a 2d array
@@ -41,7 +46,7 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 		setLayout(new BorderLayout());
 		JPanel panel_7 = new JPanel();
 		add(panel_7, BorderLayout.CENTER);
-		panel_7.setBorder(new EmptyBorder(30, 0, 0, 0));
+		panel_7.setBorder(new EmptyBorder(10, 0, 0, 0));
 
 		JPanel panel_8 = new JPanel();
 		panel_8.setToolTipText("Pesquisar");
@@ -50,6 +55,7 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 
 		searchText = new JTextField();
 		searchText.setToolTipText("Pesquisar");
+		searchText.setDocument(new JTextFieldLimit(30));
 		panel_8.add(searchText);
 		searchText.setColumns(30);
 
@@ -58,10 +64,10 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 		searchButton.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\search-loop-12.png"));
 		panel_8.add(searchButton);
 
-		JButton btnNewButton_3 = new JButton("");
-		btnNewButton_3.setToolTipText(newEmpresaName);
-		btnNewButton_3.setIcon(new ImageIcon(newEmpresaIconPath));
-		panel_7.add(btnNewButton_3);
+		novaEmpresaButton = new JButton("");
+		novaEmpresaButton.setToolTipText(newEmpresaName);
+		novaEmpresaButton.setIcon(new ImageIcon(newEmpresaIconPath));
+		panel_7.add(novaEmpresaButton);
 
 		JPanel panel_9 = new JPanel();
 		add(panel_9, BorderLayout.SOUTH);
@@ -72,6 +78,15 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 		table.removeColumn(table.getColumnModel().getColumn(3));
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_9.add(scrollPane);
+		
+		JPanel panel_15 = new JPanel();
+		add(panel_15, BorderLayout.NORTH);
+
+		JLabel lblEmpresa = new JLabel("Empresas");
+		lblEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmpresa.setForeground(Color.ORANGE);
+		lblEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panel_15.add(lblEmpresa);
 
 	}
 
@@ -109,6 +124,11 @@ public class EntityTabPanel extends JPanel implements EmpresasDisplay {
 	@Override
 	public JTable getJTable() {
 		return table;
+	}
+
+	@Override
+	public JButton goToNewEmpresa() {
+		return novaEmpresaButton;
 	}
 
 }

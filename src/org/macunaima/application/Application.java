@@ -1,5 +1,6 @@
 package org.macunaima.application;
 
+import org.macunaima.domain.Empresa;
 import org.macunaima.gui.EventListener;
 
 public interface Application {
@@ -10,6 +11,10 @@ public interface Application {
 	
 	public static Application getEmpresasApplication() {
 		return new EmpresasApplication();
+	}
+	
+	public static Application getEmpresaApplication(Empresa empresa) {
+		return new EmpresaEditApplication(empresa);
 	}
 
 	Display getDisplay();

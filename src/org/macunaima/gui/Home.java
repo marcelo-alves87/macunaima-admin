@@ -15,9 +15,11 @@ import javax.swing.border.EmptyBorder;
 
 import org.macunaima.application.Application;
 import org.macunaima.application.TabbedPaneApplication;
+import org.macunaima.domain.Empresa;
 import org.macunaima.gui.ui.ColunaLaranja;
 import org.macunaima.gui.ui.DefaultTabPanel;
-import org.macunaima.gui.ui.EntityTabPanel;
+import org.macunaima.gui.ui.EntityEditTabPanel;
+import org.macunaima.gui.ui.EntityListTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
 
@@ -36,7 +38,7 @@ public class Home extends JFrame {
 
 		private void createEmpresasPanel() {
 			Application empresasApplication = Application.getEmpresasApplication();
-			EntityTabPanel empresasTabPanel = new EntityTabPanel("Empresas", "Nova Empresa",
+			EntityListTabPanel empresasTabPanel = new EntityListTabPanel("Empresas", "Nova Empresa",
 					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_empresa_12.png");
 			empresasApplication.setDisplay(empresasTabPanel);
 			empresasApplication.setEventListener(eventListener);
@@ -52,6 +54,29 @@ public class Home extends JFrame {
 			}
 			addToTabbedPane("Empresas", "empresas", true);
 			tabbedPane.setSelectedComponent(empresasApplication.getDisplay().getContent());
+
+		}
+
+		@Override
+		public void goToEditEmpresa(Empresa empresa) {
+			Application empresaApplication = components.get("empresa");
+			if(empresaApplication != null) {
+				tabbedPane.remove(empresaApplication.getDisplay().getContent());
+				components.remove("empresa");
+			}
+			createEmpresaPanel(empresa);
+			empresaApplication = components.get("empresa");
+			addToTabbedPane("Empresa", "empresa", true);
+			tabbedPane.setSelectedComponent(empresaApplication.getDisplay().getContent());
+
+		}
+
+		private void createEmpresaPanel(Empresa empresa) {
+			Application empresaApplication = Application.getEmpresaApplication(empresa);
+			EntityEditTabPanel empresasTabPanel = new EntityEditTabPanel();
+			empresaApplication.setDisplay(empresasTabPanel);
+			empresaApplication.setEventListener(eventListener);
+			components.put("empresa", empresaApplication);
 
 		}
 
