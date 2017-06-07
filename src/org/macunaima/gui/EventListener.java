@@ -9,4 +9,6 @@ public interface EventListener {
 	void goToEmpresasPanel();
 	
 	void goToEditEmpresa(Empresa empresa);
+	
+	void closeEditEmpresa();
 }

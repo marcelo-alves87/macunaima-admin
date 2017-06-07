@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 import org.macunaima.controller.EmpresaController;
+import org.macunaima.domain.Callback;
 import org.macunaima.domain.Empresa;
 
 import com.mongodb.BasicDBObject;
@@ -72,7 +73,7 @@ public class EmpresaControllerImp implements EmpresaController {
 	}
 
 	@Override
-	public void persist(Empresa empresa) {
+	public Callback persist(Empresa empresa) {
 		checkConnection();
 		DBCollection empresasCollection = getEmpresasCollection();
 		DBObject dbObject = empresa.fromEmpresa();
@@ -83,7 +84,40 @@ public class EmpresaControllerImp implements EmpresaController {
 			whereQuery.put("_id", new ObjectId(empresa.getId()));
 			empresasCollection.update(whereQuery, dbObject);
 		}
+		return new Callback() {
+			
+			@Override
+			public int callBack() {
+				return 1;
+			}
+		};
 		
+	}
+
+	@Override
+	public Callback delete(Empresa empresa) {
+		if(empresa == null || empresa.isNew()) {
+			return new Callback() {
+				
+				@Override
+				public int callBack() {
+					return 0;
+				}
+			};
+		} else {
+			checkConnection();
+			DBCollection empresasCollection = getEmpresasCollection();
+			DBObject dbObject = empresa.fromEmpresa();
+			empresasCollection.remove(dbObject);
+			return new Callback() {
+				
+				@Override
+				public int callBack() {
+					// TODO Auto-generated method stub
+					return 1;
+				}
+			};
+		}
 	}
 
 }

@@ -59,13 +59,9 @@ public class Home extends JFrame {
 
 		@Override
 		public void goToEditEmpresa(Empresa empresa) {
-			Application empresaApplication = components.get("empresa");
-			if(empresaApplication != null) {
-				tabbedPane.remove(empresaApplication.getDisplay().getContent());
-				components.remove("empresa");
-			}
+			closeEditEmpresa();
 			createEmpresaPanel(empresa);
-			empresaApplication = components.get("empresa");
+			Application empresaApplication = components.get("empresa");
 			addToTabbedPane("Empresa", "empresa", true);
 			tabbedPane.setSelectedComponent(empresaApplication.getDisplay().getContent());
 
@@ -78,6 +74,15 @@ public class Home extends JFrame {
 			empresaApplication.setEventListener(eventListener);
 			components.put("empresa", empresaApplication);
 
+		}
+
+		@Override
+		public void closeEditEmpresa() {
+			Application empresaApplication = components.get("empresa");
+			if(empresaApplication != null) {
+				tabbedPane.remove(empresaApplication.getDisplay().getContent());
+				components.remove("empresa");
+			}
 		}
 
 	}

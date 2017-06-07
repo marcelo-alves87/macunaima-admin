@@ -7,6 +7,7 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -121,12 +122,26 @@ public class EntityEditTabPanel extends JPanel implements EmpresaEditApplication
 	}
 
 	@Override
-	public void close() {
+	public JButton getDeletarButton() {
+		return deletarButton;
 	}
 
 	@Override
-	public JButton getDeletarButton() {
-		return deletarButton;
+	public void showMessage(String string) {
+		JOptionPane.showMessageDialog(null, string, "Informação", JOptionPane.INFORMATION_MESSAGE);
+
+	}
+
+	@Override
+	public boolean confirmSalvarEmpresa() {
+		int dialogResult = JOptionPane.showConfirmDialog (null, "Você deseja salvar a empresa?","Alerta",JOptionPane.YES_NO_OPTION);
+		return dialogResult == JOptionPane.YES_OPTION;
+	}
+
+	@Override
+	public boolean confirmDeletarEmpresa() {
+		int dialogResult = JOptionPane.showConfirmDialog (null, "Você deseja deletar a empresa?","Alerta",JOptionPane.YES_NO_OPTION);
+		return dialogResult == JOptionPane.YES_OPTION;
 	}
 
 }
