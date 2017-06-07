@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import org.macunaima.domain.Empresa;
 import org.macunaima.gui.EventListener;
@@ -21,12 +22,12 @@ public class EmpresasApplication implements Application {
 
 		JButton getSearchButton();
 
-		String getSearchText();
+		JTextField getSearch();
 
 		void put(Vector<Empresa> empresas);
 
 		JTable getJTable();
-		
+
 		JButton goToNewEmpresa();
 	}
 
@@ -51,15 +52,24 @@ public class EmpresasApplication implements Application {
 	}
 
 	private void bind() {
+		this.display.getSearch().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				find();
+
+			}
+		});
+
 		this.display.getSearchButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
-						Vector<Empresa> empresas = DefaultService.getEmpresaController().find(display.getSearchText());
-						display.put(empresas);
+						find();
 					}
+
 				});
 
 			}
@@ -79,19 +89,24 @@ public class EmpresasApplication implements Application {
 
 		});
 		display.goToNewEmpresa().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				goToNewEmpresa();
-				
+
 			}
 		});
 
 	}
 
+	private void find() {
+		Vector<Empresa> empresas = DefaultService.getEmpresaController().find(display.getSearch().getText());
+		display.put(empresas);
+	}
+
 	protected void goToNewEmpresa() {
 		this.eventListener.goToEditEmpresa(null);
-		
+
 	}
 
 	protected Empresa convertToEmpresa(int row) {

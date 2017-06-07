@@ -17,8 +17,6 @@ public class EmpresaEditApplication implements Application {
 
 		JButton getSalvarButton();
 
-		JButton getCancelarButton();
-
 		JButton getDeletarButton();
 
 		void copyFrom(Empresa empresa);
@@ -26,8 +24,6 @@ public class EmpresaEditApplication implements Application {
 		void copyTo(Empresa empresa);
 
 		void showMessage(String string);
-
-		boolean confirmSalvarEmpresa();
 
 		boolean confirmDeletarEmpresa();
 
@@ -61,37 +57,17 @@ public class EmpresaEditApplication implements Application {
 	}
 
 	private void bind() {
-		display.getCancelarButton().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				close();
-
-			}
-		});
-
 		display.getSalvarButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (display.confirmSalvarEmpresa()) {
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							if (validate()) {
-								persist();
-							}
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						if (validate()) {
+							persist();
 						}
-					});
-				}
-			}
-		});
-
-		display.getCancelarButton().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				close();
-
+					}
+				});
 			}
 		});
 

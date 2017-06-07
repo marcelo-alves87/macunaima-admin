@@ -24,7 +24,6 @@ public class EntityEditTabPanel extends JPanel implements EmpresaEditApplication
 	private static final long serialVersionUID = 1L;
 	private JButton salvarButton;
 	private JButton deletarButton;
-	private JButton cancelarButton;
 	private JTextField nomeTextField;
 	private IntegerInputField creditoTextField;
 	private IntegerInputField vistaTextField;
@@ -87,9 +86,6 @@ public class EntityEditTabPanel extends JPanel implements EmpresaEditApplication
 
 		deletarButton = new JButton("Deletar");
 		panel_16.add(deletarButton);
-
-		cancelarButton = new JButton("Cancelar");
-		panel_16.add(cancelarButton);
 	}
 
 	@Override
@@ -100,11 +96,6 @@ public class EntityEditTabPanel extends JPanel implements EmpresaEditApplication
 	@Override
 	public JButton getSalvarButton() {
 		return salvarButton;
-	}
-
-	@Override
-	public JButton getCancelarButton() {
-		return cancelarButton;
 	}
 
 	@Override
@@ -130,12 +121,6 @@ public class EntityEditTabPanel extends JPanel implements EmpresaEditApplication
 	public void showMessage(String string) {
 		JOptionPane.showMessageDialog(null, string, "Informação", JOptionPane.INFORMATION_MESSAGE);
 
-	}
-
-	@Override
-	public boolean confirmSalvarEmpresa() {
-		int dialogResult = JOptionPane.showConfirmDialog (null, "Você deseja salvar a empresa?","Alerta",JOptionPane.YES_NO_OPTION);
-		return dialogResult == JOptionPane.YES_OPTION;
 	}
 
 	@Override

@@ -100,11 +100,6 @@ public class EntityListTabPanel extends JPanel implements EmpresasDisplay {
 		return searchButton;
 	}
 
-	@Override	
-	public String getSearchText() {
-		return searchText.getText();
-	}
-
 	@Override
 	public void put(Vector<Empresa> empresas) {
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
@@ -129,6 +124,11 @@ public class EntityListTabPanel extends JPanel implements EmpresasDisplay {
 	@Override
 	public JButton goToNewEmpresa() {
 		return novaEmpresaButton;
+	}
+
+	@Override
+	public JTextField getSearch() {
+		return searchText;
 	}
 
 }
