@@ -77,7 +77,9 @@ public class EmpresaEditApplication implements Application {
 				if (display.confirmSalvarEmpresa()) {
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
-							persist();
+							if (validate()) {
+								persist();
+							}
 						}
 					});
 				}
@@ -110,17 +112,38 @@ public class EmpresaEditApplication implements Application {
 
 	}
 
+	protected boolean validate() {
+		boolean isValid = true;
+		Empresa empresa = importEmpresaFromDisplay();
+		if (empresa.getNome() == null || empresa.getNome().isEmpty()) {
+			isValid = false;
+			display.showMessage("Por favor, insira um nome da empresa");
+		} else if (empresa.getDescontoCredito() == null || empresa.getDescontoCredito().isEmpty()) {
+			isValid = false;
+			display.showMessage("Por favor, insira um valor de desconto a crédito");
+		} else if (empresa.getDescontoAVista() == null || empresa.getDescontoAVista().isEmpty()) {
+			isValid = false;
+			display.showMessage("Por favor, insira um valor de desconto à vista");
+		}
+		return isValid;
+	}
+
+	private Empresa importEmpresaFromDisplay() {
+		Empresa empresa = new Empresa();
+		if (this.empresa != null) {
+			empresa.setId(this.empresa.getId());
+		}
+		display.copyTo(empresa);
+		return empresa;
+	}
+
 	protected void close() {
 		eventListener.closeEditEmpresa();
 
 	}
 
 	protected void persist() {
-		Empresa empresa = new Empresa();
-		if (this.empresa != null) {
-			empresa.setId(this.empresa.getId());
-		}
-		display.copyTo(empresa);
+		Empresa empresa = importEmpresaFromDisplay();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Callback callback = DefaultService.getEmpresaController().persist(empresa);
@@ -139,11 +162,7 @@ public class EmpresaEditApplication implements Application {
 	}
 
 	protected void delete() {
-		Empresa empresa = new Empresa();
-		if (this.empresa != null) {
-			empresa.setId(this.empresa.getId());
-		}
-		display.copyTo(empresa);
+		Empresa empresa = importEmpresaFromDisplay();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Callback callback = DefaultService.getEmpresaController().delete(empresa);
