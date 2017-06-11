@@ -13,10 +13,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import org.macunaima.application.EmpresaEditApplication;
+import org.macunaima.application.AbstractEditApplication.EditDisplay;
 import org.macunaima.domain.Empresa;
 
-public class EntityEditTabPanel extends JPanel implements EmpresaEditApplication.EmpresaDisplay {
+public class EntityEditTabPanel extends JPanel implements EditDisplay<Empresa> {
 
 	/**
 	 * 
@@ -124,7 +124,7 @@ public class EntityEditTabPanel extends JPanel implements EmpresaEditApplication
 	}
 
 	@Override
-	public boolean confirmDeletarEmpresa() {
+	public boolean confirmDeletar() {
 		int dialogResult = JOptionPane.showConfirmDialog (null, "Você deseja deletar a empresa?","Alerta",JOptionPane.YES_NO_OPTION);
 		return dialogResult == JOptionPane.YES_OPTION;
 	}

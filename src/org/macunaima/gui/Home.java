@@ -18,8 +18,8 @@ import org.macunaima.application.TabbedPaneApplication;
 import org.macunaima.domain.Empresa;
 import org.macunaima.gui.ui.ColunaLaranja;
 import org.macunaima.gui.ui.DefaultTabPanel;
+import org.macunaima.gui.ui.EmpresaListTabPanel;
 import org.macunaima.gui.ui.EntityEditTabPanel;
-import org.macunaima.gui.ui.EntityListTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
 
@@ -38,7 +38,7 @@ public class Home extends JFrame {
 
 		private void createEmpresasPanel() {
 			Application empresasApplication = Application.getEmpresasApplication();
-			EntityListTabPanel empresasTabPanel = new EntityListTabPanel("Empresas", "Nova Empresa",
+			EmpresaListTabPanel empresasTabPanel = new EmpresaListTabPanel("Empresas", "Nova Empresa",
 					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_empresa_12.png");
 			empresasApplication.setDisplay(empresasTabPanel);
 			empresasApplication.setEventListener(eventListener);
@@ -79,7 +79,7 @@ public class Home extends JFrame {
 		@Override
 		public void closeEditEmpresa() {
 			Application empresaApplication = components.get("empresa");
-			if(empresaApplication != null) {
+			if (empresaApplication != null) {
 				tabbedPane.remove(empresaApplication.getDisplay().getContent());
 				components.remove("empresa");
 			}
