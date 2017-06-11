@@ -1,23 +1,15 @@
 package org.macunaima.domain;
 
-import org.bson.types.ObjectId;
-
-import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
-public class Empresa {
+public class Empresa extends Entity {
 
-	private String id;
 	private String nome;
 	private String descontoCredito;
 	private String descontoAVista;
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public Empresa() {
+		super();
 	}
 
 	public String getNome() {
@@ -44,28 +36,29 @@ public class Empresa {
 		this.descontoAVista = descontoAVista;
 	}
 
-	public static Empresa toEmpresa(DBObject dbObject) {
-		Empresa empresa = new Empresa();
-		empresa.setId(((ObjectId) dbObject.get("_id")).toString());
-		empresa.setNome((String) dbObject.get("nome"));
-		empresa.setDescontoCredito((String) dbObject.get("descontoCredito"));
-		empresa.setDescontoAVista((String) dbObject.get("descontoAVista"));
-		return empresa;
-	}
-
-	public DBObject fromEmpresa() {
-		DBObject dbObject = new BasicDBObject();
-		if (id != null) {
-			dbObject.put("_id", new ObjectId(getId()));
-		}
+	@Override
+	public void to(DBObject dbObject) {
+		super.put(dbObject);
 		dbObject.put("nome", getNome());
 		dbObject.put("descontoCredito", getDescontoCredito());
 		dbObject.put("descontoAVista", getDescontoAVista());
-		return dbObject;
 	}
-	
-	public boolean isNew() {
-		return this.id == null;
+
+	@Override
+	public void fromEntity(DBObject dbObject) {
+		super.get(dbObject);
+		setNome((String) dbObject.get("nome"));
+		setDescontoCredito((String) dbObject.get("descontoCredito"));
+		setDescontoAVista((String) dbObject.get("descontoAVista"));
+	}
+
+	public static Empresa newInstance() {
+		return new Empresa();
+	}
+
+	@Override
+	public Entity create() {
+		return new Empresa();
 	}
 
 }

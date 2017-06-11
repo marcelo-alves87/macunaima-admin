@@ -18,10 +18,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.macunaima.application.EmpresasApplication.EmpresasDisplay;
+import org.macunaima.application.AbstractListApplication.ListDisplay;
 import org.macunaima.domain.Empresa;
 
-public class EntityListTabPanel extends JPanel implements EmpresasDisplay {
+public class EntityListTabPanel extends JPanel implements ListDisplay<Empresa> {
 
 	/**
 	 * 
@@ -78,7 +78,7 @@ public class EntityListTabPanel extends JPanel implements EmpresasDisplay {
 		table.removeColumn(table.getColumnModel().getColumn(3));
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_9.add(scrollPane);
-		
+
 		JPanel panel_15 = new JPanel();
 		add(panel_15, BorderLayout.NORTH);
 
@@ -122,13 +122,13 @@ public class EntityListTabPanel extends JPanel implements EmpresasDisplay {
 	}
 
 	@Override
-	public JButton goToNewEmpresa() {
-		return novaEmpresaButton;
+	public JTextField getSearch() {
+		return searchText;
 	}
 
 	@Override
-	public JTextField getSearch() {
-		return searchText;
+	public JButton goToNewEntity() {
+		return novaEmpresaButton;
 	}
 
 }
