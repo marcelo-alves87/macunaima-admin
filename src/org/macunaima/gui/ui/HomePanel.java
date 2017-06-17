@@ -16,6 +16,7 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 	 */
 	private static final long serialVersionUID = 1L;
 	private HomeButton empresasButton;
+	private HomeButton clientesButton;
 
 	public HomePanel() {
 		super();
@@ -26,9 +27,9 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 		empresasButton = new HomeButton("Empresas", "C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\empresa.png");
 		add(empresasButton);
 
-		HomeButton btnNewButton_1 = new HomeButton("Clientes",
+		clientesButton = new HomeButton("Clientes",
 				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\users.png");
-		add(btnNewButton_1);
+		add(clientesButton);
 
 		HomeButton btnNewButton_2 = new HomeButton("Relat\u00F3rios",
 				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\relatorios.png");
@@ -47,6 +48,11 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 	@Override
 	public Component getContent() {
 		return this;
+	}
+
+	@Override
+	public JButton getClientesButton() {
+		return clientesButton;
 	}
 
 }

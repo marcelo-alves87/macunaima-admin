@@ -61,4 +61,9 @@ public class Empresa extends Entity {
 		return new Empresa();
 	}
 
+	@Override
+	public String toString() {
+		return this.nome;
+	}
+
 }

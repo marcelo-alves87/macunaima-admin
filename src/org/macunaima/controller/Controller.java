@@ -13,4 +13,6 @@ public interface Controller<T extends Entity> {
 
 	Vector<T> find(String... search);
 
+	Vector<T> findAll();
+
 }

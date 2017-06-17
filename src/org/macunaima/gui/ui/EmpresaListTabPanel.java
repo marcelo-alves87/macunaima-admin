@@ -32,8 +32,8 @@ public class EmpresaListTabPanel extends AbstractListTabPanel<Empresa> {
 	}
 
 	@Override
-	protected int getColumnIdIndex() {
-		return 3;
+	protected int[] getColumnIdIndex() {
+		return new int[]{3};
 	}
 
 	@Override

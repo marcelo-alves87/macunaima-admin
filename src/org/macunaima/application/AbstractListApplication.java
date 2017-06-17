@@ -65,6 +65,8 @@ public abstract class AbstractListApplication<T extends Entity> implements Appli
 
 			}
 		});
+		
+		this.listDisplay.getSearch().requestFocus();
 
 		this.listDisplay.getSearchButton().addActionListener(new ActionListener() {
 

@@ -32,11 +32,11 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 	private EditDisplay<T> editDisplay;
 	private EventListener eventListener;
 	private T entity;
-	
+
 	public AbstractEditApplication() {
 		super();
 	}
-	
+
 	public AbstractEditApplication(T entity) {
 		this.entity = entity;
 	}
@@ -66,18 +66,12 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 		return this.eventListener;
 	}
 
-	private void bind() {
+	protected void bind() {
 		this.editDisplay.getSalvarButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						if (validate()) {
-							persist();
-						}
-					}
-				});
+				persist();
 			}
 		});
 
@@ -130,12 +124,14 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 
 	protected void persist() {
 		T entity = importFromDisplay();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				Callback callback = getController().persist(entity);
-				processPersist(callback);
-			}
-		});
+		if (validate()) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					Callback callback = getController().persist(entity);
+					processPersist(callback);
+				}
+			});
+		}
 
 	}
 
@@ -172,7 +168,7 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 	protected abstract String getSucessDeleteMessage();
 
 	protected abstract String getErrorDeleteMessage();
-	
+
 	protected void showMessage(String string) {
 		this.editDisplay.showMessage(string);
 	}

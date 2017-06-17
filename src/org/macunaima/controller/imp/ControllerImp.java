@@ -34,11 +34,10 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 				if (!search1.isEmpty())
 					whereQuery.put("nome", Pattern.compile(".*" + search1 + ".*", Pattern.CASE_INSENSITIVE));
 			}
-			dbCursor = collection.find(whereQuery);
+			dbCursor = collection.find(whereQuery).sort(new BasicDBObject("dataCadastramento", -1));
 		} else {
-			dbCursor = collection.find();
+			dbCursor = collection.find().sort(new BasicDBObject("dataCadastramento", -1));
 		}
-		dbCursor.sort(new BasicDBObject("dataCadastramento", 1));
 		Vector<T> entities = new Vector<T>();
 		while (dbCursor.hasNext()) {
 			DBObject dbObject = dbCursor.next();
@@ -128,6 +127,11 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		if (!isConnectionOpened()) {
 			openConnection();
 		}
+	}
+
+	@Override
+	public Vector<T> findAll() {
+		return find(null);
 	}
 
 	protected DBCollection getCollection(String collection) {

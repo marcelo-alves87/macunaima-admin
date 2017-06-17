@@ -1,10 +1,26 @@
 package org.macunaima.application;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JTextField;
+
 import org.macunaima.controller.Controller;
 import org.macunaima.domain.Empresa;
+import org.macunaima.gui.ui.IntegerInputField;
 import org.macunaima.service.DefaultService;
 
 public class EmpresaEditApplication extends AbstractEditApplication<Empresa> {
+	
+	public interface EmpresaEditDisplay extends EditDisplay<Empresa> {
+		
+		JTextField getNomeTextField();
+		
+		IntegerInputField getCreditoTextField();
+		
+		IntegerInputField getVistaTextField();
+
+	}
 
 	public EmpresaEditApplication(Empresa empresa) {
 		super(empresa);
@@ -25,6 +41,39 @@ public class EmpresaEditApplication extends AbstractEditApplication<Empresa> {
 			showMessage("Por favor, insira um valor de desconto à vista");
 		}
 		return isValid;
+	}
+
+	@Override
+	protected void bind() {
+		super.bind();
+		
+		EmpresaEditDisplay empresaEditDisplay = (EmpresaEditDisplay) getDisplay();
+		
+		empresaEditDisplay.getNomeTextField().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				persist();
+			}
+		});
+		
+		empresaEditDisplay.getNomeTextField().requestFocus();
+		
+		empresaEditDisplay.getCreditoTextField().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				persist();
+			}
+		});
+		
+		empresaEditDisplay.getVistaTextField().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				persist();
+			}
+		});
 	}
 
 	@Override

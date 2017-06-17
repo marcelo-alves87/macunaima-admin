@@ -12,6 +12,8 @@ public class HomeApplication implements Application {
 	public interface HomeDisplay extends Display {
 
 		JButton getEmpresasButton();
+		
+		JButton getClientesButton();
 	}
 
 	private HomeDisplay display;
@@ -23,6 +25,15 @@ public class HomeApplication implements Application {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				eventListener.goToEmpresasPanel();
+				
+			}
+		});
+		
+		this.display.getClientesButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eventListener.goToClientesPanel();
 				
 			}
 		});

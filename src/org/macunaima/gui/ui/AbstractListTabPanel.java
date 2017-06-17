@@ -70,7 +70,14 @@ public abstract class AbstractListTabPanel<T extends Entity> extends JPanel impl
 		// create table with data
 		table = new JTable(data, columns);
 		table.setDefaultEditor(Object.class, null);
-		table.removeColumn(table.getColumnModel().getColumn(getColumnIdIndex()));
+
+		int[] indexes = getColumnIdIndex();
+		if (indexes != null) {
+			for (int i = 0; i < indexes.length; i++) {
+				table.removeColumn(table.getColumnModel().getColumn(indexes[i]));
+			}
+		}
+
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_9.add(scrollPane);
 
@@ -85,7 +92,7 @@ public abstract class AbstractListTabPanel<T extends Entity> extends JPanel impl
 
 	}
 
-	protected abstract int getColumnIdIndex();
+	protected abstract int[] getColumnIdIndex();
 
 	protected abstract Vector<String> getColumns();
 

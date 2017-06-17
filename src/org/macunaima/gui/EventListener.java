@@ -1,5 +1,6 @@
 package org.macunaima.gui;
 
+import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
 
 public interface EventListener {
@@ -11,4 +12,10 @@ public interface EventListener {
 	void goToEditEmpresa(Empresa empresa);
 	
 	void closeEditEmpresa();
+	
+	void goToClientesPanel();
+	
+	void goToEditCliente(Cliente cliente);
+	
+	void closeEditCliente();
 }

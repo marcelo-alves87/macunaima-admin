@@ -15,11 +15,14 @@ import javax.swing.border.EmptyBorder;
 
 import org.macunaima.application.Application;
 import org.macunaima.application.TabbedPaneApplication;
+import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
+import org.macunaima.gui.ui.ClienteEditTabPanel;
+import org.macunaima.gui.ui.ClienteListTabPanel;
 import org.macunaima.gui.ui.ColunaLaranja;
 import org.macunaima.gui.ui.DefaultTabPanel;
+import org.macunaima.gui.ui.EmpresaEditTabPanel;
 import org.macunaima.gui.ui.EmpresaListTabPanel;
-import org.macunaima.gui.ui.EntityEditTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
 
@@ -69,8 +72,8 @@ public class Home extends JFrame {
 
 		private void createEmpresaPanel(Empresa empresa) {
 			Application empresaApplication = Application.getEmpresaApplication(empresa);
-			EntityEditTabPanel empresasTabPanel = new EntityEditTabPanel();
-			empresaApplication.setDisplay(empresasTabPanel);
+			EmpresaEditTabPanel empresaEditTabPanel = new EmpresaEditTabPanel("Empresa");
+			empresaApplication.setDisplay(empresaEditTabPanel);
 			empresaApplication.setEventListener(eventListener);
 			components.put("empresa", empresaApplication);
 
@@ -82,6 +85,55 @@ public class Home extends JFrame {
 			if (empresaApplication != null) {
 				tabbedPane.remove(empresaApplication.getDisplay().getContent());
 				components.remove("empresa");
+			}
+		}
+
+		@Override
+		public void goToEditCliente(Cliente cliente) {
+			closeEditCliente();
+			createClientePanel(cliente);
+			Application clienteApplication = components.get("cliente");
+			addToTabbedPane("Cliente", "cliente", true);
+			tabbedPane.setSelectedComponent(clienteApplication.getDisplay().getContent());
+			
+		}
+
+		private void createClientePanel(Cliente cliente) {
+			Application clienteApplication = Application.getClienteApplication(cliente);
+			ClienteEditTabPanel clienteEditTabPanel = new ClienteEditTabPanel("Cliente");
+			clienteApplication.setDisplay(clienteEditTabPanel);
+			clienteApplication.setEventListener(eventListener);
+			components.put("cliente", clienteApplication);
+		}
+
+		@Override
+		public void goToClientesPanel() {
+			Application clientesApplication = components.get("clientes");
+			if (clientesApplication == null) {
+				createClientesPanel();
+				clientesApplication = components.get("clientes");
+			}
+			addToTabbedPane("Clientes", "clientes", true);
+			tabbedPane.setSelectedComponent(clientesApplication.getDisplay().getContent());
+			
+		}
+
+		private void createClientesPanel() {
+			Application clientesApplication = Application.getClientesApplication();
+			ClienteListTabPanel clientesTabPanel = new ClienteListTabPanel("Clientes", "Novo Cliente",
+					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_cliente.png");
+			clientesApplication.setDisplay(clientesTabPanel);
+			clientesApplication.setEventListener(eventListener);
+			components.put("clientes", clientesApplication);
+			
+		}
+
+		@Override
+		public void closeEditCliente() {
+			Application clienteApplication = components.get("cliente");
+			if (clienteApplication != null) {
+				tabbedPane.remove(clienteApplication.getDisplay().getContent());
+				components.remove("cliente");
 			}
 		}
 
