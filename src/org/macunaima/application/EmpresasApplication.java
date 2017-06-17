@@ -9,9 +9,6 @@ public class EmpresasApplication extends AbstractListApplication<Empresa> {
 	protected Empresa convertToEmpresa(int row) {
 		Empresa empresa = new Empresa();
 		empresa.setId((String) getListDisplay().getJTable().getModel().getValueAt(row, 3));
-		empresa.setNome((String) getListDisplay().getJTable().getModel().getValueAt(row, 0));
-		empresa.setDescontoCredito((String) getListDisplay().getJTable().getModel().getValueAt(row, 1));
-		empresa.setDescontoAVista((String) getListDisplay().getJTable().getModel().getValueAt(row, 2));
 		return empresa;
 	}
 

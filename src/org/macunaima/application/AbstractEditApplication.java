@@ -51,9 +51,19 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 	public void setDisplay(Display display) {
 		this.editDisplay = (EditDisplay<T>) display;
 		bind();
+		fetchFirst();
+		fetch();
 		if (this.entity != null) {
 			this.editDisplay.copyFrom(this.entity);
 		}
+	}
+
+	protected void fetchFirst() {
+		
+	}
+
+	private void fetch() {
+		this.entity = getController().findById(this.entity.getId());
 	}
 
 	@Override
@@ -115,11 +125,8 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 
 	protected abstract Class<T> getInstance();
 
-	protected void close() {
-		eventListener.closeEditEmpresa();
-
-	}
-
+	protected abstract void close();
+	
 	protected abstract Controller<T> getController();
 
 	protected void persist() {

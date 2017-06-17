@@ -26,8 +26,8 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 	@Override
 	public Vector<T> find(String... search) {
 		checkConnection();
-		DBCollection collection = getDefaultCollection();
 		DBCursor dbCursor = null;
+		DBCollection collection = getDefaultCollection();
 		if (search != null) {
 			BasicDBObject whereQuery = new BasicDBObject();
 			for (String search1 : search) {
@@ -41,20 +41,30 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		Vector<T> entities = new Vector<T>();
 		while (dbCursor.hasNext()) {
 			DBObject dbObject = dbCursor.next();
-			Class<T> clazz = getInstance();
-			try {
-				T t = clazz.newInstance();
-				t.fromEntity(dbObject);
-				entities.add(t);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			T t = convertFromDBObject(dbObject);
+			entities.add(t);
 		}
 
 		return entities;
 	}
 
 	protected abstract DBCollection getDefaultCollection();
+
+	protected T convertFromDBObject(DBObject dbObject) {
+		Class<T> clazz = getInstance();
+		T t = null;
+		try {
+			t = clazz.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t.fromEntity(dbObject);
+		return t;
+	}
 
 	@Override
 	public Callback persist(T entity) {
@@ -141,4 +151,16 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 	}
 
 	protected abstract Class<T> getInstance();
+
+	protected DBObject findById(String id, String collection) {
+		ObjectId objectId = new ObjectId(id);
+		return getCollection(collection).findOne(objectId);
+	}
+
+	@Override
+	public T findById(String id) {
+		checkConnection();
+		DBObject dbObject = getDefaultCollection().findOne(new ObjectId(id));
+		return convertFromDBObject(dbObject);
+	}
 }

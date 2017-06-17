@@ -123,16 +123,21 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 		return "Não foi possível remover esse cliente";
 	}
 
-	@Override
-	public void setDisplay(Display display) {
-		super.setDisplay(display);
-		fetchEmpresas();
-	}
 
 	private void fetchEmpresas() {
 		Vector<Empresa> empresas = DefaultService.getEmpresaController().findAll();
 		ClienteEditDisplay clienteEditDisplay = (ClienteEditDisplay) getDisplay();
 		clienteEditDisplay.put(empresas);
+	}
+
+	@Override
+	protected void fetchFirst() {
+		fetchEmpresas();
+	}
+
+	@Override
+	protected void close() {
+		getEventListener().closeEditCliente();
 	}
 
 }

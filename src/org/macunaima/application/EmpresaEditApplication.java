@@ -101,4 +101,9 @@ public class EmpresaEditApplication extends AbstractEditApplication<Empresa> {
 		return "Não foi possível remover a empresa";
 	}
 
+	@Override
+	protected void close() {
+		getEventListener().closeEditEmpresa();
+	}
+
 }
