@@ -47,9 +47,11 @@ public class Empresa extends Entity {
 	@Override
 	public void fromEntity(DBObject dbObject) {
 		super.get(dbObject);
-		setNome((String) dbObject.get("nome"));
-		setDescontoCredito((String) dbObject.get("descontoCredito"));
-		setDescontoAVista((String) dbObject.get("descontoAVista"));
+		if (dbObject != null) {
+			setNome((String) dbObject.get("nome"));
+			setDescontoCredito((String) dbObject.get("descontoCredito"));
+			setDescontoAVista((String) dbObject.get("descontoAVista"));
+		}
 	}
 
 	public static Empresa newInstance() {

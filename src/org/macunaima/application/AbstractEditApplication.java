@@ -59,11 +59,13 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 	}
 
 	protected void fetchFirst() {
-		
+
 	}
 
 	private void fetch() {
-		this.entity = getController().findById(this.entity.getId());
+		if (this.entity != null) {
+			this.entity = getController().findById(this.entity.getId());
+		}
 	}
 
 	@Override
@@ -126,7 +128,7 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 	protected abstract Class<T> getInstance();
 
 	protected abstract void close();
-	
+
 	protected abstract Controller<T> getController();
 
 	protected void persist() {

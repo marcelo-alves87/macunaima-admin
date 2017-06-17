@@ -48,10 +48,12 @@ public abstract class Entity {
 	}
 
 	protected void get(DBObject dbObject) {
-		this.id = dbObject.get("_id").toString();
-		this.dataCadastramento = (Date) dbObject.get("dataCadastramento");
+		if (dbObject != null) {
+			this.id = dbObject.get("_id").toString();
+			this.dataCadastramento = (Date) dbObject.get("dataCadastramento");
+		}
 	}
-	
+
 	public abstract Entity create();
 
 	@Override
