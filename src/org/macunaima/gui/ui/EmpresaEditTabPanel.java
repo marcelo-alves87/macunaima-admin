@@ -70,7 +70,7 @@ public class EmpresaEditTabPanel extends AbstractEditTabPanel<Empresa> implement
 
 	@Override
 	protected String getConfirmDeleteMessage() {
-		return "Você gostaria de remover essa empresa?";
+		return "Você gostaria de remover essa empresa e todos os seus clientes?";
 	}
 
 	@Override

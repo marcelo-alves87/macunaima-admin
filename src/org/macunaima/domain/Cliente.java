@@ -19,7 +19,7 @@ public class Cliente extends Entity {
 		dbObject.put("gender", isGender());
 		if (empresa == null || (empresa != null && empresa.isNew())) {
 			dbObject.put("empresaID", "");
-		} else if(empresa != null && !empresa.isNew()) {
+		} else if (empresa != null && !empresa.isNew()) {
 			dbObject.put("empresaID", empresa.getId());
 		}
 		dbObject.put("digital1", getDigital1());
@@ -29,14 +29,16 @@ public class Cliente extends Entity {
 	@Override
 	public void fromEntity(DBObject dbObject) {
 		super.get(dbObject);
-		setNome((String) dbObject.get("nome"));
-		setEmail((String) dbObject.get("email"));
-		setGender((Boolean) dbObject.get("gender"));
-		Empresa empresa = new Empresa();
-		empresa.setId((String) dbObject.get("empresaID"));
-		setEmpresa(empresa);
-		setDigital1((String) dbObject.get("digital1"));
-		setDigital2((String) dbObject.get("digital2"));
+		if (dbObject != null) {
+			setNome((String) dbObject.get("nome"));
+			setEmail((String) dbObject.get("email"));
+			setGender((Boolean) dbObject.get("gender"));
+			Empresa empresa = new Empresa();
+			empresa.setId((String) dbObject.get("empresaID"));
+			setEmpresa(empresa);
+			setDigital1((String) dbObject.get("digital1"));
+			setDigital2((String) dbObject.get("digital2"));
+		}
 	}
 
 	@Override

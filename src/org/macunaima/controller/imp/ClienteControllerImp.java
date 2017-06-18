@@ -22,7 +22,7 @@ public class ClienteControllerImp extends ControllerImp<Cliente> implements Clie
 	}
 
 	@Override
-	public Vector<Cliente> find(String... search) {
+	public Vector<Cliente> find(String search) {
 		Vector<Cliente> clientes = super.find(search);
 		if (clientes != null) {
 			for (Cliente cliente : clientes) {
@@ -44,6 +44,11 @@ public class ClienteControllerImp extends ControllerImp<Cliente> implements Clie
 		Cliente cliente = super.findById(id);
 		updateEmpresa(cliente);
 		return cliente;
+	}
+
+	@Override
+	protected String getDefaultParameter() {
+		return "nome";
 	}
 
 }

@@ -24,29 +24,19 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 	private static String DEFAULT_DATABASE = "macunaima";
 
 	@Override
-	public Vector<T> find(String... search) {
+	public Vector<T> find(String search) {
 		checkConnection();
-		DBCursor dbCursor = null;
-		DBCollection collection = getDefaultCollection();
-		if (search != null) {
-			BasicDBObject whereQuery = new BasicDBObject();
-			for (String search1 : search) {
-				if (!search1.isEmpty())
-					whereQuery.put("nome", Pattern.compile(".*" + search1 + ".*", Pattern.CASE_INSENSITIVE));
-			}
-			dbCursor = collection.find(whereQuery).sort(new BasicDBObject("dataCadastramento", -1));
-		} else {
-			dbCursor = collection.find().sort(new BasicDBObject("dataCadastramento", -1));
-		}
+		DBCursor dbCursor = findDBCursor(getDefaultCollection(), getDefaultParameter(), search);
 		Vector<T> entities = new Vector<T>();
 		while (dbCursor.hasNext()) {
 			DBObject dbObject = dbCursor.next();
 			T t = convertFromDBObject(dbObject);
 			entities.add(t);
 		}
-
 		return entities;
 	}
+
+	protected abstract String getDefaultParameter();
 
 	protected abstract DBCollection getDefaultCollection();
 
@@ -89,7 +79,11 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 	}
 
 	@Override
-	public Callback delete(T entity) {
+	public Callback delete(Entity entity) {
+		return delete(entity, getDefaultCollection());
+	}
+
+	protected Callback delete(Entity entity, DBCollection collection) {
 		if (entity == null || entity.isNew()) {
 			return new Callback() {
 
@@ -100,15 +94,13 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 			};
 		} else {
 			checkConnection();
-			DBCollection empresasCollection = getDefaultCollection();
 			DBObject dbObject = new BasicDBObject();
 			dbObject.put("_id", new ObjectId(entity.getId()));
-			empresasCollection.findAndRemove(dbObject);
+			collection.findAndRemove(dbObject);
 			return new Callback() {
 
 				@Override
 				public int callBack() {
-					// TODO Auto-generated method stub
 					return 1;
 				}
 			};
@@ -162,5 +154,19 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		checkConnection();
 		DBObject dbObject = getDefaultCollection().findOne(new ObjectId(id));
 		return convertFromDBObject(dbObject);
+	}
+
+	protected DBCursor findDBCursor(DBCollection collection, String parameters, String search) {
+		checkConnection();
+		DBCursor dbCursor = null;
+		if (search != null) {
+			BasicDBObject whereQuery = new BasicDBObject();
+			if (!search.isEmpty())
+				whereQuery.put(parameters, Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE));
+			dbCursor = collection.find(whereQuery).sort(new BasicDBObject("dataCadastramento", -1));
+		} else {
+			dbCursor = collection.find().sort(new BasicDBObject("dataCadastramento", -1));
+		}
+		return dbCursor;
 	}
 }

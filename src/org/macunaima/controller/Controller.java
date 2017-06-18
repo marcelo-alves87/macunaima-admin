@@ -9,12 +9,12 @@ public interface Controller<T extends Entity> {
 
 	Callback persist(T entity);
 
-	Callback delete(T entity);
-
-	Vector<T> find(String... search);
+	Callback delete(Entity entity);
 
 	Vector<T> findAll();
 	
 	T findById(String id);
+
+	Vector<T> find(String search);
 
 }
