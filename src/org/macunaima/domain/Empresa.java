@@ -54,15 +54,6 @@ public class Empresa extends Entity {
 		}
 	}
 
-	public static Empresa newInstance() {
-		return new Empresa();
-	}
-
-	@Override
-	public Entity create() {
-		return new Empresa();
-	}
-
 	@Override
 	public String toString() {
 		return this.nome;

@@ -2,6 +2,7 @@ package org.macunaima.application;
 
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
+import org.macunaima.domain.Filial;
 import org.macunaima.gui.EventListener;
 
 public interface Application {
@@ -24,6 +25,14 @@ public interface Application {
 
 	public static Application getClienteApplication(Cliente cliente) {
 		return new ClienteEditApplication(cliente);
+	}
+
+	public static Application getFiliaisApplication() {
+		return new FiliaisApplication();
+	}
+
+	public static Application getFilialApplication(Filial filial) {
+		return new FilialEditApplication(filial);
 	}
 
 	Display getDisplay();

@@ -14,6 +14,8 @@ public class HomeApplication implements Application {
 		JButton getEmpresasButton();
 		
 		JButton getClientesButton();
+
+		JButton getFiliaisButton();
 	}
 
 	private HomeDisplay display;
@@ -34,6 +36,15 @@ public class HomeApplication implements Application {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				eventListener.goToClientesPanel();
+				
+			}
+		});
+
+		this.display.getFiliaisButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eventListener.goToFiliaisPanel();
 				
 			}
 		});

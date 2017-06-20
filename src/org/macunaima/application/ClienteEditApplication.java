@@ -42,6 +42,9 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 		} else if (cliente.getEmail() == null || cliente.getNome().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um email do cliente");
+		} else if (cliente.getEmpresa() == null || cliente.getEmpresa().getId() == null) {
+			isValid = false;
+			showMessage("Por favor, escolha uma empresa para o cliente");
 		} else if (!isValidEmailAddress(cliente.getEmail())) {
 			isValid = false;
 			showMessage("Por favor, insira um email do cliente válido");
@@ -59,43 +62,43 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 	@Override
 	protected void bind() {
 		super.bind();
-		
+
 		ClienteEditDisplay clienteEditDisplay = (ClienteEditDisplay) getDisplay();
-		
+
 		clienteEditDisplay.getNomeTextField().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				persist();
-				
+
 			}
 		});
-		
+
 		clienteEditDisplay.getEmailTextField().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				persist();
-				
+
 			}
 		});
-		
+
 		clienteEditDisplay.getDigital1PasswordField().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				persist();
 			}
 		});
-		
+
 		clienteEditDisplay.getDigital2PasswordField().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				persist();
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -122,7 +125,6 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 	protected String getErrorDeleteMessage() {
 		return "Não foi possível remover esse cliente";
 	}
-
 
 	private void fetchEmpresas() {
 		Vector<Empresa> empresas = DefaultService.getEmpresaController().findAll();

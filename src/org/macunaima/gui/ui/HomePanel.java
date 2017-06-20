@@ -17,6 +17,7 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 	private static final long serialVersionUID = 1L;
 	private HomeButton empresasButton;
 	private HomeButton clientesButton;
+	private HomeButton filiaisButton;
 
 	public HomePanel() {
 		super();
@@ -27,17 +28,16 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 		empresasButton = new HomeButton("Empresas", "C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\empresa.png");
 		add(empresasButton);
 
-		clientesButton = new HomeButton("Clientes",
-				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\users.png");
+		clientesButton = new HomeButton("Clientes", "C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\users.png");
 		add(clientesButton);
 
 		HomeButton btnNewButton_2 = new HomeButton("Relat\u00F3rios",
 				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\relatorios.png");
 		add(btnNewButton_2);
 
-		HomeButton btnNewButton_3 = new HomeButton("Configurações",
-				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\configuration.png");
-		add(btnNewButton_3);
+		filiaisButton = new HomeButton("Filiais",
+				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\link_company.png");
+		add(filiaisButton);
 	}
 
 	@Override
@@ -53,6 +53,11 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 	@Override
 	public JButton getClientesButton() {
 		return clientesButton;
+	}
+
+	@Override
+	public JButton getFiliaisButton() {
+		return filiaisButton;
 	}
 
 }

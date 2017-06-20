@@ -120,7 +120,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 
 	@Override
 	protected String getConfirmDeleteMessage() {
-		return "Você gostaria de remover essa cliente?";
+		return "Você gostaria de remover esse cliente?";
 	}
 
 	@Override

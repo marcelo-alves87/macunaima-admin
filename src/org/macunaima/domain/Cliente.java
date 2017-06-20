@@ -41,11 +41,6 @@ public class Cliente extends Entity {
 		}
 	}
 
-	@Override
-	public Entity create() {
-		return new Cliente();
-	}
-
 	public String getNome() {
 		return nome;
 	}

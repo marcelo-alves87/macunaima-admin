@@ -54,8 +54,6 @@ public abstract class Entity {
 		}
 	}
 
-	public abstract Entity create();
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

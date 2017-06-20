@@ -1,6 +1,7 @@
 package org.macunaima.controller.imp;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,7 @@ import org.macunaima.controller.Controller;
 import org.macunaima.domain.Callback;
 import org.macunaima.domain.Entity;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -26,7 +28,7 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 	@Override
 	public Vector<T> find(String search) {
 		checkConnection();
-		DBCursor dbCursor = findDBCursor(getDefaultCollection(), getDefaultParameter(), search);
+		DBCursor dbCursor = findDBCursor(getDefaultCollection(), getDefaultParameters(), search);
 		Vector<T> entities = new Vector<T>();
 		while (dbCursor.hasNext()) {
 			DBObject dbObject = dbCursor.next();
@@ -36,12 +38,12 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		return entities;
 	}
 
-	protected abstract String getDefaultParameter();
+	protected abstract String[] getDefaultParameters();
 
 	protected abstract DBCollection getDefaultCollection();
 
 	protected T convertFromDBObject(DBObject dbObject) {
-		Class<T> clazz = getInstance();
+		Class<T> clazz = getClazz();
 		T t = null;
 		try {
 			t = clazz.newInstance();
@@ -142,7 +144,7 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		return db.getCollection(collection);
 	}
 
-	protected abstract Class<T> getInstance();
+	protected abstract Class<T> getClazz();
 
 	protected DBObject findById(String id, String collection) {
 		ObjectId objectId = new ObjectId(id);
@@ -156,13 +158,37 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		return convertFromDBObject(dbObject);
 	}
 
-	protected DBCursor findDBCursor(DBCollection collection, String parameters, String search) {
+	protected DBCursor findDBCursor(DBCollection collection, String parameter, String search) {
+		return findDBCursor(collection, new String[] { parameter }, search);
+	}
+
+	protected DBCursor findDBCursor(DBCollection collection, String[] parameters, String search) {
 		checkConnection();
 		DBCursor dbCursor = null;
-		if (search != null) {
-			BasicDBObject whereQuery = new BasicDBObject();
-			if (!search.isEmpty())
-				whereQuery.put(parameters, Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE));
+		if (search != null && !search.isEmpty()) {
+			BasicDBList basicDBList = new BasicDBList();
+			for (String parameter : parameters) {
+				basicDBList.add(
+						new BasicDBObject(parameter, Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE)));
+			}
+			BasicDBObject whereQuery = new BasicDBObject("$or", basicDBList);
+			dbCursor = collection.find(whereQuery).sort(new BasicDBObject("dataCadastramento", -1));
+		} else {
+			dbCursor = collection.find().sort(new BasicDBObject("dataCadastramento", -1));
+		}
+		return dbCursor;
+	}
+	
+	protected DBCursor findDBCursor(DBCollection collection, String parameter, List<String> search) {
+		checkConnection();
+		DBCursor dbCursor = null;
+		if (search != null && !search.isEmpty()) {
+			BasicDBList basicDBList = new BasicDBList();
+			for (String search1 : search) {
+				basicDBList.add(
+						new BasicDBObject(parameter, Pattern.compile(".*" + search1 + ".*", Pattern.CASE_INSENSITIVE)));
+			}
+			BasicDBObject whereQuery = new BasicDBObject("$or", basicDBList);
 			dbCursor = collection.find(whereQuery).sort(new BasicDBObject("dataCadastramento", -1));
 		} else {
 			dbCursor = collection.find().sort(new BasicDBObject("dataCadastramento", -1));

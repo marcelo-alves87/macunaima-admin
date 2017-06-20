@@ -17,12 +17,15 @@ import org.macunaima.application.Application;
 import org.macunaima.application.TabbedPaneApplication;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
+import org.macunaima.domain.Filial;
 import org.macunaima.gui.ui.ClienteEditTabPanel;
 import org.macunaima.gui.ui.ClienteListTabPanel;
 import org.macunaima.gui.ui.ColunaLaranja;
 import org.macunaima.gui.ui.DefaultTabPanel;
 import org.macunaima.gui.ui.EmpresaEditTabPanel;
 import org.macunaima.gui.ui.EmpresaListTabPanel;
+import org.macunaima.gui.ui.FilialEditTabPanel;
+import org.macunaima.gui.ui.FilialListTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
 
@@ -95,7 +98,7 @@ public class Home extends JFrame {
 			Application clienteApplication = components.get("cliente");
 			addToTabbedPane("Cliente", "cliente", true);
 			tabbedPane.setSelectedComponent(clienteApplication.getDisplay().getContent());
-			
+
 		}
 
 		private void createClientePanel(Cliente cliente) {
@@ -115,7 +118,7 @@ public class Home extends JFrame {
 			}
 			addToTabbedPane("Clientes", "clientes", true);
 			tabbedPane.setSelectedComponent(clientesApplication.getDisplay().getContent());
-			
+
 		}
 
 		private void createClientesPanel() {
@@ -125,7 +128,7 @@ public class Home extends JFrame {
 			clientesApplication.setDisplay(clientesTabPanel);
 			clientesApplication.setEventListener(eventListener);
 			components.put("clientes", clientesApplication);
-			
+
 		}
 
 		@Override
@@ -134,6 +137,55 @@ public class Home extends JFrame {
 			if (clienteApplication != null) {
 				tabbedPane.remove(clienteApplication.getDisplay().getContent());
 				components.remove("cliente");
+			}
+		}
+
+		@Override
+		public void goToEditFilial(Filial filial) {
+			closeEditFilial();
+			createFilialPanel(filial);
+			Application filialApplication = components.get("filial");
+			addToTabbedPane("Filial", "filial", true);
+			tabbedPane.setSelectedComponent(filialApplication.getDisplay().getContent());
+
+		}
+
+		private void createFilialPanel(Filial filial) {
+			Application filialApplication = Application.getFilialApplication(filial);
+			FilialEditTabPanel filialEditTabPanel = new FilialEditTabPanel("Filial");
+			filialApplication.setDisplay(filialEditTabPanel);
+			filialApplication.setEventListener(eventListener);
+			components.put("filial", filialApplication);
+		}
+
+		@Override
+		public void goToFiliaisPanel() {
+			Application filiaisApplication = components.get("filiais");
+			if (filiaisApplication == null) {
+				createFiliaisPanel();
+				filiaisApplication = components.get("filiais");
+			}
+			addToTabbedPane("Filiais", "filiais", true);
+			tabbedPane.setSelectedComponent(filiaisApplication.getDisplay().getContent());
+
+		}
+
+		private void createFiliaisPanel() {
+			Application filiaisApplication = Application.getFiliaisApplication();
+			FilialListTabPanel filiaisTabPanel = new FilialListTabPanel("Filiais", "Nova Filial",
+					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_link_company.png");
+			filiaisApplication.setDisplay(filiaisTabPanel);
+			filiaisApplication.setEventListener(eventListener);
+			components.put("filiais", filiaisApplication);
+
+		}
+
+		@Override
+		public void closeEditFilial() {
+			Application filialApplication = components.get("filial");
+			if (filialApplication != null) {
+				tabbedPane.remove(filialApplication.getDisplay().getContent());
+				components.remove("filial");
 			}
 		}
 

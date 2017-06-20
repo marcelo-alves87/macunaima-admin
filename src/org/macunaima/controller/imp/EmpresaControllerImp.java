@@ -13,7 +13,7 @@ import com.mongodb.DBObject;
 public class EmpresaControllerImp extends ControllerImp<Empresa> implements EmpresaController {
 
 	@Override
-	protected java.lang.Class<Empresa> getInstance() {
+	protected java.lang.Class<Empresa> getClazz() {
 		return Empresa.class;
 	}
 
@@ -51,8 +51,8 @@ public class EmpresaControllerImp extends ControllerImp<Empresa> implements Empr
 	}
 
 	@Override
-	protected String getDefaultParameter() {
-		return "nome";
+	protected String[] getDefaultParameters() {
+		return new String[]{"nome", "descontoCredito", "descontoAVista"};
 	}
 
 }
