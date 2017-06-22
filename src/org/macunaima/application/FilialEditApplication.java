@@ -2,13 +2,10 @@ package org.macunaima.application;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.macunaima.controller.Controller;
-import org.macunaima.domain.Empresa;
 import org.macunaima.domain.Filial;
 import org.macunaima.service.DefaultService;
 

@@ -64,7 +64,15 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 
 	private void fetch() {
 		if (this.entity != null) {
-			this.entity = getController().findById(this.entity.getId());
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						entity = getController().findById(entity.getId());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 	}
 

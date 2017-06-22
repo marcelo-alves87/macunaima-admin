@@ -1,5 +1,6 @@
 package org.macunaima.application;
 
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -127,9 +128,17 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 	}
 
 	private void fetchEmpresas() {
-		Vector<Empresa> empresas = DefaultService.getEmpresaController().findAll();
-		ClienteEditDisplay clienteEditDisplay = (ClienteEditDisplay) getDisplay();
-		clienteEditDisplay.put(empresas);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Vector<Empresa> empresas = DefaultService.getEmpresaController().findAll();
+					ClienteEditDisplay clienteEditDisplay = (ClienteEditDisplay) getDisplay();
+					clienteEditDisplay.put(empresas);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	@Override

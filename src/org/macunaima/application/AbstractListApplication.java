@@ -65,7 +65,7 @@ public abstract class AbstractListApplication<T extends Entity> implements Appli
 
 			}
 		});
-		
+
 		this.listDisplay.getSearch().requestFocus();
 
 		this.listDisplay.getSearchButton().addActionListener(new ActionListener() {
@@ -111,10 +111,18 @@ public abstract class AbstractListApplication<T extends Entity> implements Appli
 	protected abstract Controller<T> getController();
 
 	private void find() {
-		Vector<T> entities = getController().find(this.listDisplay.getSearch().getText());
-		this.listDisplay.put(entities);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Vector<T> entities = getController().find(listDisplay.getSearch().getText());
+					listDisplay.put(entities);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	
+
 	protected ListDisplay<T> getListDisplay() {
 		return this.listDisplay;
 	}
