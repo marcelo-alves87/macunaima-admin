@@ -25,6 +25,10 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 		setBorder(new EmptyBorder(100, 0, 0, 0));
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
+		filiaisButton = new HomeButton("Filiais",
+				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\link_company.png");
+		add(filiaisButton);
+
 		empresasButton = new HomeButton("Empresas", "C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\empresa.png");
 		add(empresasButton);
 
@@ -35,9 +39,6 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\relatorios.png");
 		add(btnNewButton_2);
 
-		filiaisButton = new HomeButton("Filiais",
-				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\link_company.png");
-		add(filiaisButton);
 	}
 
 	@Override
