@@ -4,4 +4,6 @@ import org.macunaima.domain.Cliente;
 
 public interface ClienteController extends Controller<Cliente> {
 
+	Cliente findDigital(String input);
+
 }

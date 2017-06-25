@@ -1,27 +1,22 @@
 package org.macunaima.client.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.EmptyBorder;
 
 import org.macunaima.client.application.Application;
+import org.macunaima.client.gui.event.ActionListener;
+import org.macunaima.client.gui.event.EventBus;
+import org.macunaima.client.gui.ui.AskDialog;
+import org.macunaima.client.gui.ui.ButtonsDialog;
 import org.macunaima.client.gui.ui.Content;
-import org.macunaima.client.gui.ui.EventBus;
-import org.macunaima.client.gui.ui.EventBusImp;
+import org.macunaima.client.gui.ui.MessageDialog;
 
 public class GUI extends JFrame {
 
@@ -31,6 +26,7 @@ public class GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static GraphicsDevice graphicsDevice;
 	private EventBus eventBus;
+	private Application application;
 
 	/**
 	 * Launch the application.
@@ -65,67 +61,112 @@ public class GUI extends JFrame {
 		GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		graphicsDevice = e.getDefaultScreenDevice();
 
-		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
-		this.eventBus = new EventBusImp(this);
+		createEventBus();
 
 		setContentPane(getContent());
-		
 
+	}
+
+	private void createEventBus() {
+		this.eventBus = new EventBus() {
+
+			@Override
+			public void showMessage(String cliente, String empresa, ActionListener actionListener) {
+				showDialog(cliente, empresa, actionListener);
+			}
+
+			@Override
+			public void showMessage(String message) {
+				showDialog(message);
+
+			}
+
+			@Override
+			public void showMessage(String descontoCredito, String descontoAVista,
+					ActionListener descontoCreditoActionListener, ActionListener descontoAVistaActionListener) {
+				showDialog(descontoCredito, descontoAVista, descontoCreditoActionListener,
+						descontoAVistaActionListener);
+
+			}
+		};
 	}
 
 	private Container getContent() {
 		Content content = new Content();
-		Application application = new Application(eventBus);
+		application = new Application(eventBus);
 		application.setDisplay(content);
 		return content;
 	}
 
-	private Container getTeste() {
-		JPanel jPanel = new JPanel();
-		jPanel.setBackground(Color.ORANGE);
-		jPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		jPanel.setLayout(new BorderLayout(0, 0));
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new EmptyBorder(100, 0, 100, 0));
-		panel_1.setBackground(Color.ORANGE);
-		jPanel.add(panel_1, BorderLayout.NORTH);
-		panel_1.setLayout(new BorderLayout(0, 0));
-
-		JLabel lblNewLabel = new JLabel("");
-		panel_1.add(lblNewLabel, BorderLayout.CENTER);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBackground(Color.ORANGE);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon2.png"));
-
-		JPanel panel = new JPanel();
-		panel.setBorder(new EmptyBorder(0, 0, 130, 0));
-		jPanel.add(panel, BorderLayout.SOUTH);
-		panel.setBackground(Color.ORANGE);
-		panel.setLayout(new BorderLayout(0, 0));
-
-		JLabel lblNewLabel_1 = new JLabel("Por favor, insira sua digital");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 45));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_1, BorderLayout.NORTH);
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new EmptyBorder(50, 0, 0, 0));
-		panel_2.setBackground(Color.ORANGE);
-		panel.add(panel_2, BorderLayout.CENTER);
-
-		JPasswordField passwordField = new JPasswordField();
-		panel_2.add(passwordField);
-		passwordField.setColumns(100);
-		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
-		passwordField.setBackground(Color.ORANGE);
-		passwordField.requestFocus();
-		return jPanel;
+	private void showDialog(String cliente, String empresa, ActionListener actionListener) {
+		AskDialog dialog = new AskDialog(this, cliente, empresa, actionListener);
+		dialog.initPane();
+		dialog.setVisible(true);
 	}
 
+	private void showDialog(String descontoCredito, String descontoAVista, ActionListener descontoCreditoActionListener,
+			ActionListener descontoAVistaActionListener) {
+		ButtonsDialog dialog = new ButtonsDialog(this, descontoCredito, descontoAVista, descontoCreditoActionListener,
+				descontoAVistaActionListener);
+		dialog.initPane();
+		dialog.setVisible(true);
+
+	}
+
+	private void showDialog(String message) {
+		MessageDialog dialog = new MessageDialog(this, message);
+		dialog.initPane();
+		dialog.addWindowListener(getDialogListener());
+		dialog.setVisible(true);
+	}
+
+	private WindowListener getDialogListener() {
+		return new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				application.close();
+
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+	}
 }

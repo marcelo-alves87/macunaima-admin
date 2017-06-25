@@ -46,7 +46,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 		panel_13.add(lblNewLabel_2);
 
 		nomeTextField = new JTextField();
-		nomeTextField.setDocument(new JTextFieldLimit(100));
+		nomeTextField.setDocument(new JTextFieldLimit(50));
 		panel_13.add(nomeTextField);
 		nomeTextField.setColumns(40);
 

@@ -8,6 +8,7 @@ public class FiliaisApplication extends AbstractListApplication<Filial> {
 
 	protected Filial convertToFilial(int row) {
 		Filial filial = new Filial();
+		filial.setNome((String) getListDisplay().getJTable().getModel().getValueAt(row, 0));
 		filial.setId((String) getListDisplay().getJTable().getModel().getValueAt(row, 1));
 		return filial;
 	}

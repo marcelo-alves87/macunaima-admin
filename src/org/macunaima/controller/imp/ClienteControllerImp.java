@@ -8,6 +8,8 @@ import org.macunaima.controller.ClienteController;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -80,6 +82,25 @@ public class ClienteControllerImp extends ControllerImp<Cliente> implements Clie
 	@Override
 	protected String[] getDefaultParameters() {
 		return new String[] { "nome" };
+	}
+
+	@Override
+	public Cliente findDigital(String input) {
+		checkConnection();
+
+		BasicDBList basicDBList = new BasicDBList();
+		basicDBList.add(new BasicDBObject("digital1", input));
+		basicDBList.add(new BasicDBObject("digital2", input));
+		BasicDBObject whereQuery = new BasicDBObject("$or", basicDBList);
+
+		DBObject dbObject = getDefaultCollection().findOne(whereQuery);
+		Cliente cliente = null;
+		if (dbObject != null) {
+			cliente = new Cliente();
+			cliente.fromEntity(dbObject);
+			updateEmpresa(cliente);
+		}
+		return cliente;
 	}
 
 }

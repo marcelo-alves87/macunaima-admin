@@ -32,7 +32,7 @@ public class EmpresaEditTabPanel extends AbstractEditTabPanel<Empresa> implement
 		panel_13.add(lblNewLabel_2);
 
 		nomeTextField = new JTextField();
-		nomeTextField.setDocument(new JTextFieldLimit(30));
+		nomeTextField.setDocument(new JTextFieldLimit(50));
 		panel_13.add(nomeTextField);
 		nomeTextField.setColumns(40);
 
