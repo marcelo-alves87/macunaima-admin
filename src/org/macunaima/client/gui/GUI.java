@@ -6,6 +6,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -16,7 +17,9 @@ import org.macunaima.client.gui.event.EventBus;
 import org.macunaima.client.gui.ui.AskDialog;
 import org.macunaima.client.gui.ui.ButtonsDialog;
 import org.macunaima.client.gui.ui.Content;
+import org.macunaima.client.gui.ui.FilialDialog;
 import org.macunaima.client.gui.ui.MessageDialog;
+import org.macunaima.domain.Filial;
 
 public class GUI extends JFrame {
 
@@ -91,6 +94,12 @@ public class GUI extends JFrame {
 						descontoAVistaActionListener);
 
 			}
+
+			@Override
+			public void showMessage(Vector<Filial> filials) {
+				showDialog(filials);
+
+			}
 		};
 	}
 
@@ -118,6 +127,13 @@ public class GUI extends JFrame {
 
 	private void showDialog(String message) {
 		MessageDialog dialog = new MessageDialog(this, message);
+		dialog.initPane();
+		dialog.addWindowListener(getDialogListener());
+		dialog.setVisible(true);
+	}
+
+	protected void showDialog(Vector<Filial> filials) {
+		FilialDialog dialog = new FilialDialog(this, filials);
 		dialog.initPane();
 		dialog.addWindowListener(getDialogListener());
 		dialog.setVisible(true);

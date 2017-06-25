@@ -1,6 +1,7 @@
 package org.macunaima.client.application;
 
 import java.awt.EventQueue;
+import java.util.Vector;
 
 import javax.swing.JPasswordField;
 import javax.swing.event.DocumentEvent;
@@ -9,6 +10,7 @@ import javax.swing.event.DocumentListener;
 import org.macunaima.client.gui.event.ActionListener;
 import org.macunaima.client.gui.event.EventBus;
 import org.macunaima.domain.Cliente;
+import org.macunaima.domain.Filial;
 import org.macunaima.service.DefaultService;
 
 public class Application {
@@ -83,17 +85,28 @@ public class Application {
 			isFetching = true;
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
-					try {
-						Cliente cliente = DefaultService.getClienteController().findDigital(input);
-						openInput(cliente);
-					} catch (Exception e) {
-						close();
+					if (input.equals("1")) {
+						openFiliais();
+					} else {
+						try {
+							Cliente cliente = DefaultService.getClienteController().findDigital(input);
+							openInput(cliente);
+						} catch (Exception e) {
+							close();
+						}
 					}
 				}
 
 			});
 
 		}
+	}
+
+	private void openFiliais() {
+		display.disable();
+		display.showDarkTheme();
+		Vector<Filial> filials = DefaultService.getFilialController().findAll();
+		eventBus.showMessage(filials);
 	}
 
 	private void openInputButtons(Cliente cliente) {
