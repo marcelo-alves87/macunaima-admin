@@ -9,8 +9,10 @@ import javax.swing.event.DocumentListener;
 
 import org.macunaima.client.gui.event.ActionListener;
 import org.macunaima.client.gui.event.EventBus;
+import org.macunaima.domain.Callback;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Filial;
+import org.macunaima.domain.Registro;
 import org.macunaima.service.DefaultService;
 
 public class Application {
@@ -115,14 +117,29 @@ public class Application {
 
 					@Override
 					public void actionPerformed() {
-						showSucessMessage();
+						Registro registro = new Registro();
+						registro.setCliente(cliente);
+						Filial filial = new Filial();
+						filial.setId(Resource.getFilialId());
+						registro.setFilial(filial);
+						Callback callback = DefaultService.getRegistroController().persist(registro);
+						if (callback.callBack() == 1)
+							showSucessMessage();
 
 					}
 				}, new ActionListener() {
 
 					@Override
 					public void actionPerformed() {
-						showSucessMessage();
+						Registro registro = new Registro();
+						registro.setCliente(cliente);
+						Filial filial = new Filial();
+						filial.setId(Resource.getFilialId());
+						registro.setFilial(filial);
+						registro.setDesconto(true);
+						Callback callback = DefaultService.getRegistroController().persist(registro);
+						if (callback.callBack() == 1)
+							showSucessMessage();
 
 					}
 				});
