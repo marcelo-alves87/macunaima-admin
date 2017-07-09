@@ -3,6 +3,7 @@ package org.macunaima.application;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import org.macunaima.controller.Controller;
@@ -14,6 +15,10 @@ public class FilialEditApplication extends AbstractEditApplication<Filial> {
 	public interface FilialEditDisplay extends EditDisplay<Filial> {
 
 		JTextField getNomeTextField();
+
+		JButton getLogoButton();
+
+		void showLogoFileChooser();
 
 	}
 
@@ -28,6 +33,9 @@ public class FilialEditApplication extends AbstractEditApplication<Filial> {
 		if (filial.getNome() == null || filial.getNome().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um nome da filial");
+		} else if (filial.getLogotipo() == null) {
+			isValid = false;
+			showMessage("Por favor, insira um logotipo da filial");
 		}
 		return isValid;
 	}
@@ -36,13 +44,22 @@ public class FilialEditApplication extends AbstractEditApplication<Filial> {
 	protected void bind() {
 		super.bind();
 
-		FilialEditDisplay FilialEditDisplay = (FilialEditDisplay) getDisplay();
+		FilialEditDisplay filialEditDisplay = (FilialEditDisplay) getDisplay();
 
-		FilialEditDisplay.getNomeTextField().addActionListener(new ActionListener() {
+		filialEditDisplay.getNomeTextField().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				persist();
+
+			}
+		});
+
+		filialEditDisplay.getLogoButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				filialEditDisplay.showLogoFileChooser();
 
 			}
 		});

@@ -11,13 +11,13 @@ import org.macunaima.gui.ui.IntegerInputField;
 import org.macunaima.service.DefaultService;
 
 public class EmpresaEditApplication extends AbstractEditApplication<Empresa> {
-	
+
 	public interface EmpresaEditDisplay extends EditDisplay<Empresa> {
-		
+
 		JTextField getNomeTextField();
-		
+
 		IntegerInputField getCreditoTextField();
-		
+
 		IntegerInputField getVistaTextField();
 
 	}
@@ -46,34 +46,35 @@ public class EmpresaEditApplication extends AbstractEditApplication<Empresa> {
 	@Override
 	protected void bind() {
 		super.bind();
-		
+
 		EmpresaEditDisplay empresaEditDisplay = (EmpresaEditDisplay) getDisplay();
-		
+
 		empresaEditDisplay.getNomeTextField().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				persist();
 			}
 		});
-		
+
 		empresaEditDisplay.getNomeTextField().requestFocus();
-		
+
 		empresaEditDisplay.getCreditoTextField().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				persist();
 			}
 		});
-		
+
 		empresaEditDisplay.getVistaTextField().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				persist();
 			}
 		});
+
 	}
 
 	@Override

@@ -53,9 +53,6 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 		bind();
 		fetchFirst();
 		fetch();
-		if (this.entity != null) {
-			this.editDisplay.copyFrom(this.entity);
-		}
 	}
 
 	protected void fetchFirst() {
@@ -68,6 +65,9 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 				public void run() {
 					try {
 						entity = getController().findById(entity.getId());
+						if (entity != null) {
+							editDisplay.copyFrom(entity);
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

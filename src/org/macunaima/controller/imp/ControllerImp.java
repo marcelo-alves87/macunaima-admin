@@ -139,9 +139,13 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 	}
 
 	protected DBCollection getCollection(String collection) {
-		@SuppressWarnings("deprecation")
-		DB db = mongoClient.getDB(DEFAULT_DATABASE);
+		DB db = getDefaultDB();
 		return db.getCollection(collection);
+	}
+	
+	@SuppressWarnings("deprecation")
+	protected DB getDefaultDB() {
+		return mongoClient.getDB(DEFAULT_DATABASE);
 	}
 
 	protected abstract Class<T> getClazz();
