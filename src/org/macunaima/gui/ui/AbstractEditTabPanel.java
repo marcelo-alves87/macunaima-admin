@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -32,10 +33,12 @@ public abstract class AbstractEditTabPanel<T extends Entity> extends JPanel impl
 		JPanel panel_11 = new JPanel();
 		add(panel_11, BorderLayout.NORTH);
 		panel_11.setLayout(new BorderLayout(0, 0));
-
+		
+		JScrollPane scrollPane = new JScrollPane();
 		centerPanel = new JPanel();
+		scrollPane.setViewportView(centerPanel);
 		centerPanel.setBorder(new EmptyBorder(50, 0, 50, 0));
-		panel_11.add(centerPanel, BorderLayout.CENTER);
+		panel_11.add(scrollPane, BorderLayout.CENTER);
 		centerPanel.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_15 = new JPanel();

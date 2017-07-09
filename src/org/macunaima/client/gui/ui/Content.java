@@ -3,6 +3,7 @@ package org.macunaima.client.gui.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.macunaima.client.application.Application.Display;
+import org.macunaima.gui.ui.ImageLabel;
 
 public class Content extends JPanel implements Display {
 
@@ -22,9 +24,10 @@ public class Content extends JPanel implements Display {
 	private static final long serialVersionUID = 1L;
 	private JPasswordField passwordField;
 	private JPanel panel_1;
-	private JLabel lblNewLabel;
+	private ImageLabel lblNewLabel;
 	private JPanel panel_2;
 	private JPanel panel;
+	private String filialNome;
 
 	public Content() {
 		super();
@@ -33,14 +36,14 @@ public class Content extends JPanel implements Display {
 		setLayout(new BorderLayout(0, 0));
 
 		panel_1 = new JPanel();
-		panel_1.setBorder(new EmptyBorder(100, 0, 100, 0));
+		panel_1.setBorder(new EmptyBorder(0, 0, 0, 0));
 		add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 
-		lblNewLabel = new JLabel("");
+		lblNewLabel = new ImageLabel();
 		panel_1.add(lblNewLabel, BorderLayout.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon2.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon-desconto.png"));
 
 		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(0, 0, 130, 0));
@@ -74,13 +77,7 @@ public class Content extends JPanel implements Display {
 	@Override
 	public int showAskMessage(String cliente, String empresa) {
 		return JOptionPane.showInternalConfirmDialog(this, "Você é " + cliente + " da empresa " + empresa + "?",
-				"Macunaíma", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-	}
-
-	@Override
-	public int showOptionMessage(String descontoCredito, String descontoAVista) {
-		// TODO Auto-generated method stub
-		return 0;
+				getFilialNome(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
 
 	@Override
@@ -90,7 +87,7 @@ public class Content extends JPanel implements Display {
 
 	@Override
 	public void showUserNotFoundMessage() {
-		JOptionPane.showInternalMessageDialog(this, "Usuário não encontrado. Por favor, tente novamente", "Macunaíma",
+		JOptionPane.showInternalMessageDialog(this, "Usuário não encontrado. Por favor, tente novamente", getFilialNome(),
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
@@ -126,9 +123,22 @@ public class Content extends JPanel implements Display {
 
 	@Override
 	public void showDarkTheme() {
-		Color color = new Color(170, 132, 0);
-		setBackgroundColor(color);
+		setBackgroundColor(Color.ORANGE.darker());
 
+	}
+
+	@Override
+	public void setLogotipo(File logotipo) {
+		lblNewLabel.setImageFile(logotipo);
+	}
+
+	@Override
+	public void setFilialNome(String nome) {
+		this.filialNome = nome;
+	}
+	
+	private String getFilialNome() {
+		return this.filialNome != null ? this.filialNome : "";
 	}
 
 }

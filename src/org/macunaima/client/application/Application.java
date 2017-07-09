@@ -1,6 +1,7 @@
 package org.macunaima.client.application;
 
 import java.awt.EventQueue;
+import java.io.File;
 import java.util.Vector;
 
 import javax.swing.JPasswordField;
@@ -23,8 +24,6 @@ public class Application {
 
 		int showAskMessage(String cliente, String empresa);
 
-		int showOptionMessage(String descontoCredito, String descontoAVista);
-
 		void clearInput();
 
 		void showUserNotFoundMessage();
@@ -39,6 +38,10 @@ public class Application {
 
 		void showDarkTheme();
 
+		void setLogotipo(File logotipo);
+
+		void setFilialNome(String nome);
+
 	}
 
 	private Display display;
@@ -52,6 +55,20 @@ public class Application {
 	public void setDisplay(Display display) {
 		this.display = display;
 		bind();
+		fetch();
+	}
+
+	private void fetch() {
+		String id = Resource.getFilialId();
+		if (id != null) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					Filial filial = DefaultService.getFilialController().findById(id);
+					display.setLogotipo(filial.getLogotipo());
+					display.setFilialNome(filial.getNome());
+				}
+			});
+		}
 	}
 
 	private void bind() {
@@ -147,7 +164,7 @@ public class Application {
 
 	protected void showSucessMessage() {
 		eventBus.showMessage(
-				"Seu cupom de desconto está disponível no caixa do restaurante.<br>Obrigado por usar nossos serviços.");
+				"Aguarde a impressão do cupom de desconto e apresente no caixa.<br>Obrigado por usar nossos serviços.");
 
 	}
 
