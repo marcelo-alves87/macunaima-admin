@@ -28,6 +28,7 @@ import org.macunaima.gui.ui.FilialEditTabPanel;
 import org.macunaima.gui.ui.FilialListTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
+import org.macunaima.gui.ui.RelatoriosTabPanel;
 
 public class Home extends JFrame {
 
@@ -189,6 +190,26 @@ public class Home extends JFrame {
 			}
 		}
 
+		@Override
+		public void goToRelatoriosPanel() {
+			Application relatoriosApplication = components.get("relatorios");
+			if (relatoriosApplication == null) {
+				createRelatoriosPanel();
+				relatoriosApplication = components.get("relatorios");
+			}
+			addToTabbedPane("Relatórios", "relatorios", true);
+			tabbedPane.setSelectedComponent(relatoriosApplication.getDisplay().getContent());
+		}
+
+		private void createRelatoriosPanel() {
+			Application relatoriosApplication = Application.getRelatoriosApplication();
+			RelatoriosTabPanel relatoriosTabPanel = new RelatoriosTabPanel();
+			relatoriosApplication.setDisplay(relatoriosTabPanel);
+			relatoriosApplication.setEventListener(eventListener);
+			components.put("relatorios", relatoriosApplication);
+			
+		}
+
 	}
 
 	/**
@@ -228,9 +249,9 @@ public class Home extends JFrame {
 	public Home() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		setTitle("Macuna\u00EDma Restaurante e Pizzaria");
+		setTitle("Desconto Fácil");
 		setIconImage(
-				Toolkit.getDefaultToolkit().getImage("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon2.png"));
+				Toolkit.getDefaultToolkit().getImage("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon-desconto.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setBounds(100, 100, 450, 300);

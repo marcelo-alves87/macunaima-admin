@@ -25,4 +25,6 @@ public interface EventListener {
 	void goToEditFilial(Filial filial);
 	
 	void closeEditFilial();
+
+	void goToRelatoriosPanel();
 }

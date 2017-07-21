@@ -16,6 +16,8 @@ public class HomeApplication implements Application {
 		JButton getClientesButton();
 
 		JButton getFiliaisButton();
+
+		JButton getRelatoriosButton();
 	}
 
 	private HomeDisplay display;
@@ -45,6 +47,15 @@ public class HomeApplication implements Application {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				eventListener.goToFiliaisPanel();
+				
+			}
+		});
+
+		this.display.getRelatoriosButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				eventListener.goToRelatoriosPanel();
 				
 			}
 		});

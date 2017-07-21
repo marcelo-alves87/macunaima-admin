@@ -14,7 +14,7 @@ public class Logomarca extends JLabel {
 	public Logomarca() {
 		super("");
 		setHorizontalAlignment(SwingConstants.CENTER);
-		setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\logo.png"));
+		setIcon(new ImageIcon("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon-desconto.png"));
 	}
 
 }

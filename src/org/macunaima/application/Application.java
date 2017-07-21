@@ -34,6 +34,10 @@ public interface Application {
 	public static Application getFilialApplication(Filial filial) {
 		return new FilialEditApplication(filial);
 	}
+	
+	public static Application getRelatoriosApplication() {
+		return new RelatoriosApplication();
+	}
 
 	Display getDisplay();
 
