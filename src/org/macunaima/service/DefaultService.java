@@ -4,16 +4,19 @@ import org.macunaima.controller.ClienteController;
 import org.macunaima.controller.EmpresaController;
 import org.macunaima.controller.FilialController;
 import org.macunaima.controller.RegistroController;
+import org.macunaima.controller.RelatoriosController;
 import org.macunaima.controller.imp.ClienteControllerImp;
 import org.macunaima.controller.imp.EmpresaControllerImp;
 import org.macunaima.controller.imp.FilialControllerImp;
 import org.macunaima.controller.imp.RegistroControllerImp;
+import org.macunaima.controller.imp.RelatoriosControllerImp;
 
 public class DefaultService {
 	private static EmpresaController empresaController;
 	private static ClienteController clienteController;
 	private static FilialController filialController;
 	private static RegistroController registroController;
+	private static RelatoriosController relatoriosController;
 
 	public static EmpresaController getEmpresaController() {
 		if (empresaController == null) {
@@ -41,5 +44,12 @@ public class DefaultService {
 			registroController = new RegistroControllerImp();
 		}
 		return registroController;
+	}
+	
+	public static RelatoriosController getRelatoriosController() {
+		if (relatoriosController == null) {
+			relatoriosController = new RelatoriosControllerImp();
+		}
+		return relatoriosController;
 	}
 }

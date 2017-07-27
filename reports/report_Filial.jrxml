@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcd75c5b-32dc-4605-ba0d-3a119867fd22">
+	<property name="ireport.zoom" value="0.8264462809917359"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="filialID" class="java.lang.String"/>
+	<queryString language="MongoDbQuery">
+		<![CDATA[{
+   runCommand: {
+        aggregate : 'registros',
+        pipeline : [
+                { $match : { filialID : $P{filialID} } },
+      {
+        $group : {
+           _id : '$clienteID', cliente : { $first : '$clienteName'}, filial : { $first: '$filialName' },
+           count: { $sum: 1 }
+        }
+      }
+        ]
+    }
+}]]>
+	</queryString>
+	<field name="_id" class="java.lang.String"/>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="count" class="java.lang.Integer"/>
+	<field name="filial" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="93" backcolor="#006699" uuid="1003dc25-4219-4a00-9299-17e877e4f36f"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="6d7783fd-5a36-4c37-93d8-40a058189957"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCFÁCIL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="357" y="20" width="180" height="20" forecolor="#FFFFFF" uuid="396fa210-1c48-427b-8986-b1064d2f1719"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatório de Filial]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="357" y="40" width="180" height="20" forecolor="#FFFFFF" uuid="13d19b3f-638d-4f6e-8d5d-ae1e1ce5751e"/>
+					<textElement textAlignment="Right">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="357" y="60" width="180" height="20" forecolor="#FFFFFF" uuid="7b2d0fa6-e2f0-4af4-ab6c-662ee0225566"/>
+					<textElement textAlignment="Right">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{filial}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="200" splitType="Stretch">
+			<bar3DChart>
+				<chart>
+					<reportElement x="0" y="47" width="555" height="153" uuid="0f5bbe6f-890a-48e6-89c1-c05b5bcd3824"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{cliente}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{cliente}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{count}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+		</band>
+	</summary>
+</jasperReport>
