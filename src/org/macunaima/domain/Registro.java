@@ -16,6 +16,9 @@ public class Registro extends Entity {
 		dbObject.put("desconto", isDesconto());
 		dbObject.put("filialName", filial.getNome());
 		dbObject.put("clienteName", cliente.getNome());
+		dbObject.put("clienteNomeCompleto", cliente.getNomeCompleto());
+		dbObject.put("empresaName", cliente.getEmpresa().getNome());
+		dbObject.put("clienteUtilizacoes", cliente.getUtilizacoes());
 	}
 
 	@Override

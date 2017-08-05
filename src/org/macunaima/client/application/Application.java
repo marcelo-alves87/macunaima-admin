@@ -10,10 +10,11 @@ import javax.swing.event.DocumentListener;
 
 import org.macunaima.client.gui.event.ActionListener;
 import org.macunaima.client.gui.event.EventBus;
-import org.macunaima.domain.Callback;
+import org.macunaima.client.printer.Printer;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Filial;
 import org.macunaima.domain.Registro;
+import org.macunaima.domain.RegistroCallback;
 import org.macunaima.service.DefaultService;
 
 public class Application {
@@ -134,32 +135,41 @@ public class Application {
 
 					@Override
 					public void actionPerformed() {
-						Registro registro = new Registro();
-						registro.setCliente(cliente);
-						Filial filial = new Filial();
-						filial.setId(Resource.getFilialId());
-						registro.setFilial(filial);
-						Callback callback = DefaultService.getRegistroController().persist(registro);
-						if (callback.callBack() == 1)
-							showSucessMessage();
+						createRegistro(cliente, false);
 
 					}
 				}, new ActionListener() {
 
 					@Override
 					public void actionPerformed() {
-						Registro registro = new Registro();
-						registro.setCliente(cliente);
-						Filial filial = new Filial();
-						filial.setId(Resource.getFilialId());
-						registro.setFilial(filial);
-						registro.setDesconto(true);
-						Callback callback = DefaultService.getRegistroController().persist(registro);
-						if (callback.callBack() == 1)
-							showSucessMessage();
+						createRegistro(cliente, true);
 
 					}
 				});
+	}
+
+	private void createRegistro(Cliente cliente, boolean desconto) {
+		Registro registro = new Registro();
+		DefaultService.getClienteController().incrementarUtilizacoes(cliente);
+		registro.setCliente(cliente);
+		Filial filial = new Filial();
+		filial.setId(Resource.getFilialId());
+		registro.setFilial(filial);
+		registro.setDesconto(desconto);
+		RegistroCallback registroCallback = DefaultService.getRegistroController().persistRegistro(registro);
+		if (registroCallback != null) {
+			showSucessMessage();
+			Printer.print(registroCallback);
+		} else {
+			showErrorMessage();
+		}
+
+	}
+
+	private void showErrorMessage() {
+		eventBus.showMessage(
+				"Desculpe, houve um erro ao registrar seu cupom de desconto. Por favor, procure um funcionário mais próximo.");
+
 	}
 
 	protected void showSucessMessage() {

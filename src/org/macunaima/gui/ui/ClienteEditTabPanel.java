@@ -23,6 +23,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 	private static final long serialVersionUID = 1L;
 
 	private JTextField nomeTextField;
+	private JTextField nomeCompletoTextField;
 	private JTextField emailTextField;
 	private JRadioButton genderMaleRadio;
 	private JRadioButton genderFemaleRadio;
@@ -42,16 +43,27 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 		JPanel panel_13 = new JPanel();
 		north.add(panel_13, BorderLayout.NORTH);
 
-		JLabel lblNewLabel_2 = new JLabel("Nome");
+		JLabel lblNewLabel_2 = new JLabel("Primeiro Nome");
 		panel_13.add(lblNewLabel_2);
 
 		nomeTextField = new JTextField();
 		nomeTextField.setDocument(new JTextFieldLimit(50));
 		panel_13.add(nomeTextField);
 		nomeTextField.setColumns(40);
+		
+		JPanel panel_15 = new JPanel();
+		north.add(panel_15, BorderLayout.CENTER);
+
+		JLabel lblNewLabel_12 = new JLabel("Nome Completo");
+		panel_15.add(lblNewLabel_12);
+
+		nomeCompletoTextField = new JTextField();
+		nomeCompletoTextField.setDocument(new JTextFieldLimit(100));
+		panel_15.add(nomeCompletoTextField);
+		nomeCompletoTextField.setColumns(70);
 
 		JPanel panel_14 = new JPanel();
-		north.add(panel_14, BorderLayout.CENTER);
+		north.add(panel_14, BorderLayout.SOUTH);
 
 		JLabel lblNewLabel_3 = new JLabel("Email");
 		panel_14.add(lblNewLabel_3);
@@ -127,6 +139,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 	public void copyFrom(Cliente entity) {
 		if(entity != null) {
 			nomeTextField.setText(entity.getNome());
+			nomeCompletoTextField.setText(entity.getNomeCompleto());
 			emailTextField.setText(entity.getEmail());
 			genderMaleRadio.setSelected(entity.isGender());
 			genderFemaleRadio.setSelected(!entity.isGender());
@@ -145,6 +158,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 	@Override
 	public void copyTo(Cliente entity) {
 		entity.setNome(nomeTextField.getText());
+		entity.setNomeCompleto(nomeCompletoTextField.getText());
 		entity.setEmail(emailTextField.getText());
 		entity.setGender(genderMaleRadio.isSelected());
 		entity.setEmpresa(getEmprasaSelected());
@@ -185,6 +199,11 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 				empresaComboBox.addItem(empresa);
 			}
 		}
+	}
+
+	@Override
+	public JTextField getNomeCompletoTextField() {
+		return nomeCompletoTextField;
 	}
 
 }

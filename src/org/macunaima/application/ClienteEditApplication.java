@@ -19,6 +19,8 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 
 		JTextField getNomeTextField();
 
+		JTextField getNomeCompletoTextField();
+
 		JTextField getEmailTextField();
 
 		JPasswordField getDigital1PasswordField();
@@ -40,6 +42,9 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 		if (cliente.getNome() == null || cliente.getNome().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um nome do cliente");
+		} else if (cliente.getNomeCompleto() == null || cliente.getNomeCompleto().isEmpty()) {
+			isValid = false;
+			showMessage("Por favor, insira um nome completo do cliente");
 		} else if (cliente.getEmail() == null || cliente.getNome().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um email do cliente");
@@ -67,6 +72,15 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 		ClienteEditDisplay clienteEditDisplay = (ClienteEditDisplay) getDisplay();
 
 		clienteEditDisplay.getNomeTextField().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				persist();
+
+			}
+		});
+
+		clienteEditDisplay.getNomeCompletoTextField().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

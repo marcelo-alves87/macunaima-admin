@@ -6,4 +6,6 @@ public interface ClienteController extends Controller<Cliente> {
 
 	Cliente findDigital(String input);
 
+	void incrementarUtilizacoes(Cliente cliente);
+
 }
