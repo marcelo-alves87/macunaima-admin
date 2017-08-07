@@ -318,6 +318,9 @@ public class PrinterOptions {
 
 			byte1 = -125;
 			put(new Character('â'), byte1);
+			
+			byte1 = -123;
+			put(new Character('ã'), byte1);
 
 			byte1 = -123;
 			put(new Character('à'), byte1);
@@ -355,7 +358,7 @@ public class PrinterOptions {
 			byte1 = -93;
 			put(new Character('Ñ'), byte1);
 
-			byte1 = -91;
+			byte1 = -89;
 			put(new Character('º'), byte1);
 
 			byte1 = -113;
