@@ -20,6 +20,8 @@ public class FilialEditApplication extends AbstractEditApplication<Filial> {
 
 		void showLogoFileChooser();
 
+		JTextField getUnidadeTextField();
+
 	}
 
 	public FilialEditApplication(Filial filial) {
@@ -36,6 +38,9 @@ public class FilialEditApplication extends AbstractEditApplication<Filial> {
 		} else if (filial.getLogotipo() == null) {
 			isValid = false;
 			showMessage("Por favor, insira um logotipo da filial");
+		} else if (filial.getUnidade() == null) {
+			isValid = false;
+			showMessage("Por favor, insira a unidade da filial");
 		}
 		return isValid;
 	}

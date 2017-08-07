@@ -33,7 +33,7 @@ public abstract class AbstractEditTabPanel<T extends Entity> extends JPanel impl
 		JPanel panel_11 = new JPanel();
 		add(panel_11, BorderLayout.NORTH);
 		panel_11.setLayout(new BorderLayout(0, 0));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		centerPanel = new JPanel();
 		scrollPane.setViewportView(centerPanel);
@@ -89,7 +89,7 @@ public abstract class AbstractEditTabPanel<T extends Entity> extends JPanel impl
 	}
 
 	protected abstract String getConfirmDeleteMessage();
-	
+
 	protected JPanel getCenterPanel() {
 		return this.centerPanel;
 	}

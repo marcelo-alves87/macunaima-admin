@@ -9,12 +9,14 @@ public class Filial extends Entity {
 	private String nome;
 	private String logoName;
 	private File logotipo;
+	private String unidade;
 
 	@Override
 	public void to(DBObject dbObject) {
 		super.put(dbObject);
 		dbObject.put("nome", getNome());
 		dbObject.put("logoName", getLogoName());
+		dbObject.put("unidade", getUnidade());
 	}
 
 	@Override
@@ -23,6 +25,7 @@ public class Filial extends Entity {
 		if (dbObject != null) {
 			setNome((String) dbObject.get("nome"));
 			setLogoName((String) dbObject.get("logoName"));
+			setUnidade((String) dbObject.get("unidade"));
 		}
 	}
 
@@ -36,7 +39,7 @@ public class Filial extends Entity {
 
 	@Override
 	public String toString() {
-		return nome;
+		return nome + " - " + unidade;
 	}
 
 	public String getLogoName() {
@@ -53,6 +56,14 @@ public class Filial extends Entity {
 
 	public void setLogotipo(File logotipo) {
 		this.logotipo = logotipo;
+	}
+
+	public String getUnidade() {
+		return unidade;
+	}
+
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
 	}
 
 }

@@ -47,7 +47,7 @@ public class FilialDialog extends CustomDialog {
 			}
 			JScrollPane scrollPane = new JScrollPane();
 			jList = new JList<Filial>(listModel);
-			jList.setFont(new Font("Tahoma", Font.BOLD, 30));
+			jList.setFont(new Font("Tahoma", Font.BOLD, 20));
 			scrollPane.setViewportView(jList);
 			contentPanel.add(scrollPane, BorderLayout.CENTER);
 		}

@@ -23,6 +23,8 @@ public class FilialEditTabPanel extends AbstractEditTabPanel<Filial> implements 
 
 	private JTextField nomeTextField;
 
+	private JTextField unidadeTextField;
+
 	private JButton logoButton;
 
 	private ImageLabel picLabel;
@@ -45,20 +47,31 @@ public class FilialEditTabPanel extends AbstractEditTabPanel<Filial> implements 
 		nomeTextField = new JTextField();
 		nomeTextField.setDocument(new JTextFieldLimit(100));
 		panel_13.add(nomeTextField);
-		nomeTextField.setColumns(40);
+		nomeTextField.setColumns(50);
 
 		JPanel panel_15 = new JPanel();
-		panel_15.setLayout(new BorderLayout(0, 0));
-		centerPanel.add(panel_15, BorderLayout.SOUTH);
+		north.add(panel_15, BorderLayout.CENTER);
+
+		JLabel lblNewLabel_12 = new JLabel("Unidade");
+		panel_15.add(lblNewLabel_12);
+
+		unidadeTextField = new JTextField();
+		unidadeTextField.setDocument(new JTextFieldLimit(50));
+		panel_15.add(unidadeTextField);
+		unidadeTextField.setColumns(40);
+
+		JPanel panel = new JPanel();
+		north.add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_16 = new JPanel();
-		panel_15.add(panel_16, BorderLayout.NORTH);
+		panel.add(panel_16, BorderLayout.NORTH);
 
 		logoButton = new JButton("Novo Logotipo");
 		panel_16.add(logoButton);
 
 		JPanel panel_17 = new JPanel();
-		panel_15.add(panel_17, BorderLayout.SOUTH);
+		panel.add(panel_17);
 
 		picLabel = new ImageLabel();
 		panel_17.add(picLabel);
@@ -75,6 +88,7 @@ public class FilialEditTabPanel extends AbstractEditTabPanel<Filial> implements 
 		if (entity != null) {
 			nomeTextField.setText(entity.getNome());
 			picLabel.setImageFile(entity.getLogotipo());
+			unidadeTextField.setText(entity.getUnidade());
 		}
 
 	}
@@ -83,6 +97,7 @@ public class FilialEditTabPanel extends AbstractEditTabPanel<Filial> implements 
 	public void copyTo(Filial entity) {
 		entity.setNome(nomeTextField.getText());
 		entity.setLogotipo(picLabel.getImageFile());
+		entity.setUnidade(unidadeTextField.getText());
 	}
 
 	@Override
@@ -110,6 +125,11 @@ public class FilialEditTabPanel extends AbstractEditTabPanel<Filial> implements 
 			picLabel.setImageFile(selectedFile);
 		}
 
+	}
+
+	@Override
+	public JTextField getUnidadeTextField() {
+		return unidadeTextField;
 	}
 
 }

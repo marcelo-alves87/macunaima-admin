@@ -48,6 +48,9 @@ public class Printer {
 		p.alignCenter();
 		p.setText(registroCallback.nomeFilial());
 		p.newLine();
+		p.alignCenter();
+		p.setText(registroCallback.unidade());
+		p.newLine();
 		p.newLine();
 		p.addLineSeperator();
 		p.newLine();
@@ -59,6 +62,7 @@ public class Printer {
 		p.addLineSeperator();
 		p.newLine();
 		p.newLine();
+		p.alignLeft();
 		p.setText("Nome\t:" + registroCallback.nomeCliente());
 		p.newLine();
 		p.setText("Empresa\t: " + registroCallback.nomeEmpresa());

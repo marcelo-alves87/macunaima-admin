@@ -97,6 +97,11 @@ public class RegistroControllerImp extends ControllerImp<Registro> implements Re
 					}
 				}
 
+				@Override
+				public String unidade() {
+					return registro.getFilial().getUnidade();
+				}
+
 			};
 		} else {
 			return null;

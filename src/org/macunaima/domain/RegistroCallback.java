@@ -19,4 +19,6 @@ public interface RegistroCallback extends Callback {
 	boolean gender();
 	
 	String desconto();
+	
+	String unidade();
 }
