@@ -75,7 +75,9 @@ public class Printer {
 		p.newLine();
 		p.newLine();
 		p.alignCenter();
-		p.setText("Esse presente cupom de desconto fornece " + formatGender(registroCallback)  + " " + registroCallback.nomeCliente() + " " + registroCallback.desconto() + "% de desconto no valor a ser pago.");
+		p.setText("Esse presente cupom de desconto fornece " + formatGender(registroCallback) + " "
+				+ registroCallback.nomeCliente() + " " + registroCallback.desconto()
+				+ "% de desconto no valor a ser pago " + registroCallback.formaPagamento() + ".");
 		p.newLine();
 		p.newLine();
 		p.addLineSeperator();
@@ -91,6 +93,22 @@ public class Printer {
 		p.newLine();
 		p.newLine();
 		p.newLine();
+		p.addLineSeperator();
+		p.newLine();
+		p.alignCenter();
+		p.setText("Nome do Caixa");
+		p.newLine();
+		p.newLine();
+		p.newLine();
+		p.newLine();
+		p.addLineSeperator();
+		p.newLine();
+		p.alignCenter();
+		p.setText("Fiscal do Caixa");
+		p.newLine();
+		p.newLine();
+		p.newLine();
+		p.newLine();
 		p.feed((byte) 3);
 		p.finit();
 		feedPrinter(p.finalCommandSet().getBytes());
@@ -100,14 +118,14 @@ public class Printer {
 	private static String formatDate(Date date) {
 		String string = "";
 		if (date != null) {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			string = df.format(date);
 		}
 		return string;
 	}
-	
+
 	private static String formatGender(RegistroCallback registroCallback) {
-		if(registroCallback.gender()) {
+		if (registroCallback.gender()) {
 			return "ao Sr";
 		} else {
 			return "a Sra";

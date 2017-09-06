@@ -21,4 +21,7 @@ public interface RegistroCallback extends Callback {
 	String desconto();
 	
 	String unidade();
+
+	String formaPagamento();
+
 }

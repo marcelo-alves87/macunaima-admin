@@ -102,6 +102,15 @@ public class RegistroControllerImp extends ControllerImp<Registro> implements Re
 					return registro.getFilial().getUnidade();
 				}
 
+				@Override
+				public String formaPagamento() {
+					if (!registro.isDesconto()) {
+						return "em cartão de crédito";
+					} else {
+						return "em espécie";
+					}
+				}
+
 			};
 		} else {
 			return null;
