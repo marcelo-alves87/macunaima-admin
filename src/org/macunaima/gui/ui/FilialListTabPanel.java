@@ -19,9 +19,10 @@ public class FilialListTabPanel extends AbstractListTabPanel<Filial> {
 		DefaultTableModel tableModel = (DefaultTableModel) getJTable().getModel();
 		tableModel.setRowCount(0);
 		for (int i = 0; i < Filials.size(); i++) {
-			String[] data = new String[2];
+			String[] data = new String[3];
 			data[0] = Filials.get(i).getNome();
-			data[1] = Filials.get(i).getId();
+			data[1] = Filials.get(i).getUnidade();
+			data[2] = Filials.get(i).getId();
 			tableModel.addRow(data);
 		}
 		getJTable().setModel(tableModel);
@@ -31,13 +32,14 @@ public class FilialListTabPanel extends AbstractListTabPanel<Filial> {
 
 	@Override
 	protected int[] getColumnIdIndex() {
-		return new int[]{1};
+		return new int[]{2};
 	}
 
 	@Override
 	protected Vector<String> getColumns() {
 		Vector<String> columns = new Vector<String>();
 		columns.add("Nome da Filial");
+		columns.add("Unidade");
 		columns.add("ID");
 		return columns;
 	}
