@@ -18,7 +18,14 @@ public class Registro extends Entity {
 		dbObject.put("clienteName", cliente.getNome());
 		dbObject.put("clienteNomeCompleto", cliente.getNomeCompleto());
 		dbObject.put("empresaName", cliente.getEmpresa().getNome());
+		dbObject.put("empresaID", cliente.getEmpresa().getId());
 		dbObject.put("clienteUtilizacoes", cliente.getUtilizacoes());
+		dbObject.put("unidade", filial.getUnidade());
+		if (!isDesconto()) {
+			dbObject.put("valor", cliente.getEmpresa().getDescontoCredito());
+		} else {
+			dbObject.put("valor", cliente.getEmpresa().getDescontoAVista());
+		}
 	}
 
 	@Override

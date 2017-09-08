@@ -78,8 +78,7 @@ public class FilialControllerImp extends ControllerImp<Filial> implements Filial
 		File file = new File("file");
 		try {
 			imageForOutput.writeTo(file);
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 		}
 		filial.setLogotipo(file);
 		return filial;
