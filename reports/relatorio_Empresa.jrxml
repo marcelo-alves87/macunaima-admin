@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_Empresa" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f62cd29d-0f65-4dd2-978a-5ccf6d2cc795">
-	<property name="ireport.zoom" value="3.4522712143931042"/>
-	<property name="ireport.x" value="696"/>
-	<property name="ireport.y" value="277"/>
+	<property name="ireport.zoom" value="2.357947691000003"/>
+	<property name="ireport.x" value="610"/>
+	<property name="ireport.y" value="78"/>
 	<parameter name="empresaID" class="java.lang.String"/>
 	<queryString language="MongoDbQuery">
 		<![CDATA[{
@@ -10,7 +10,7 @@
         aggregate : 'registros',
         pipeline : [
                 { $match : { empresaID : $P{empresaID} } },
-	      { $sort : { clienteID : 1, clienteUtilizacoes : 1 }   }
+	      { $sort : { clienteName : 1, clienteUtilizacoes : 1 }   }
         ]
     }
 }]]>
@@ -205,6 +205,17 @@
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="120" height="20" uuid="d0f42743-3ad2-44f8-8ff9-10e819db9836"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["" + $F{valor} + ( $F{desconto} ?  "% em espécie" : "% em crédito")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
