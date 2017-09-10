@@ -92,6 +92,11 @@ public class RelatoriosApplication implements Application {
 		if (isSelectedRelatorioFilial) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
+					Filial filial = relatoriosDisplay.getFilialSelected();
+					Map<String, Object> parameters = createDefaultParameters();
+					parameters.put("filialID", filial.getId());
+					String file = DefaultService.getRelatoriosController().printRelatorioFilial(parameters);
+					relatoriosDisplay.open(file);
 				}
 			});
 
