@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_Empresa" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f62cd29d-0f65-4dd2-978a-5ccf6d2cc795">
-	<property name="ireport.zoom" value="2.357947691000003"/>
-	<property name="ireport.x" value="610"/>
-	<property name="ireport.y" value="78"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_Empresa" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f62cd29d-0f65-4dd2-978a-5ccf6d2cc795">
+	<property name="ireport.zoom" value="1.6105100000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="empresaID" class="java.lang.String"/>
+	<parameter name="dataInicial" class="java.util.Date"/>
+	<parameter name="dataFinal" class="java.util.Date"/>
 	<queryString language="MongoDbQuery">
 		<![CDATA[{
    runCommand: {
         aggregate : 'registros',
         pipeline : [
-                { $match : { empresaID : $P{empresaID} } },
+                { $match : { empresaID : $P{empresaID}, dataCadastramento : { $gte : $P{dataInicial}, $lt : $P{dataFinal} } } },
 	      { $sort : { clienteName : 1, clienteUtilizacoes : 1 }   }
         ]
     }
@@ -133,25 +135,53 @@
 					<text><![CDATA[Relatório de Empresa]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="426" y="43" width="149" height="20" forecolor="#F0F0F0" uuid="449a1aef-24aa-433f-9396-0ee1e2f2c24f"/>
+					<reportElement x="426" y="20" width="149" height="20" forecolor="#F0F0F0" uuid="449a1aef-24aa-433f-9396-0ee1e2f2c24f"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{empresaName_1}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="312" y="43" width="114" height="20" forecolor="#FFFFFF" uuid="f1fddb2f-be59-4e2f-b2de-a9c5ff7471fa"/>
+					<reportElement x="312" y="20" width="114" height="20" forecolor="#FFFFFF" uuid="f1fddb2f-be59-4e2f-b2de-a9c5ff7471fa"/>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Nome da Empresa: ]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="312" y="40" width="114" height="20" forecolor="#FFFFFF" uuid="ef3e5891-b6d9-4b9a-9898-d4cd428aba95"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data Inicial:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="426" y="40" width="149" height="20" forecolor="#F0F0F0" uuid="e7a33921-bcab-49b1-8d6c-96d413d86676"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{dataInicial}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="312" y="60" width="114" height="20" forecolor="#FFFFFF" uuid="c6698f5e-1e1f-49fd-b710-0770c1071635"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data Final:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="426" y="60" width="149" height="20" forecolor="#F0F0F0" uuid="571bbd28-c489-49c3-949e-e6eb2eabd957"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{dataFinal}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</title>
 	<detail>
 		<band height="20">
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="101" y="0" width="99" height="20" uuid="3d9d5862-cf28-4d7c-8873-dd99a4b0a102"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid"/>
@@ -227,7 +257,7 @@
 			<textField>
 				<reportElement mode="Opaque" x="-20" y="4" width="535" height="13" backcolor="#E6E6E6" uuid="d3cdcfca-fade-4c31-8415-48f6a2d6c13e"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement mode="Opaque" x="515" y="4" width="60" height="13" backcolor="#E6E6E6" uuid="0e84a770-53c0-43d7-9084-ca158eae42f4"/>

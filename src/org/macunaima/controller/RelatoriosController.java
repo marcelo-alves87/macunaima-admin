@@ -4,8 +4,8 @@ import java.util.Map;
 
 public interface RelatoriosController {
 	
-	String printRelatorioFilial(Map<String, String> parameters);
+	String printRelatorioFilial(Map<String, Object> parameters);
 	
-	String printRelatorioFiliais();
+	String printRelatorioEmpresa(Map<String, Object> parameters);
 
 }

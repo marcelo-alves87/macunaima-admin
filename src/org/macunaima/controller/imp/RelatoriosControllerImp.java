@@ -19,11 +19,11 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class RelatoriosControllerImp implements RelatoriosController {
 
 	@Override
-	public String printRelatorioFilial(Map<String, String> parameters) {
+	public String printRelatorioFilial(Map<String, Object> parameters) {
 		return printRelatorio("report_Filial", parameters);
 	}
 
-	private String printRelatorio(String jrxmlName, Map<String, String> parameters) {
+	private String printRelatorio(String jrxmlName, Map<String, Object> parameters) {
 		String report_path = null;
 		String mongoURI = "mongodb://myTester:xyz123@127.0.0.1:27017/macunaima";
 		MongoDbConnection mongConnection = null;
@@ -32,7 +32,7 @@ public class RelatoriosControllerImp implements RelatoriosController {
 			mongConnection = new MongoDbConnection(mongoURI, null, null);
 			reportParameters.put(MongoDbDataSource.CONNECTION, mongConnection);
 			if (parameters != null) {
-				for (Entry<String, String> parameter : parameters.entrySet()) {
+				for (Entry<String, Object> parameter : parameters.entrySet()) {
 					reportParameters.put(parameter.getKey(), parameter.getValue());
 				}
 			}
@@ -54,8 +54,8 @@ public class RelatoriosControllerImp implements RelatoriosController {
 	}
 
 	@Override
-	public String printRelatorioFiliais() {
-		return printRelatorio("report_Filiais", null);
+	public String printRelatorioEmpresa(Map<String, Object> parameters) {
+		return printRelatorio("report_Empresa", parameters);
 	}
 
 }
