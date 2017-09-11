@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -29,6 +30,9 @@ import org.macunaima.gui.ui.FilialListTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
 import org.macunaima.gui.ui.RelatoriosTabPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Color;
 
 public class Home extends JFrame {
 
@@ -220,6 +224,7 @@ public class Home extends JFrame {
 	private Map<String, Application> components;
 	private JTabbedPane tabbedPane;
 	private EventListener eventListener;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -249,7 +254,7 @@ public class Home extends JFrame {
 	public Home() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		setTitle("Desconto Fácil");
+		setTitle("Desconto Fácil - v1.00");
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon-desconto.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -298,7 +303,18 @@ public class Home extends JFrame {
 	}
 
 	private void addNorth() {
-		contentPane.add(new Logomarca(), BorderLayout.NORTH);
+		JPanel jPanel = new JPanel();
+		jPanel.setLayout(new BorderLayout(0, 0));
+		
+		jPanel.add(new Logomarca(), BorderLayout.NORTH);
+		
+		lblNewLabel = new JLabel("Desconto F\u00E1cil");
+		lblNewLabel.setForeground(new Color(153, 50, 204));
+		lblNewLabel.setFont(new Font("Calibri", Font.BOLD, 30));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		jPanel.add(lblNewLabel, BorderLayout.SOUTH);
+
+		contentPane.add(jPanel, BorderLayout.NORTH);
 	}
 
 }
