@@ -49,7 +49,7 @@ public class Home extends JFrame {
 
 		private void createEmpresasPanel() {
 			Application empresasApplication = Application.getEmpresasApplication();
-			EmpresaListTabPanel empresasTabPanel = new EmpresaListTabPanel("Empresas", "Nova Empresa",
+			EmpresaListTabPanel empresasTabPanel = new EmpresaListTabPanel("Nova Empresa",
 					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_empresa_12.png");
 			empresasApplication.setDisplay(empresasTabPanel);
 			empresasApplication.setEventListener(eventListener);
@@ -128,7 +128,7 @@ public class Home extends JFrame {
 
 		private void createClientesPanel() {
 			Application clientesApplication = Application.getClientesApplication();
-			ClienteListTabPanel clientesTabPanel = new ClienteListTabPanel("Clientes", "Novo Cliente",
+			ClienteListTabPanel clientesTabPanel = new ClienteListTabPanel("Novo Cliente",
 					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_cliente.png");
 			clientesApplication.setDisplay(clientesTabPanel);
 			clientesApplication.setEventListener(eventListener);
@@ -177,7 +177,7 @@ public class Home extends JFrame {
 
 		private void createFiliaisPanel() {
 			Application filiaisApplication = Application.getFiliaisApplication();
-			FilialListTabPanel filiaisTabPanel = new FilialListTabPanel("Filiais", "Nova Filial",
+			FilialListTabPanel filiaisTabPanel = new FilialListTabPanel("Nova Filial",
 					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_link_company.png");
 			filiaisApplication.setDisplay(filiaisTabPanel);
 			filiaisApplication.setEventListener(eventListener);

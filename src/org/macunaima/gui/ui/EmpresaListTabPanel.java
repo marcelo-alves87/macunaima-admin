@@ -10,8 +10,8 @@ public class EmpresaListTabPanel extends AbstractListTabPanel<Empresa> {
 
 	private static final long serialVersionUID = 1L;
 
-	public EmpresaListTabPanel(String name, String newEmpresaName, String newEmpresaIconPath) {
-		super(name, newEmpresaName, newEmpresaIconPath);
+	public EmpresaListTabPanel(String newEmpresaName, String newEmpresaIconPath) {
+		super(newEmpresaName, newEmpresaIconPath);
 	}
 
 	@Override

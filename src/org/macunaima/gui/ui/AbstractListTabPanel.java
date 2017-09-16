@@ -1,19 +1,15 @@
 package org.macunaima.gui.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
@@ -32,7 +28,7 @@ public abstract class AbstractListTabPanel<T extends Entity> extends JPanel impl
 	private JTable table;
 	private JButton novaEntityButton;
 
-	public AbstractListTabPanel(String name, String newEmpresaName, String newEmpresaIconPath) {
+	public AbstractListTabPanel(String newEmpresaName, String newEmpresaIconPath) {
 		// headers for the table
 		Vector<String> columns = getColumns();
 
@@ -80,15 +76,6 @@ public abstract class AbstractListTabPanel<T extends Entity> extends JPanel impl
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_9.add(scrollPane);
-
-		JPanel panel_15 = new JPanel();
-		add(panel_15, BorderLayout.NORTH);
-
-		JLabel lblEmpresa = new JLabel(name);
-		lblEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmpresa.setForeground(Color.ORANGE);
-		lblEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		panel_15.add(lblEmpresa);
 
 	}
 

@@ -5,6 +5,7 @@ import org.macunaima.domain.Callback;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
 import org.macunaima.domain.Entity;
+import org.macunaima.domain.Registro;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -27,6 +28,7 @@ public class EmpresaControllerImp extends ControllerImp<Empresa> implements Empr
 		Callback callback = super.delete(entity);
 		if (callback.callBack() == 1) {
 			callback = deleteClientes((Empresa) entity);
+			callback = deleteRegistros((Empresa) entity);
 		}
 		return callback;
 	}
@@ -48,6 +50,25 @@ public class EmpresaControllerImp extends ControllerImp<Empresa> implements Empr
 			}
 		};
 
+	}
+
+	private Callback deleteRegistros(Empresa entity) {
+		DBCollection registrosCollection = getCollection("registros");
+		DBCursor dbCursor = findDBCursor(registrosCollection, "empresaID", entity.getId());
+		while (dbCursor.hasNext()) {
+			DBObject dbObject = dbCursor.next();
+			Registro registro = new Registro();
+			registro.fromEntity(dbObject);
+			delete(registro, registrosCollection);
+		}
+		return new Callback() {
+			
+			@Override
+			public int callBack() {
+				return 1;
+			}
+		};
+		
 	}
 
 	@Override

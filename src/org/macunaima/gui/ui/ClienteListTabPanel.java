@@ -12,8 +12,8 @@ public class ClienteListTabPanel extends AbstractListTabPanel<Cliente> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ClienteListTabPanel(String name, String newEmpresaName, String newEmpresaIconPath) {
-		super(name, newEmpresaName, newEmpresaIconPath);
+	public ClienteListTabPanel(String newEmpresaName, String newEmpresaIconPath) {
+		super(newEmpresaName, newEmpresaIconPath);
 	}
 
 	@Override

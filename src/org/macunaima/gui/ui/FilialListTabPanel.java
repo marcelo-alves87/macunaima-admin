@@ -10,8 +10,8 @@ public class FilialListTabPanel extends AbstractListTabPanel<Filial> {
 
 	private static final long serialVersionUID = 1L;
 
-	public FilialListTabPanel(String name, String newFilialName, String newFilialIconPath) {
-		super(name, newFilialName, newFilialIconPath);
+	public FilialListTabPanel(String newFilialName, String newFilialIconPath) {
+		super(newFilialName, newFilialIconPath);
 	}
 
 	@Override
