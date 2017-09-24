@@ -19,6 +19,7 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 	private HomeButton clientesButton;
 	private HomeButton filiaisButton;
 	private HomeButton relatoriosButton;
+	private HomeButton usuariosButton;
 
 	public HomePanel() {
 		super();
@@ -39,6 +40,10 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 		relatoriosButton = new HomeButton("Relat\u00F3rios",
 				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\relatorios.png");
 		add(relatoriosButton);
+
+		usuariosButton = new HomeButton("Usuários",
+				"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\usuarios.png");
+		add(usuariosButton);
 
 	}
 
@@ -65,6 +70,11 @@ public class HomePanel extends JPanel implements HomeApplication.HomeDisplay {
 	@Override
 	public JButton getRelatoriosButton() {
 		return relatoriosButton;
+	}
+
+	@Override
+	public JButton getUsuariosButton() {
+		return usuariosButton;
 	}
 
 }

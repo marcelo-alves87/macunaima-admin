@@ -1,12 +1,15 @@
 package org.macunaima.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -19,6 +22,7 @@ import org.macunaima.application.TabbedPaneApplication;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
 import org.macunaima.domain.Filial;
+import org.macunaima.domain.Usuario;
 import org.macunaima.gui.ui.ClienteEditTabPanel;
 import org.macunaima.gui.ui.ClienteListTabPanel;
 import org.macunaima.gui.ui.ColunaLaranja;
@@ -30,9 +34,8 @@ import org.macunaima.gui.ui.FilialListTabPanel;
 import org.macunaima.gui.ui.HomePanel;
 import org.macunaima.gui.ui.Logomarca;
 import org.macunaima.gui.ui.RelatoriosTabPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Color;
+import org.macunaima.gui.ui.UsuarioEditTabPanel;
+import org.macunaima.gui.ui.UsuarioListTabPanel;
 
 public class Home extends JFrame {
 
@@ -212,6 +215,54 @@ public class Home extends JFrame {
 			relatoriosApplication.setEventListener(eventListener);
 			components.put("relatorios", relatoriosApplication);
 			
+		}
+
+		@Override
+		public void goToEditUsuario(Usuario usuario) {
+			closeEditUsuario();
+			createUsuarioPanel(usuario);
+			Application usuarioApplication = components.get("usuario");
+			addToTabbedPane("Usuário", "usuario", true);
+			tabbedPane.setSelectedComponent(usuarioApplication.getDisplay().getContent());
+		}
+
+		private void createUsuarioPanel(Usuario usuario) {
+			Application usuarioApplication = Application.getUsuarioApplication(usuario);
+			UsuarioEditTabPanel usuarioEditTabPanel = new UsuarioEditTabPanel("Usuário");
+			usuarioApplication.setDisplay(usuarioEditTabPanel);
+			usuarioApplication.setEventListener(eventListener);
+			components.put("usuario", usuarioApplication);
+		}
+
+		@Override
+		public void closeEditUsuario() {
+			Application usuarioApplication = components.get("usuario");
+			if (usuarioApplication != null) {
+				tabbedPane.remove(usuarioApplication.getDisplay().getContent());
+				components.remove("usuario");
+			}
+			
+		}
+
+		@Override
+		public void goToUsuariosPanel() {
+			Application usuariosApplication = components.get("usuarios");
+			if (usuariosApplication == null) {
+				createUsuariosPanel();
+				usuariosApplication = components.get("usuarios");
+			}
+			addToTabbedPane("Usuários", "usuarios", true);
+			tabbedPane.setSelectedComponent(usuariosApplication.getDisplay().getContent());
+			
+		}
+
+		private void createUsuariosPanel() {
+			Application usuariosApplication = Application.getUsuariosApplication();
+			UsuarioListTabPanel usuariosTabPanel = new UsuarioListTabPanel("Novo Usuário",
+					"C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\new_usuarios.png");
+			usuariosApplication.setDisplay(usuariosTabPanel);
+			usuariosApplication.setEventListener(eventListener);
+			components.put("usuarios", usuariosApplication);
 		}
 
 	}

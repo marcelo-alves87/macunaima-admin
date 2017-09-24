@@ -3,6 +3,7 @@ package org.macunaima.application;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
 import org.macunaima.domain.Filial;
+import org.macunaima.domain.Usuario;
 import org.macunaima.gui.EventListener;
 
 public interface Application {
@@ -37,6 +38,14 @@ public interface Application {
 	
 	public static Application getRelatoriosApplication() {
 		return new RelatoriosApplication();
+	}
+
+	public static Application getUsuarioApplication(Usuario usuario) {
+		return new UsuarioEditApplication(usuario);
+	}
+
+	public static Application getUsuariosApplication() {
+		return new UsuariosApplication();
 	}
 
 	Display getDisplay();
