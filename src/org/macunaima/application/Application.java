@@ -48,10 +48,15 @@ public interface Application {
 		return new UsuariosApplication();
 	}
 
+	public static Application getLoginApplication() {
+		return new LoginApplication();
+	}
+
 	Display getDisplay();
 
 	void setDisplay(Display display);
 
 	void setEventListener(EventListener eventListener);
+
 
 }

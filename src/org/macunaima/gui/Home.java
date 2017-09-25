@@ -36,6 +36,7 @@ import org.macunaima.gui.ui.Logomarca;
 import org.macunaima.gui.ui.RelatoriosTabPanel;
 import org.macunaima.gui.ui.UsuarioEditTabPanel;
 import org.macunaima.gui.ui.UsuarioListTabPanel;
+import org.macunaima.service.DefaultService;
 
 public class Home extends JFrame {
 
@@ -214,7 +215,7 @@ public class Home extends JFrame {
 			relatoriosApplication.setDisplay(relatoriosTabPanel);
 			relatoriosApplication.setEventListener(eventListener);
 			components.put("relatorios", relatoriosApplication);
-			
+
 		}
 
 		@Override
@@ -241,7 +242,7 @@ public class Home extends JFrame {
 				tabbedPane.remove(usuarioApplication.getDisplay().getContent());
 				components.remove("usuario");
 			}
-			
+
 		}
 
 		@Override
@@ -253,7 +254,7 @@ public class Home extends JFrame {
 			}
 			addToTabbedPane("Usuários", "usuarios", true);
 			tabbedPane.setSelectedComponent(usuariosApplication.getDisplay().getContent());
-			
+
 		}
 
 		private void createUsuariosPanel() {
@@ -263,6 +264,15 @@ public class Home extends JFrame {
 			usuariosApplication.setDisplay(usuariosTabPanel);
 			usuariosApplication.setEventListener(eventListener);
 			components.put("usuarios", usuariosApplication);
+		}
+
+		@Override
+		public void createLoginPanel() {
+			Application homeApplication = Application.getLoginApplication();
+			HomePanel homePanel = new HomePanel();
+			homeApplication.setDisplay(homePanel);
+			homeApplication.setEventListener(eventListener);
+			components.put("home", homeApplication);
 		}
 
 	}
@@ -306,8 +316,8 @@ public class Home extends JFrame {
 			UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		setTitle("Desconto Fácil - v1.00");
-		setIconImage(
-				Toolkit.getDefaultToolkit().getImage("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon-desconto.png"));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage("C:\\Users\\Marcelo\\workspace\\macunaima-admin\\img\\icon-desconto.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setBounds(100, 100, 450, 300);
@@ -329,8 +339,20 @@ public class Home extends JFrame {
 	private void addCenter() {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
-		eventListener.createHomePanel();
+		if (DefaultService.hasUsuarioInSession()) {
+			goToHomePanel();
+		} else {
+			goToLoginPanel();
+		}
+	}
 
+	private void goToLoginPanel() {
+		eventListener.createLoginPanel();
+		addToTabbedPane("Login", "login", false);
+	}
+
+	private void goToHomePanel() {
+		eventListener.createHomePanel();
 		addToTabbedPane("Início", "home", false);
 	}
 
@@ -356,9 +378,9 @@ public class Home extends JFrame {
 	private void addNorth() {
 		JPanel jPanel = new JPanel();
 		jPanel.setLayout(new BorderLayout(0, 0));
-		
+
 		jPanel.add(new Logomarca(), BorderLayout.NORTH);
-		
+
 		lblNewLabel = new JLabel("Desconto F\u00E1cil");
 		lblNewLabel.setForeground(new Color(153, 50, 204));
 		lblNewLabel.setFont(new Font("Calibri", Font.BOLD, 30));

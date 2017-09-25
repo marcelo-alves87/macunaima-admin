@@ -35,4 +35,6 @@ public interface EventListener {
 
 	void goToUsuariosPanel();
 
+	void createLoginPanel();
+
 }

@@ -12,6 +12,7 @@ import org.macunaima.controller.imp.FilialControllerImp;
 import org.macunaima.controller.imp.RegistroControllerImp;
 import org.macunaima.controller.imp.RelatoriosControllerImp;
 import org.macunaima.controller.imp.UsuarioControllerImp;
+import org.macunaima.domain.Usuario;
 
 public class DefaultService {
 	private static EmpresaController empresaController;
@@ -20,6 +21,7 @@ public class DefaultService {
 	private static RegistroController registroController;
 	private static RelatoriosController relatoriosController;
 	private static UsuarioController usuarioController;
+	private static Usuario usuarioSession;
 
 	public static EmpresaController getEmpresaController() {
 		if (empresaController == null) {
@@ -61,5 +63,17 @@ public class DefaultService {
 			usuarioController = new UsuarioControllerImp();
 		}
 		return usuarioController;
+	}
+
+	public static Usuario getUsuarioSession() {
+		return usuarioSession;
+	}
+	
+	public static boolean hasUsuarioInSession() {
+		return usuarioSession != null;
+	}
+
+	public static void setUsuarioSession(Usuario usuarioSession) {
+		DefaultService.usuarioSession = usuarioSession;
 	}
 }
