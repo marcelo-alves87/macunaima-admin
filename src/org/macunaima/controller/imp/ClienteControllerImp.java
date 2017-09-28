@@ -106,7 +106,7 @@ public class ClienteControllerImp extends ControllerImp<Cliente> implements Clie
 	@Override
 	public void incrementarUtilizacoes(Cliente cliente) {
 		cliente.setUtilizacoes(cliente.getUtilizacoes() + 1);
-		persist(cliente);
+		persist(cliente, true);
 	}
 
 }

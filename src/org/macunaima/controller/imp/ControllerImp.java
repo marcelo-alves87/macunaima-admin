@@ -59,34 +59,44 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 	}
 
 	@Override
-	public Callback persist(T entity) {
-		checkConnection();
-		DBCollection collection = getDefaultCollection();
-		DBObject dbObject = new BasicDBObject();
-		entity.to(dbObject);
-		if (entity.isNew()) {
-			collection.insert(dbObject);
-		} else {
-			BasicDBObject whereQuery = new BasicDBObject();
-			whereQuery.put("_id", new ObjectId(entity.getId()));
-			collection.update(whereQuery, dbObject);
-		}
-		return new Callback() {
-
-			@Override
-			public int callBack() {
-				return 1;
+	public Callback persist(T entity, boolean isAdministrador) {
+		if (isAdministrador) {
+			checkConnection();
+			DBCollection collection = getDefaultCollection();
+			DBObject dbObject = new BasicDBObject();
+			entity.to(dbObject);
+			if (entity.isNew()) {
+				collection.insert(dbObject);
+			} else {
+				BasicDBObject whereQuery = new BasicDBObject();
+				whereQuery.put("_id", new ObjectId(entity.getId()));
+				collection.update(whereQuery, dbObject);
 			}
-		};
+			return new Callback() {
+
+				@Override
+				public int callBack() {
+					return 1;
+				}
+			};
+		} else {
+			return new Callback() {
+				
+				@Override
+				public int callBack() {
+					return 0;
+				}
+			};
+		}
 	}
 
 	@Override
-	public Callback delete(Entity entity) {
-		return delete(entity, getDefaultCollection());
+	public Callback delete(Entity entity, boolean isAdministrador) {
+		return delete(entity, getDefaultCollection(), isAdministrador);
 	}
 
-	protected Callback delete(Entity entity, DBCollection collection) {
-		if (entity == null || entity.isNew()) {
+	protected Callback delete(Entity entity, DBCollection collection, boolean isAdministrador) {
+		if (entity == null || entity.isNew() || !isAdministrador) {
 			return new Callback() {
 
 				@Override
@@ -142,7 +152,7 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		DB db = getDefaultDB();
 		return db.getCollection(collection);
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	protected DB getDefaultDB() {
 		return mongoClient.getDB(DEFAULT_DATABASE);
@@ -182,7 +192,7 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		}
 		return dbCursor;
 	}
-	
+
 	protected DBCursor findDBCursor(DBCollection collection, String parameter, List<String> search) {
 		checkConnection();
 		DBCursor dbCursor = null;
@@ -199,5 +209,5 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		}
 		return dbCursor;
 	}
-	
+
 }

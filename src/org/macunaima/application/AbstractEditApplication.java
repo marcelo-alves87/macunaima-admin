@@ -10,6 +10,7 @@ import org.macunaima.controller.Controller;
 import org.macunaima.domain.Callback;
 import org.macunaima.domain.Entity;
 import org.macunaima.gui.EventListener;
+import org.macunaima.service.DefaultService;
 
 public abstract class AbstractEditApplication<T extends Entity> implements Application {
 
@@ -144,7 +145,7 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 		if (validate()) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
-					Callback callback = getController().persist(entity);
+					Callback callback = getController().persist(entity, DefaultService.isUsuarioAdministrador());
 					processPersist(callback);
 				}
 			});
@@ -156,9 +157,13 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 		if (callback.callBack() == 1) {
 			this.editDisplay.showMessage(getSucessPersistMessage());
 			close();
+		} else {
+			this.editDisplay.showMessage(getErrorPersistMessage());
 		}
 
 	}
+
+	protected abstract String getErrorPersistMessage();
 
 	protected abstract String getSucessPersistMessage();
 
@@ -166,7 +171,7 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 		T entity = importFromDisplay();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				Callback callback = getController().delete(entity);
+				Callback callback = getController().delete(entity, DefaultService.isUsuarioAdministrador());
 				processDelete(callback);
 			}
 		});

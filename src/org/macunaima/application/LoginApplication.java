@@ -98,6 +98,7 @@ public class LoginApplication implements Application {
 
 	private void processCallBack(UsuarioCallback callback) {
 		if (callback != null && callback.callBack() == 1 && callback.getUsuario() != null) {
+			DefaultService.setUsuarioSession(callback.getUsuario());
 			eventListener.closeLoginPanel();
 			eventListener.goToHomePanel(callback.getUsuario().isAdministrador());
 		} else if (callback != null && callback.callBack() == 1 && callback.getUsuario() == null) {

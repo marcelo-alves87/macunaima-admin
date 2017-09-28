@@ -101,4 +101,9 @@ public class FilialEditApplication extends AbstractEditApplication<Filial> {
 		getEventListener().closeEditFilial();
 	}
 
+	@Override
+	protected String getErrorPersistMessage() {
+		return "Não foi possível salvar ou atualizar essa filial";
+	}
+
 }

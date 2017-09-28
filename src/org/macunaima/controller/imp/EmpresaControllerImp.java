@@ -24,23 +24,23 @@ public class EmpresaControllerImp extends ControllerImp<Empresa> implements Empr
 	}
 
 	@Override
-	public Callback delete(Entity entity) {
-		Callback callback = super.delete(entity);
+	public Callback delete(Entity entity, boolean isAdministrador) {
+		Callback callback = super.delete(entity, isAdministrador);
 		if (callback.callBack() == 1) {
-			callback = deleteClientes((Empresa) entity);
-			callback = deleteRegistros((Empresa) entity);
+			callback = deleteClientes((Empresa) entity, isAdministrador);
+			callback = deleteRegistros((Empresa) entity, isAdministrador);
 		}
 		return callback;
 	}
 
-	private Callback deleteClientes(Empresa entity) {
+	private Callback deleteClientes(Empresa entity, boolean isAdministrador) {
 		DBCollection clientesCollection = getCollection("clientes");
 		DBCursor dbCursor = findDBCursor(clientesCollection, "empresaID", entity.getId());
 		while (dbCursor.hasNext()) {
 			DBObject dbObject = dbCursor.next();
 			Cliente cliente = new Cliente();
 			cliente.fromEntity(dbObject);
-			delete(cliente, clientesCollection);
+			delete(cliente, clientesCollection, isAdministrador);
 		}
 		return new Callback() {
 
@@ -52,14 +52,14 @@ public class EmpresaControllerImp extends ControllerImp<Empresa> implements Empr
 
 	}
 
-	private Callback deleteRegistros(Empresa entity) {
+	private Callback deleteRegistros(Empresa entity, boolean isAdministrador) {
 		DBCollection registrosCollection = getCollection("registros");
 		DBCursor dbCursor = findDBCursor(registrosCollection, "empresaID", entity.getId());
 		while (dbCursor.hasNext()) {
 			DBObject dbObject = dbCursor.next();
 			Registro registro = new Registro();
 			registro.fromEntity(dbObject);
-			delete(registro, registrosCollection);
+			delete(registro, registrosCollection, isAdministrador);
 		}
 		return new Callback() {
 			

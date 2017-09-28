@@ -107,4 +107,9 @@ public class EmpresaEditApplication extends AbstractEditApplication<Empresa> {
 		getEventListener().closeEditEmpresa();
 	}
 
+	@Override
+	protected String getErrorPersistMessage() {
+		return "Não foi possível salvar ou atualizar essa empresa";
+	}
+
 }

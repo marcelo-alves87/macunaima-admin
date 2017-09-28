@@ -76,4 +76,8 @@ public class DefaultService {
 	public static void setUsuarioSession(Usuario usuarioSession) {
 		DefaultService.usuarioSession = usuarioSession;
 	}
+
+	public static boolean isUsuarioAdministrador() {
+		return hasUsuarioInSession() ? usuarioSession.isAdministrador() : false;
+	}
 }

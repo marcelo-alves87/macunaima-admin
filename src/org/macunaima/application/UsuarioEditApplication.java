@@ -97,4 +97,9 @@ public class UsuarioEditApplication extends AbstractEditApplication<Usuario> {
 		getEventListener().closeEditUsuario();
 	}
 
+	@Override
+	protected String getErrorPersistMessage() {
+		return "Não foi possível salvar ou atualizar esse usuário";
+	}
+
 }

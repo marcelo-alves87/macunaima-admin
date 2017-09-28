@@ -32,14 +32,14 @@ public class FilialControllerImp extends ControllerImp<Filial> implements Filial
 	}
 
 	@Override
-	public Callback persist(Filial entity) {
+	public Callback persist(Filial entity, boolean isAdministrador) {
 		checkConnection();
 		if (!entity.isNew()) {
-			deleteLogo(entity);
+			deleteLogo(entity, isAdministrador);
 		}
 		String logoName = persistLogotipo(entity);
 		entity.setLogoName(logoName);
-		return super.persist(entity);
+		return super.persist(entity, isAdministrador);
 	}
 
 	private String persistLogotipo(Filial entity) {
@@ -58,16 +58,18 @@ public class FilialControllerImp extends ControllerImp<Filial> implements Filial
 	}
 
 	@Override
-	public Callback delete(Entity entity) {
-		deleteLogo(entity);
-		return super.delete(entity);
+	public Callback delete(Entity entity, boolean isAdministrador) {
+		deleteLogo(entity, isAdministrador);
+		return super.delete(entity, isAdministrador);
 	}
 
-	private void deleteLogo(Entity entity) {
-		Filial filial = findById(entity.getId());
-		GridFS gfsPhoto = new GridFS(getDefaultDB(), "photo");
-		GridFSDBFile imageForOutput = gfsPhoto.findOne(filial.getLogoName());
-		gfsPhoto.remove(imageForOutput);
+	private void deleteLogo(Entity entity, boolean isAdministrador) {
+		if (isAdministrador) {
+			Filial filial = findById(entity.getId());
+			GridFS gfsPhoto = new GridFS(getDefaultDB(), "photo");
+			GridFSDBFile imageForOutput = gfsPhoto.findOne(filial.getLogoName());
+			gfsPhoto.remove(imageForOutput);
+		}
 	}
 
 	@Override

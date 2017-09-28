@@ -165,4 +165,9 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 		getEventListener().closeEditCliente();
 	}
 
+	@Override
+	protected String getErrorPersistMessage() {
+		return "Não foi possível salvar ou atualizar esse cliente";
+	}
+
 }

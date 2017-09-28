@@ -7,9 +7,9 @@ import org.macunaima.domain.Entity;
 
 public interface Controller<T extends Entity> {
 
-	Callback persist(T entity);
+	Callback persist(T entity, boolean isAdministrador);
 
-	Callback delete(Entity entity);
+	Callback delete(Entity entity, boolean isAdministrador);
 
 	Vector<T> findAll();
 	

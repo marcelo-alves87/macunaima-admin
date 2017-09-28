@@ -29,9 +29,9 @@ public class RegistroControllerImp extends ControllerImp<Registro> implements Re
 	}
 
 	@Override
-	public Callback persist(Registro entity) {
+	public Callback persist(Registro entity, boolean isAdministrador) {
 		updateFilial(entity);
-		return super.persist(entity);
+		return super.persist(entity, true);
 	}
 
 	private void updateFilial(Registro registro) {
@@ -44,7 +44,7 @@ public class RegistroControllerImp extends ControllerImp<Registro> implements Re
 
 	@Override
 	public RegistroCallback persistRegistro(Registro registro) {
-		Callback callback = this.persist(registro);
+		Callback callback = this.persist(registro, true);
 		if (callback.callBack() == 1) {
 			return new RegistroCallback() {
 
@@ -116,5 +116,7 @@ public class RegistroControllerImp extends ControllerImp<Registro> implements Re
 			return null;
 		}
 	}
+	
+	
 
 }
