@@ -47,18 +47,34 @@ public class UsuarioControllerImp extends ControllerImp<Usuario> implements Usua
 			Vector<Usuario> usuarios = find(username);
 
 			if (usuarios != null && !usuarios.isEmpty()) {
-				return new UsuarioCallback() {
+				Usuario usuario = usuarios.get(0);
+				if (usuario.getSenha() != null && usuario.getSenha().equals(password)) {
+					return new UsuarioCallback() {
 
-					@Override
-					public int callBack() {
-						return 1;
-					}
+						@Override
+						public int callBack() {
+							return 1;
+						}
 
-					@Override
-					public Usuario getUsuario() {
-						return usuarios.get(0);
-					}
-				};
+						@Override
+						public Usuario getUsuario() {
+							return usuario;
+						}
+					};
+				} else {
+					return new UsuarioCallback() {
+
+						@Override
+						public int callBack() {
+							return 1;
+						}
+
+						@Override
+						public Usuario getUsuario() {
+							return null;
+						}
+					};
+				}
 			} else {
 				return new UsuarioCallback() {
 

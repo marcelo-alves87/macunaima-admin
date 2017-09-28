@@ -100,6 +100,8 @@ public class LoginApplication implements Application {
 		if (callback != null && callback.callBack() == 1 && callback.getUsuario() != null) {
 			eventListener.closeLoginPanel();
 			eventListener.goToHomePanel(callback.getUsuario().isAdministrador());
+		} else if (callback != null && callback.callBack() == 1 && callback.getUsuario() == null) {
+			display.showMessage("Senha incorreta");
 		} else {
 			display.showMessage("Usuário não encontrado");
 		}
