@@ -32,6 +32,7 @@ import org.macunaima.gui.ui.EmpresaListTabPanel;
 import org.macunaima.gui.ui.FilialEditTabPanel;
 import org.macunaima.gui.ui.FilialListTabPanel;
 import org.macunaima.gui.ui.HomePanel;
+import org.macunaima.gui.ui.LoginPanel;
 import org.macunaima.gui.ui.Logomarca;
 import org.macunaima.gui.ui.RelatoriosTabPanel;
 import org.macunaima.gui.ui.UsuarioEditTabPanel;
@@ -41,15 +42,6 @@ import org.macunaima.service.DefaultService;
 public class Home extends JFrame {
 
 	private class HomeEventListener implements EventListener {
-
-		@Override
-		public void createHomePanel() {
-			Application homeApplication = Application.getHomeApplication();
-			HomePanel homePanel = new HomePanel();
-			homeApplication.setDisplay(homePanel);
-			homeApplication.setEventListener(eventListener);
-			components.put("home", homeApplication);
-		}
 
 		private void createEmpresasPanel() {
 			Application empresasApplication = Application.getEmpresasApplication();
@@ -268,12 +260,48 @@ public class Home extends JFrame {
 
 		@Override
 		public void createLoginPanel() {
-			Application homeApplication = Application.getLoginApplication();
+			Application loginApplication = Application.getLoginApplication();
+			LoginPanel loginPanel = new LoginPanel();
+			loginApplication.setDisplay(loginPanel);
+			loginApplication.setEventListener(eventListener);
+			components.put("login", loginApplication);
+		}
+
+		@Override
+		public void closeLoginPanel() {
+			Application loginApplication = components.get("login");
+			if (loginApplication != null) {
+				tabbedPane.remove(loginApplication.getDisplay().getContent());
+				components.remove("login");
+			}
+		}
+
+		@Override
+		public void goToHomePanel(boolean isAdministrador) {
+			Application homeApplication = components.get("home");
+			if (homeApplication == null) {
+				createHomePanel(isAdministrador);
+				homeApplication = components.get("home");
+			}
+			addToTabbedPane("Início", "home", true);
+			tabbedPane.setSelectedComponent(homeApplication.getDisplay().getContent());
+			
+		}
+		
+		private void createHomePanel(boolean isAdministrador) {
+			Application homeApplication = Application.getHomeApplication();
 			HomePanel homePanel = new HomePanel();
 			homeApplication.setDisplay(homePanel);
 			homeApplication.setEventListener(eventListener);
 			components.put("home", homeApplication);
 		}
+
+		@Override
+		public void goToLoginPanel() {
+			eventListener.createLoginPanel();
+			addToTabbedPane("Login", "login", false);
+		}
+
 
 	}
 
@@ -340,23 +368,22 @@ public class Home extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		if (DefaultService.hasUsuarioInSession()) {
-			goToHomePanel();
+			goToHomePanel(DefaultService.getUsuarioSession().isAdministrador());
 		} else {
 			goToLoginPanel();
 		}
 	}
 
 	private void goToLoginPanel() {
-		eventListener.createLoginPanel();
-		addToTabbedPane("Login", "login", false);
+		eventListener.goToLoginPanel();
 	}
 
-	private void goToHomePanel() {
-		eventListener.createHomePanel();
-		addToTabbedPane("Início", "home", false);
+	private void goToHomePanel(boolean isAdministrador) {
+		eventListener.goToHomePanel(isAdministrador);
 	}
 
 	private void addToTabbedPane(String title, String componentName, boolean withCloseButtton) {
+		
 		tabbedPane.addTab(title, null, components.get(componentName).getDisplay().getContent(), null);
 		int index = tabbedPane.indexOfTab(title);
 

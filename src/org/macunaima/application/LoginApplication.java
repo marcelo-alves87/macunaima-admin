@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import org.macunaima.domain.Callback;
+import org.macunaima.domain.UsuarioCallback;
 import org.macunaima.gui.EventListener;
 import org.macunaima.service.DefaultService;
 
@@ -88,7 +88,7 @@ public class LoginApplication implements Application {
 	private void validateLoginInService() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				Callback callback = DefaultService.getUsuarioController().validateLogin(
+				UsuarioCallback callback = DefaultService.getUsuarioController().validateLogin(
 						display.getLoginTextField().getText(), display.getSenhaPasswordField().getText());
 				processCallBack(callback);
 			}
@@ -96,9 +96,13 @@ public class LoginApplication implements Application {
 
 	}
 
-	private void processCallBack(Callback callback) {
-		//Se 1 e administrar redireciona
-		//Se 1 e n adminstrador
-		// Se 0 show Message
+	private void processCallBack(UsuarioCallback callback) {
+		if (callback != null && callback.callBack() == 1 && callback.getUsuario() != null) {
+			eventListener.closeLoginPanel();
+			eventListener.goToHomePanel(callback.getUsuario().isAdministrador());
+		} else {
+			display.showMessage("Usuário não encontrado");
+		}
+
 	}
 }

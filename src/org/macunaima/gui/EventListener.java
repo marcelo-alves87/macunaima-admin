@@ -7,8 +7,6 @@ import org.macunaima.domain.Usuario;
 
 public interface EventListener {
 
-	void createHomePanel();
-
 	void goToEmpresasPanel();
 
 	void goToEditEmpresa(Empresa empresa);
@@ -36,5 +34,11 @@ public interface EventListener {
 	void goToUsuariosPanel();
 
 	void createLoginPanel();
+
+	void closeLoginPanel();
+
+	void goToHomePanel(boolean administrador);
+
+	void goToLoginPanel();
 
 }

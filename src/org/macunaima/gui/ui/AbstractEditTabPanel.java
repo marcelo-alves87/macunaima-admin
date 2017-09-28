@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 import org.macunaima.application.AbstractEditApplication.EditDisplay;
 import org.macunaima.domain.Entity;
 
-public abstract class AbstractEditTabPanel<T extends Entity> extends JPanel implements EditDisplay<T> {
+public abstract class AbstractEditTabPanel<T extends Entity> extends JScrollPane implements EditDisplay<T> {
 
 	/**
 	 * 
@@ -28,17 +28,20 @@ public abstract class AbstractEditTabPanel<T extends Entity> extends JPanel impl
 
 	public AbstractEditTabPanel(String name) {
 		super();
-		setLayout(new BorderLayout(0, 0));
+		ini(name);
+	}
+
+	private void ini(String name) {
+		JPanel jPanel = new JPanel();
+		jPanel.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_11 = new JPanel();
-		add(panel_11, BorderLayout.NORTH);
+		jPanel.add(panel_11, BorderLayout.NORTH);
 		panel_11.setLayout(new BorderLayout(0, 0));
 
-		JScrollPane scrollPane = new JScrollPane();
 		centerPanel = new JPanel();
-		scrollPane.setViewportView(centerPanel);
 		centerPanel.setBorder(new EmptyBorder(50, 0, 50, 0));
-		panel_11.add(scrollPane, BorderLayout.CENTER);
+		panel_11.add(centerPanel, BorderLayout.CENTER);
 		centerPanel.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_15 = new JPanel();
@@ -58,6 +61,7 @@ public abstract class AbstractEditTabPanel<T extends Entity> extends JPanel impl
 
 		deletarButton = new JButton("Deletar");
 		panel_16.add(deletarButton);
+		setViewportView(jPanel);
 	}
 
 	@Override
