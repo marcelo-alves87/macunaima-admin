@@ -62,18 +62,49 @@ public class EmpresaControllerImp extends ControllerImp<Empresa> implements Empr
 			delete(registro, registrosCollection, isAdministrador);
 		}
 		return new Callback() {
-			
+
 			@Override
 			public int callBack() {
 				return 1;
 			}
 		};
-		
+
 	}
 
 	@Override
 	protected String[] getDefaultParameters() {
-		return new String[]{"nome", "descontoCredito", "descontoAVista"};
+		return new String[] { "nome", "descontoCredito", "descontoAVista" };
+	}
+
+	@Override
+	public Callback persist(Empresa entity, boolean isAdministrador) {
+		Callback callback = super.persist(entity, isAdministrador);
+		if (callback.callBack() == 1) {
+			callback = updateRegistros(entity);
+		}
+		return callback;
+	}
+
+	private Callback updateRegistros(Empresa entity) {
+		DBCollection registrosCollection = getCollection("registros");
+		DBCursor dbCursor = findDBCursor(registrosCollection, "empresaID", entity.getId());
+		while (dbCursor.hasNext()) {
+			DBObject dbObject = dbCursor.next();
+			Registro registro = new Registro();
+			registro.fromEntity(dbObject);
+			if (registro.getCliente() != null) {
+				registro.getCliente().setEmpresa(entity);
+			}
+			persist(registro, registrosCollection, true);
+		}
+		return new Callback() {
+
+			@Override
+			public int callBack() {
+				return 1;
+			}
+		};
+
 	}
 
 }

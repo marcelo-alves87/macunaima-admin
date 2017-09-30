@@ -58,11 +58,9 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 		return t;
 	}
 
-	@Override
-	public Callback persist(T entity, boolean isAdministrador) {
+	protected Callback persist(Entity entity, DBCollection collection, boolean isAdministrador) {
 		if (isAdministrador) {
 			checkConnection();
-			DBCollection collection = getDefaultCollection();
 			DBObject dbObject = new BasicDBObject();
 			entity.to(dbObject);
 			if (entity.isNew()) {
@@ -81,13 +79,18 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 			};
 		} else {
 			return new Callback() {
-				
+
 				@Override
 				public int callBack() {
 					return 0;
 				}
 			};
 		}
+	}
+
+	@Override
+	public Callback persist(T entity, boolean isAdministrador) {
+		return persist(entity, getDefaultCollection(), isAdministrador);
 	}
 
 	@Override
