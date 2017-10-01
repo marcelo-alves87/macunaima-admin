@@ -113,7 +113,7 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 
 	}
 
-	protected abstract boolean validate();
+	protected abstract boolean validate(T entity);
 
 	protected T importFromDisplay() {
 		Class<T> clazz = getInstance();
@@ -142,7 +142,7 @@ public abstract class AbstractEditApplication<T extends Entity> implements Appli
 
 	protected void persist() {
 		T entity = importFromDisplay();
-		if (validate()) {
+		if (validate(entity)) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					Callback callback = getController().persist(entity, DefaultService.isUsuarioAdministrador());

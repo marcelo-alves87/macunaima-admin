@@ -29,9 +29,8 @@ public class FilialEditApplication extends AbstractEditApplication<Filial> {
 	}
 
 	@Override
-	protected boolean validate() {
+	protected boolean validate(Filial filial) {
 		boolean isValid = true;
-		Filial filial = importFromDisplay();
 		if (filial.getNome() == null || filial.getNome().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um nome da filial");

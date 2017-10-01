@@ -1,10 +1,12 @@
 package org.macunaima.gui.ui;
 
 import java.awt.BorderLayout;
+import java.text.ParseException;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -30,6 +32,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 	private JComboBox<Empresa> empresaComboBox;
 	private JPasswordField digital1TextField;
 	private JPasswordField digital2TextField;
+	private JTextField dataNascimentoTextField;
 
 	public ClienteEditTabPanel(String name) {
 		super(name);
@@ -50,7 +53,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 		nomeTextField.setDocument(new JTextFieldLimit(50));
 		panel_13.add(nomeTextField);
 		nomeTextField.setColumns(40);
-		
+
 		JPanel panel_15 = new JPanel();
 		north.add(panel_15, BorderLayout.CENTER);
 
@@ -62,23 +65,22 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 		panel_15.add(nomeCompletoTextField);
 		nomeCompletoTextField.setColumns(70);
 
-		JPanel panel_14 = new JPanel();
-		north.add(panel_14, BorderLayout.SOUTH);
+		JPanel panel_4 = new JPanel();
+		north.add(panel_4, BorderLayout.SOUTH);
 
-		JLabel lblNewLabel_3 = new JLabel("Email");
-		panel_14.add(lblNewLabel_3);
+		JLabel lblDataDeNascimento = new JLabel("Data de Nascimento");
+		panel_4.add(lblDataDeNascimento);
 
-		emailTextField = new JTextField();
-		emailTextField.setDocument(new JTextFieldLimit(100));
-		panel_14.add(emailTextField);
-		emailTextField.setColumns(40);
+		dataNascimentoTextField = new JFormattedTextField(DateFormat.getDefaultFormat());
+		dataNascimentoTextField.setColumns(20);
+		panel_4.add(dataNascimentoTextField);
 
 		JPanel center = new JPanel();
 		centerPanel.add(center, BorderLayout.CENTER);
 		center.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		center.add(panel, BorderLayout.NORTH);
+		center.add(panel, BorderLayout.CENTER);
 
 		JLabel lblNewLabel = new JLabel("Sexo");
 		panel.add(lblNewLabel);
@@ -103,6 +105,17 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 
 		empresaComboBox = new JComboBox<Empresa>();
 		panel_1.add(empresaComboBox);
+
+		JPanel panel_14 = new JPanel();
+		center.add(panel_14, BorderLayout.NORTH);
+
+		JLabel lblNewLabel_3 = new JLabel("Email");
+		panel_14.add(lblNewLabel_3);
+
+		emailTextField = new JTextField();
+		emailTextField.setDocument(new JTextFieldLimit(100));
+		panel_14.add(emailTextField);
+		emailTextField.setColumns(40);
 
 		JPanel south = new JPanel();
 		getCenterPanel().add(south, BorderLayout.SOUTH);
@@ -137,7 +150,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 
 	@Override
 	public void copyFrom(Cliente entity) {
-		if(entity != null) {
+		if (entity != null) {
 			nomeTextField.setText(entity.getNome());
 			nomeCompletoTextField.setText(entity.getNomeCompleto());
 			emailTextField.setText(entity.getEmail());
@@ -146,13 +159,14 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 			setEmpresaSelected(entity.getEmpresa());
 			digital1TextField.setText(entity.getDigital1());
 			digital2TextField.setText(entity.getDigital2());
+			dataNascimentoTextField.setText(DateFormat.format(entity.getDataNascimento()));
 		}
 
 	}
 
 	private void setEmpresaSelected(Empresa empresa) {
 		empresaComboBox.setSelectedItem(empresa);
-		
+
 	}
 
 	@Override
@@ -164,7 +178,11 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 		entity.setEmpresa(getEmprasaSelected());
 		entity.setDigital1(digital1TextField.getText());
 		entity.setDigital2(digital2TextField.getText());
-
+		try {
+			entity.setDataNascimento(DateFormat.parse(dataNascimentoTextField.getText()));
+		} catch (ParseException e) {
+			showMessage("Data de nascimento inválida");
+		}
 	}
 
 	private Empresa getEmprasaSelected() {
@@ -194,7 +212,7 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 	@Override
 	public void put(Vector<Empresa> empresas) {
 		empresaComboBox.removeAll();
-		if(empresas != null) {
+		if (empresas != null) {
 			for (Empresa empresa : empresas) {
 				empresaComboBox.addItem(empresa);
 			}
@@ -204,6 +222,11 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 	@Override
 	public JTextField getNomeCompletoTextField() {
 		return nomeCompletoTextField;
+	}
+
+	@Override
+	public JTextField getDataNascimentoTextField() {
+		return dataNascimentoTextField;
 	}
 
 }

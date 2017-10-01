@@ -28,9 +28,8 @@ public class UsuarioEditApplication extends AbstractEditApplication<Usuario> {
 	}
 
 	@Override
-	protected boolean validate() {
+	protected boolean validate(Usuario usuario) {
 		boolean isValid = true;
-		Usuario usuario = importFromDisplay();
 		if (usuario.getLogin() == null || usuario.getLogin().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um login do usuário");

@@ -166,7 +166,7 @@ public class JDateTextField extends JTextField {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		int startYear = 1980;
+		int startYear = 1900;
 		int lastYear = 2050;
 
 		Color backGroundColor = Color.gray;

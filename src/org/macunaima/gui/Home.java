@@ -283,7 +283,7 @@ public class Home extends JFrame {
 				createHomePanel(isAdministrador);
 				homeApplication = components.get("home");
 			}
-			addToTabbedPane("Início", "home", true);
+			addToTabbedPane("Início", "home", false);
 			tabbedPane.setSelectedComponent(homeApplication.getDisplay().getContent());
 			
 		}

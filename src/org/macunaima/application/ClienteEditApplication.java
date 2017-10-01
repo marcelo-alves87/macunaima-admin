@@ -29,6 +29,7 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 
 		void put(Vector<Empresa> empresas);
 
+		JTextField getDataNascimentoTextField();
 	}
 
 	public ClienteEditApplication(Cliente cliente) {
@@ -36,24 +37,26 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 	}
 
 	@Override
-	protected boolean validate() {
+	protected boolean validate(Cliente cliente) {
 		boolean isValid = true;
-		Cliente cliente = importFromDisplay();
 		if (cliente.getNome() == null || cliente.getNome().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um nome do cliente");
 		} else if (cliente.getNomeCompleto() == null || cliente.getNomeCompleto().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um nome completo do cliente");
-		} else if (cliente.getEmail() == null || cliente.getNome().isEmpty()) {
+		} else if (cliente.getDataNascimento() == null) {
+			isValid = false;
+			showMessage("Por favor, insira uma data de nascimento do cliente");
+		} else if (cliente.getEmail() == null || cliente.getEmail().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um email do cliente");
-		} else if (cliente.getEmpresa() == null || cliente.getEmpresa().getId() == null) {
-			isValid = false;
-			showMessage("Por favor, escolha uma empresa para o cliente");
 		} else if (!isValidEmailAddress(cliente.getEmail())) {
 			isValid = false;
 			showMessage("Por favor, insira um email do cliente válido");
+		} else if (cliente.getEmpresa() == null || cliente.getEmpresa().getId() == null) {
+			isValid = false;
+			showMessage("Por favor, escolha uma empresa para o cliente");
 		}
 		return isValid;
 	}

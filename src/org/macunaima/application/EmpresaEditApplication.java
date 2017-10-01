@@ -27,9 +27,8 @@ public class EmpresaEditApplication extends AbstractEditApplication<Empresa> {
 	}
 
 	@Override
-	protected boolean validate() {
+	protected boolean validate(Empresa empresa) {
 		boolean isValid = true;
-		Empresa empresa = importFromDisplay();
 		if (empresa.getNome() == null || empresa.getNome().isEmpty()) {
 			isValid = false;
 			showMessage("Por favor, insira um nome da empresa");

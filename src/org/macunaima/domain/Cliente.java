@@ -1,5 +1,7 @@
 package org.macunaima.domain;
 
+import java.util.Date;
+
 import com.mongodb.DBObject;
 
 public class Cliente extends Entity {
@@ -12,6 +14,7 @@ public class Cliente extends Entity {
 	private String digital1;
 	private String digital2;
 	private int utilizacoes;
+	private Date dataNascimento;
 
 	@Override
 	public void to(DBObject dbObject) {
@@ -28,6 +31,7 @@ public class Cliente extends Entity {
 		dbObject.put("digital1", getDigital1());
 		dbObject.put("digital2", getDigital2());
 		dbObject.put("utilizacoes", getUtilizacoes());
+		dbObject.put("dataNascimento", getDataNascimento());
 	}
 
 	@Override
@@ -43,11 +47,12 @@ public class Cliente extends Entity {
 			setEmpresa(empresa);
 			setDigital1((String) dbObject.get("digital1"));
 			setDigital2((String) dbObject.get("digital2"));
-			if(dbObject.get("utilizacoes") != null) {
+			if (dbObject.get("utilizacoes") != null) {
 				setUtilizacoes((int) dbObject.get("utilizacoes"));
 			} else {
 				setUtilizacoes(0);
 			}
+			setDataNascimento((Date) dbObject.get("dataNascimento"));
 		}
 	}
 
@@ -66,7 +71,6 @@ public class Cliente extends Entity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 
 	public boolean isGender() {
 		return gender;
@@ -114,6 +118,14 @@ public class Cliente extends Entity {
 
 	public void setUtilizacoes(int utilizacoes) {
 		this.utilizacoes = utilizacoes;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 }
