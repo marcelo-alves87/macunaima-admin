@@ -8,4 +8,6 @@ public interface ClienteController extends Controller<Cliente> {
 
 	void incrementarUtilizacoes(Cliente cliente);
 
+	Cliente findCodigoLocalizador(String codigoLocalizador);
+
 }

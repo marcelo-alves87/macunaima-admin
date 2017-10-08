@@ -12,13 +12,17 @@ import javax.swing.JFrame;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.macunaima.client.application.Application;
+import org.macunaima.client.application.LocalizacaoApplication;
+import org.macunaima.client.application.ValidacaoClienteApplication;
 import org.macunaima.client.gui.event.ActionListener;
 import org.macunaima.client.gui.event.EventBus;
 import org.macunaima.client.gui.ui.AskDialog;
 import org.macunaima.client.gui.ui.ButtonsDialog;
 import org.macunaima.client.gui.ui.Content;
 import org.macunaima.client.gui.ui.FilialDialog;
+import org.macunaima.client.gui.ui.LocalizacaoDialog;
 import org.macunaima.client.gui.ui.MessageDialog;
+import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Filial;
 
 public class GUI extends JFrame {
@@ -96,11 +100,42 @@ public class GUI extends JFrame {
 			}
 
 			@Override
-			public void showMessage(Vector<Filial> filials) {
-				showDialog(filials);
+			public void openFiliaisDialog(Vector<Filial> filials) {
+				openFilialDialog(filials);
+			}
+
+			@Override
+			public void openDialogPrimeiroAcesso(LocalizacaoApplication localizacaoApplication) {
+				openPrimeiroAcessoDialog(localizacaoApplication);
 
 			}
+
+			@Override
+			public void showCadastrarDigital1DialogBox(Cliente cliente, ActionListener actionListener) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void showCadastrarDigital2DialogBox(Cliente cliente, ActionListener actionListener) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void openValidarClienteDialogBox(Cliente cliente, ValidacaoClienteApplication application) {
+				// TODO Auto-generated method stub
+
+			}
+
 		};
+	}
+
+	protected void openPrimeiroAcessoDialog(LocalizacaoApplication localizacaoApplication) {
+		LocalizacaoDialog localizacaoDialog = new LocalizacaoDialog(this, localizacaoApplication);
+		localizacaoDialog.initPane();
+		localizacaoDialog.setVisible(true);
+
 	}
 
 	private Container getContent() {
@@ -132,10 +167,9 @@ public class GUI extends JFrame {
 		dialog.setVisible(true);
 	}
 
-	protected void showDialog(Vector<Filial> filials) {
+	protected void openFilialDialog(Vector<Filial> filials) {
 		FilialDialog dialog = new FilialDialog(this, filials);
 		dialog.initPane();
-		dialog.addWindowListener(getDialogListener());
 		dialog.setVisible(true);
 	}
 

@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -12,10 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
 
 import org.macunaima.application.ClienteEditApplication.ClienteEditDisplay;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Empresa;
+import org.macunaima.service.DefaultService;
 
 public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implements ClienteEditDisplay {
 
@@ -33,6 +36,11 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 	private JPasswordField digital1TextField;
 	private JPasswordField digital2TextField;
 	private JTextField dataNascimentoTextField;
+	private JTextField codigoLocalizadorTextField;
+
+	private JPanel codigoLocalizadorPanel;
+
+	private JButton gerarCodigoButton;
 
 	public ClienteEditTabPanel(String name) {
 		super(name);
@@ -141,6 +149,21 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 		panel_3.add(digital2TextField);
 		digital2TextField.setColumns(40);
 
+		codigoLocalizadorPanel = new JPanel();
+		south.add(codigoLocalizadorPanel, BorderLayout.SOUTH);
+
+		JLabel lblNewLabel_6 = new JLabel("Código Localizador");
+		codigoLocalizadorPanel.add(lblNewLabel_6);
+
+		codigoLocalizadorTextField = new JTextField();
+		codigoLocalizadorTextField.setDocument(new JTextFieldLimit(100));
+		((AbstractDocument) codigoLocalizadorTextField.getDocument()).setDocumentFilter(new UppercaseDocumentFilter());
+		codigoLocalizadorPanel.add(codigoLocalizadorTextField);
+		codigoLocalizadorTextField.setColumns(40);
+
+		gerarCodigoButton = new JButton("Gerar Código");
+		codigoLocalizadorPanel.add(gerarCodigoButton);
+
 	}
 
 	@Override
@@ -160,6 +183,8 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 			digital1TextField.setText(entity.getDigital1());
 			digital2TextField.setText(entity.getDigital2());
 			dataNascimentoTextField.setText(DateFormat.format(entity.getDataNascimento()));
+			codigoLocalizadorTextField.setText(entity.getCodigoLocalizador());
+			codigoLocalizadorPanel.setVisible(DefaultService.isUsuarioAdministrador());
 		}
 
 	}
@@ -182,6 +207,11 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 			entity.setDataNascimento(DateFormat.parse(dataNascimentoTextField.getText()));
 		} catch (ParseException e) {
 			showMessage("Data de nascimento inválida");
+		}
+		if (codigoLocalizadorTextField.getText().length() >= 5) {
+			entity.setCodigoLocalizador(codigoLocalizadorTextField.getText().substring(0, 5));
+		} else {
+			entity.setCodigoLocalizador(codigoLocalizadorTextField.getText());
 		}
 	}
 
@@ -227,6 +257,16 @@ public class ClienteEditTabPanel extends AbstractEditTabPanel<Cliente> implement
 	@Override
 	public JTextField getDataNascimentoTextField() {
 		return dataNascimentoTextField;
+	}
+
+	@Override
+	public JButton getGerarCodigoLocalizadorButton() {
+		return gerarCodigoButton;
+	}
+
+	@Override
+	public JTextField getCodigoLocalizadorTextField() {
+		return codigoLocalizadorTextField;
 	}
 
 }

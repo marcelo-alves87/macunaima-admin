@@ -3,8 +3,10 @@ package org.macunaima.application;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -30,7 +32,14 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 		void put(Vector<Empresa> empresas);
 
 		JTextField getDataNascimentoTextField();
+
+		JButton getGerarCodigoLocalizadorButton();
+
+		JTextField getCodigoLocalizadorTextField();
 	}
+
+	private static char[] chars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Q', 'W', 'E', 'R', 'T', 'Z', 'U',
+			'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Y', 'X', 'C', 'V', 'B', 'N', 'M' };
 
 	public ClienteEditApplication(Cliente cliente) {
 		super(cliente);
@@ -116,6 +125,14 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 				persist();
 			}
 		});
+		clienteEditDisplay.getGerarCodigoLocalizadorButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clienteEditDisplay.getCodigoLocalizadorTextField().setText(getRandomString());
+
+			}
+		});
 
 	}
 
@@ -171,6 +188,16 @@ public class ClienteEditApplication extends AbstractEditApplication<Cliente> {
 	@Override
 	protected String getErrorPersistMessage() {
 		return "Não foi possível salvar ou atualizar esse cliente";
+	}
+
+	protected String getRandomString() {
+		StringBuilder stringBuilder = new StringBuilder();
+
+		for (int i = 0; i < 5; i++) {
+			stringBuilder.append(chars[new Random().nextInt(chars.length)]);
+		}
+		return stringBuilder.toString();
+
 	}
 
 }

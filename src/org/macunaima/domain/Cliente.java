@@ -15,6 +15,7 @@ public class Cliente extends Entity {
 	private String digital2;
 	private int utilizacoes;
 	private Date dataNascimento;
+	private String codigoLocalizador;
 
 	@Override
 	public void to(DBObject dbObject) {
@@ -32,6 +33,7 @@ public class Cliente extends Entity {
 		dbObject.put("digital2", getDigital2());
 		dbObject.put("utilizacoes", getUtilizacoes());
 		dbObject.put("dataNascimento", getDataNascimento());
+		dbObject.put("codigoLocalizador", getCodigoLocalizador());
 	}
 
 	@Override
@@ -53,6 +55,7 @@ public class Cliente extends Entity {
 				setUtilizacoes(0);
 			}
 			setDataNascimento((Date) dbObject.get("dataNascimento"));
+			setCodigoLocalizador((String) dbObject.get("codigoLocalizador"));
 		}
 	}
 
@@ -126,6 +129,14 @@ public class Cliente extends Entity {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	public String getCodigoLocalizador() {
+		return codigoLocalizador;
+	}
+
+	public void setCodigoLocalizador(String codigoLocalizador) {
+		this.codigoLocalizador = codigoLocalizador;
 	}
 
 }

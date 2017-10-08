@@ -2,6 +2,7 @@ package org.macunaima.client.gui.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.io.File;
 
@@ -28,6 +29,7 @@ public class Content extends JPanel implements Display {
 	private JPanel panel_2;
 	private JPanel panel;
 	private String filialNome;
+	private JLabel lblNewLabel_2;
 
 	public Content() {
 		super();
@@ -64,7 +66,13 @@ public class Content extends JPanel implements Display {
 		panel_2.add(passwordField);
 		passwordField.setColumns(100);
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
-		passwordField.requestFocus();
+
+		lblNewLabel_2 = new JLabel("<HTML><U>Primeiro Acesso</U></HTML>");
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Calibri", Font.BOLD, 20));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel.add(lblNewLabel_2, BorderLayout.SOUTH);
 
 		showDefaultTheme();
 	}
@@ -87,8 +95,8 @@ public class Content extends JPanel implements Display {
 
 	@Override
 	public void showUserNotFoundMessage() {
-		JOptionPane.showInternalMessageDialog(this, "Usuário não encontrado. Por favor, tente novamente", getFilialNome(),
-				JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showInternalMessageDialog(this, "Usuário não encontrado. Por favor, tente novamente",
+				getFilialNome(), JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private void setBackgroundColor(Color color) {
@@ -136,9 +144,19 @@ public class Content extends JPanel implements Display {
 	public void setFilialNome(String nome) {
 		this.filialNome = nome;
 	}
-	
+
 	private String getFilialNome() {
 		return this.filialNome != null ? this.filialNome : "";
+	}
+
+	@Override
+	public JLabel getPrimeiroAcessoTextField() {
+		return lblNewLabel_2;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return passwordField.isEnabled();  
 	}
 
 }

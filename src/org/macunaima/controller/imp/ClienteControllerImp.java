@@ -139,5 +139,22 @@ public class ClienteControllerImp extends ControllerImp<Cliente> implements Clie
 		};
 
 	}
+	
+	@Override
+	public Cliente findCodigoLocalizador(String codigoLocalizador) {
+		checkConnection();
+
+		BasicDBList basicDBList = new BasicDBList();
+		basicDBList.add(new BasicDBObject("codigoLocalizador", codigoLocalizador));
+
+		DBObject dbObject = getDefaultCollection().findOne(basicDBList);
+		Cliente cliente = null;
+		if (dbObject != null) {
+			cliente = new Cliente();
+			cliente.fromEntity(dbObject);
+			updateEmpresa(cliente);
+		}
+		return cliente;
+	}
 
 }

@@ -1,9 +1,13 @@
 package org.macunaima.client.application;
 
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Calendar;
 import java.util.Vector;
 
+import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -11,13 +15,14 @@ import javax.swing.event.DocumentListener;
 import org.macunaima.client.gui.event.ActionListener;
 import org.macunaima.client.gui.event.EventBus;
 import org.macunaima.client.printer.Printer;
+import org.macunaima.domain.Callback;
 import org.macunaima.domain.Cliente;
 import org.macunaima.domain.Filial;
 import org.macunaima.domain.Registro;
 import org.macunaima.domain.RegistroCallback;
 import org.macunaima.service.DefaultService;
 
-public class Application {
+public class Application implements LocalizacaoApplication, ValidacaoClienteApplication {
 
 	public interface Display {
 
@@ -42,6 +47,10 @@ public class Application {
 		void setLogotipo(File logotipo);
 
 		void setFilialNome(String nome);
+
+		JLabel getPrimeiroAcessoTextField();
+
+		boolean isEnabled();
 
 	}
 
@@ -93,6 +102,15 @@ public class Application {
 
 			}
 		});
+
+		display.getPrimeiroAcessoTextField().addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				openPrimeiroAcesso();
+			}
+
+		});
 	}
 
 	private void findText() {
@@ -109,8 +127,12 @@ public class Application {
 						openFiliais();
 					} else {
 						try {
-							Cliente cliente = DefaultService.getClienteController().findDigital(input);
-							openInput(cliente);
+							EventQueue.invokeLater(new Runnable() {
+								public void run() {
+									Cliente cliente = DefaultService.getClienteController().findDigital(input);
+									openInput(cliente);
+								}
+							});
 						} catch (Exception e) {
 							close();
 						}
@@ -120,13 +142,22 @@ public class Application {
 			});
 
 		}
+
+	}
+
+	protected void openPrimeiroAcesso() {
+		if (display.isEnabled()) {
+			display.disable();
+			display.showDarkTheme();
+			eventBus.openDialogPrimeiroAcesso(this);
+		}
 	}
 
 	private void openFiliais() {
 		display.disable();
 		display.showDarkTheme();
 		Vector<Filial> filials = DefaultService.getFilialController().findAll();
-		eventBus.showMessage(filials);
+		eventBus.openFiliaisDialog(filials);
 	}
 
 	private void openInputButtons(Cliente cliente) {
@@ -167,13 +198,13 @@ public class Application {
 	}
 
 	private void showErrorMessage() {
-		eventBus.showMessage(
+		showMessage(
 				"Desculpe, houve um erro ao registrar seu cupom de desconto. Por favor, procure um funcionário mais próximo.");
 
 	}
 
 	protected void showSucessMessage() {
-		eventBus.showMessage(
+		showMessage(
 				"Aguarde a impressão do cupom de desconto e apresente no caixa.<br>Obrigado por usar nossos serviços.");
 
 	}
@@ -182,7 +213,7 @@ public class Application {
 		display.disable();
 		display.showDarkTheme();
 		if (cliente != null)
-			eventBus.showMessage(cliente.getNome(), cliente.getEmpresa().getNome(), new ActionListener() {
+			showMessage(cliente, new ActionListener() {
 
 				@Override
 				public void actionPerformed() {
@@ -191,7 +222,7 @@ public class Application {
 				}
 			});
 		else
-			eventBus.showMessage("Usuário não encontrado. Por favor, tente novamente.");
+			showMessage("Usuário não encontrado. Por favor, tente novamente.");
 	}
 
 	public void close() {
@@ -200,5 +231,91 @@ public class Application {
 		display.clearInput();
 		display.focus();
 		display.showDefaultTheme();
+	}
+
+	@Override
+	public void findCliente(String codigoLocalizador) {
+		Cliente cliente = DefaultService.getClienteController().findCodigoLocalizador(codigoLocalizador);
+		if (cliente != null) {
+			openWelcomeMessage(cliente);
+		} else {
+			showMessage("Cliente não encontrado. Por favor, tente novamente.");
+		}
+	}
+
+	private void openWelcomeMessage(Cliente cliente) {
+		display.disable();
+		display.showDarkTheme();
+		if (cliente != null)
+			showMessage(cliente, new ActionListener() {
+
+				@Override
+				public void actionPerformed() {
+					openValidarClienteDialogBox(cliente);
+
+				}
+			});
+	}
+
+	private void openValidarClienteDialogBox(Cliente cliente) {
+		display.disable();
+		display.showDarkTheme();
+		if (cliente != null)
+			eventBus.openValidarClienteDialogBox(cliente, this);
+	}
+
+	private void openCadastrarDigital2(Cliente cliente) {
+		eventBus.showCadastrarDigital2DialogBox(cliente, new ActionListener() {
+
+			@Override
+			public void actionPerformed() {
+				persistCliente(cliente);
+			}
+		});
+
+	}
+
+	private void persistCliente(Cliente cliente) {
+		Callback callback = DefaultService.getClienteController().persist(cliente, true);
+		if (callback.callBack() == 1) {
+			showMessage("Cadastro do cliente realizado com sucesso. Comece já a usar os nossos serviços.");
+		} else {
+			showMessage("Não foi possível realizar o cadastro do cliente. Por favor, tente novamente.");
+		}
+	}
+
+	@Override
+	public void getValidacaoClienteActionListener(Cliente cliente) {
+		eventBus.showCadastrarDigital1DialogBox(cliente, new ActionListener() {
+
+			@Override
+			public void actionPerformed() {
+				openCadastrarDigital2(cliente);
+
+			}
+		});
+	}
+
+	@Override
+	public int getMesDataNascimentoCliente(Cliente cliente) {
+		int month = 0;
+		if (cliente != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(cliente.getDataNascimento());
+			month = calendar.get(Calendar.MONTH);
+		}
+		return month;
+	}
+
+	private void showMessage(String message) {
+		display.disable();
+		display.showDarkTheme();
+		eventBus.showMessage(message);
+	}
+
+	private void showMessage(Cliente cliente, ActionListener actionListener) {
+		display.disable();
+		display.showDarkTheme();
+		eventBus.showMessage(cliente.getNome(), cliente.getEmpresa().getNome(), actionListener);
 	}
 }

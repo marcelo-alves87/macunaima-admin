@@ -19,12 +19,13 @@ public class Resource {
 
 			output = new FileOutputStream("resources/client.properties");
 
-			prop.setProperty("id", filial.getId());
+			if (filial != null)
+				prop.setProperty("id", filial.getId());
 
 			// save properties to project root folder
 			prop.store(output, null);
 
-		} catch (IOException io) {
+		} catch (Exception io) {
 			io.printStackTrace();
 		} finally {
 			if (output != null) {
