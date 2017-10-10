@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.macunaima.client.application.CloseDialogApplication;
 import org.macunaima.client.application.LocalizacaoApplication;
 import org.macunaima.gui.ui.JVirtualKeyboard;
 
@@ -23,8 +24,9 @@ public class LocalizacaoDialog extends CustomDialog {
 	private LocalizacaoApplication localizacaoApplication;
 	private JTextField jTextField;
 
-	public LocalizacaoDialog(JFrame jFrame, LocalizacaoApplication localizacaoApplication) {
-		super(jFrame);
+	public LocalizacaoDialog(JFrame jFrame, LocalizacaoApplication localizacaoApplication,
+			CloseDialogApplication closeDialogApplication) {
+		super(jFrame, closeDialogApplication);
 		this.localizacaoApplication = localizacaoApplication;
 	}
 
@@ -43,6 +45,7 @@ public class LocalizacaoDialog extends CustomDialog {
 
 		jTextField = new JTextField(30);
 		jTextField.getDocument().addDocumentListener(getLocalizadorDocumentListener());
+		jTextField.setEditable(false);
 		jTextField.setFont(new Font("Serif", Font.BOLD, 25));
 		jPanel.add(jTextField, BorderLayout.CENTER);
 

@@ -1,11 +1,14 @@
 package org.macunaima.client.application;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -22,7 +25,8 @@ import org.macunaima.domain.Registro;
 import org.macunaima.domain.RegistroCallback;
 import org.macunaima.service.DefaultService;
 
-public class Application implements LocalizacaoApplication, ValidacaoClienteApplication {
+public class Application implements LocalizacaoApplication, ValidacaoClienteApplication, CadastrarDigital1Application,
+		CadastrarDigital2Application, CloseDialogApplication {
 
 	public interface Display {
 
@@ -149,7 +153,7 @@ public class Application implements LocalizacaoApplication, ValidacaoClienteAppl
 		if (display.isEnabled()) {
 			display.disable();
 			display.showDarkTheme();
-			eventBus.openDialogPrimeiroAcesso(this);
+			eventBus.openDialogPrimeiroAcesso(this, this);
 		}
 	}
 
@@ -157,7 +161,7 @@ public class Application implements LocalizacaoApplication, ValidacaoClienteAppl
 		display.disable();
 		display.showDarkTheme();
 		Vector<Filial> filials = DefaultService.getFilialController().findAll();
-		eventBus.openFiliaisDialog(filials);
+		eventBus.openFiliaisDialog(filials, this);
 	}
 
 	private void openInputButtons(Cliente cliente) {
@@ -176,7 +180,7 @@ public class Application implements LocalizacaoApplication, ValidacaoClienteAppl
 						createRegistro(cliente, true);
 
 					}
-				});
+				}, this);
 	}
 
 	private void createRegistro(Cliente cliente, boolean desconto) {
@@ -261,18 +265,11 @@ public class Application implements LocalizacaoApplication, ValidacaoClienteAppl
 		display.disable();
 		display.showDarkTheme();
 		if (cliente != null)
-			eventBus.openValidarClienteDialogBox(cliente, this);
+			eventBus.openValidarClienteDialogBox(cliente, this, this);
 	}
 
 	private void openCadastrarDigital2(Cliente cliente) {
-		eventBus.showCadastrarDigital2DialogBox(cliente, new ActionListener() {
-
-			@Override
-			public void actionPerformed() {
-				persistCliente(cliente);
-			}
-		});
-
+		eventBus.showCadastrarDigital2DialogBox(cliente, this, this);
 	}
 
 	private void persistCliente(Cliente cliente) {
@@ -285,15 +282,12 @@ public class Application implements LocalizacaoApplication, ValidacaoClienteAppl
 	}
 
 	@Override
-	public void getValidacaoClienteActionListener(Cliente cliente) {
-		eventBus.showCadastrarDigital1DialogBox(cliente, new ActionListener() {
-
-			@Override
-			public void actionPerformed() {
-				openCadastrarDigital2(cliente);
-
-			}
-		});
+	public void getValidacaoClienteActionListener(Cliente cliente, Integer month) {
+		if (getMesDataNascimentoCliente(cliente) == month) {
+			eventBus.showCadastrarDigital1DialogBox(cliente, this, this);
+		} else {
+			eventBus.showMessage("Mês de nascimento incorreto. Por favor, tente novamente.", this);
+		}
 	}
 
 	@Override
@@ -302,7 +296,7 @@ public class Application implements LocalizacaoApplication, ValidacaoClienteAppl
 		if (cliente != null) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(cliente.getDataNascimento());
-			month = calendar.get(Calendar.MONTH);
+			month = calendar.get(Calendar.MONTH) + 1;
 		}
 		return month;
 	}
@@ -310,12 +304,63 @@ public class Application implements LocalizacaoApplication, ValidacaoClienteAppl
 	private void showMessage(String message) {
 		display.disable();
 		display.showDarkTheme();
-		eventBus.showMessage(message);
+		eventBus.showMessage(message, this);
 	}
 
 	private void showMessage(Cliente cliente, ActionListener actionListener) {
 		display.disable();
 		display.showDarkTheme();
-		eventBus.showMessage(cliente.getNome(), cliente.getEmpresa().getNome(), actionListener);
+		eventBus.showMessage(cliente.getNome(), cliente.getEmpresa().getNome(), actionListener, this);
 	}
+
+	@Override
+	public Integer getRandomMonth(List<Integer> meses) {
+		int rand = meses.get(0);
+		while (meses.contains(rand)) {
+			rand = ThreadLocalRandom.current().nextInt(1, 12);
+		}
+		meses.add(rand);
+		return rand;
+	}
+
+	@Override
+	public java.awt.event.ActionListener getCadastrarDigital1ActionListener(Cliente cliente,
+			JPasswordField jPasswordField) {
+		return new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cliente.setDigital1(jPasswordField.getText());
+				openCadastrarDigital2(cliente);
+
+			}
+		};
+	}
+
+	@Override
+	public java.awt.event.ActionListener getCadastrarDigital2ActionListener(Cliente cliente,
+			JPasswordField jPasswordField) {
+		return new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cliente.setDigital2(jPasswordField.getText());
+				persistCliente(cliente);
+			}
+		};
+	}
+
+	@Override
+	public java.awt.event.ActionListener getCloseDialogApplication() {
+		return new java.awt.event.ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				close();
+
+			}
+		};
+
+	}
+
 }

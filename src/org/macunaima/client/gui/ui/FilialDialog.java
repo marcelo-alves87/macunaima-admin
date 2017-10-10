@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.macunaima.client.application.CloseDialogApplication;
 import org.macunaima.client.application.Resource;
 import org.macunaima.domain.Filial;
 
@@ -27,8 +28,8 @@ public class FilialDialog extends CustomDialog {
 	private Vector<Filial> filials;
 	private JList<Filial> jList;
 
-	public FilialDialog(JFrame jFrame, Vector<Filial> filials) {
-		super(jFrame);
+	public FilialDialog(JFrame jFrame, Vector<Filial> filials, CloseDialogApplication closeDialogApplication) {
+		super(jFrame, closeDialogApplication);
 		this.filials = filials;
 	}
 
@@ -68,6 +69,7 @@ public class FilialDialog extends CustomDialog {
 						dispose();
 					}
 				});
+				button.addActionListener(getCloseDialogActionListener());
 			}
 		}
 

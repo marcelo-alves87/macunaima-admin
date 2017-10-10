@@ -4,11 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.macunaima.client.application.CloseDialogApplication;
 
 public abstract class CustomDialog extends JDialog {
 
@@ -17,6 +20,7 @@ public abstract class CustomDialog extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	protected final JPanel contentPanel = new JPanel();
+	private CloseDialogApplication closeDialogApplication;
 
 	/**
 	 * Create the dialog.
@@ -24,7 +28,7 @@ public abstract class CustomDialog extends JDialog {
 	 * @param empresa
 	 * @param cliente
 	 */
-	public CustomDialog(JFrame jFrame) {
+	public CustomDialog(JFrame jFrame, CloseDialogApplication closeDialogApplication) {
 		super(jFrame);
 		setUndecorated(true);
 		setResizable(false);
@@ -39,8 +43,13 @@ public abstract class CustomDialog extends JDialog {
 		final int x = (screenSize.width - getWidth()) / 2;
 		final int y = (screenSize.height - getHeight()) / 2;
 		setLocation(x, y);
+		this.closeDialogApplication = closeDialogApplication;
 	}
 
 	public abstract void initPane();
+
+	protected ActionListener getCloseDialogActionListener() {
+		return this.closeDialogApplication.getCloseDialogApplication();
+	}
 
 }

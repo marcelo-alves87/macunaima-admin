@@ -146,8 +146,9 @@ public class ClienteControllerImp extends ControllerImp<Cliente> implements Clie
 
 		BasicDBList basicDBList = new BasicDBList();
 		basicDBList.add(new BasicDBObject("codigoLocalizador", codigoLocalizador));
+		BasicDBObject whereQuery = new BasicDBObject("$or", basicDBList);
 
-		DBObject dbObject = getDefaultCollection().findOne(basicDBList);
+		DBObject dbObject = getDefaultCollection().findOne(whereQuery);
 		Cliente cliente = null;
 		if (dbObject != null) {
 			cliente = new Cliente();

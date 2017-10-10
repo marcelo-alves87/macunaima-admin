@@ -11,20 +11,31 @@ public class Registro extends Entity {
 	@Override
 	public void to(DBObject dbObject) {
 		super.put(dbObject);
-		dbObject.put("filialID", filial.getId());
-		dbObject.put("clienteID", cliente.getId());
+		if (filial != null)
+			dbObject.put("filialID", filial.getId());
+		if (cliente != null)
+			dbObject.put("clienteID", cliente.getId());
 		dbObject.put("desconto", isDesconto());
-		dbObject.put("filialName", filial.getNome());
-		dbObject.put("clienteName", cliente.getNome());
-		dbObject.put("clienteNomeCompleto", cliente.getNomeCompleto());
-		dbObject.put("empresaName", cliente.getEmpresa().getNome());
-		dbObject.put("empresaID", cliente.getEmpresa().getId());
-		dbObject.put("clienteUtilizacoes", cliente.getUtilizacoes());
-		dbObject.put("unidade", filial.getUnidade());
-		if (!isDesconto()) {
-			dbObject.put("valor", cliente.getEmpresa().getDescontoCredito());
-		} else {
-			dbObject.put("valor", cliente.getEmpresa().getDescontoAVista());
+		if (filial != null && filial.getNome() != null)
+			dbObject.put("filialName", filial.getNome());
+		if (cliente != null && cliente.getNome() != null)
+			dbObject.put("clienteName", cliente.getNome());
+		if (cliente != null && cliente.getNomeCompleto() != null)
+			dbObject.put("clienteNomeCompleto", cliente.getNomeCompleto());
+		if (cliente != null && cliente.getEmpresa() != null && cliente.getEmpresa().getNome() != null)
+			dbObject.put("empresaName", cliente.getEmpresa().getNome());
+		if (cliente.getEmpresa() != null && cliente.getEmpresa().getId() != null)
+			dbObject.put("empresaID", cliente.getEmpresa().getId());
+		if (cliente != null)
+			dbObject.put("clienteUtilizacoes", cliente.getUtilizacoes());
+		if (filial != null && filial.getUnidade() != null)
+			dbObject.put("unidade", filial.getUnidade());
+		if (cliente != null && cliente.getEmpresa() != null) {
+			if (!isDesconto()) {
+				dbObject.put("valor", cliente.getEmpresa().getDescontoCredito());
+			} else {
+				dbObject.put("valor", cliente.getEmpresa().getDescontoAVista());
+			}
 		}
 	}
 
@@ -34,8 +45,10 @@ public class Registro extends Entity {
 		if (dbObject != null) {
 			Filial filial = new Filial();
 			filial.setId((String) dbObject.get("filialID"));
+			setFilial(filial);
 			Cliente cliente = new Cliente();
 			cliente.setId((String) dbObject.get("clienteID"));
+			setCliente(cliente);
 			setDesconto((boolean) dbObject.get("desconto"));
 		}
 

@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.macunaima.client.application.CloseDialogApplication;
+
 public class AskDialog extends CustomDialog {
 
 	/**
@@ -22,8 +24,9 @@ public class AskDialog extends CustomDialog {
 	private org.macunaima.client.gui.event.ActionListener actionListener;
 
 	public AskDialog(JFrame jFrame, String cliente, String empresa,
-			org.macunaima.client.gui.event.ActionListener actionListener) {
-		super(jFrame);
+			org.macunaima.client.gui.event.ActionListener actionListener,
+			CloseDialogApplication closeDialogApplication) {
+		super(jFrame, closeDialogApplication);
 		this.cliente = cliente;
 		this.empresa = empresa;
 		this.actionListener = actionListener;
@@ -65,6 +68,7 @@ public class AskDialog extends CustomDialog {
 
 					}
 				});
+				noButton.addActionListener(getCloseDialogActionListener());
 				buttonPane.add(noButton);
 			}
 		}

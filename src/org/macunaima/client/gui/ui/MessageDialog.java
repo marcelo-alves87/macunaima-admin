@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.macunaima.client.application.CloseDialogApplication;
+
 public class MessageDialog extends CustomDialog {
 
 	/**
@@ -19,8 +21,8 @@ public class MessageDialog extends CustomDialog {
 	private static final long serialVersionUID = 1L;
 	private String message;
 
-	public MessageDialog(JFrame jFrame, String message) {
-		super(jFrame);
+	public MessageDialog(JFrame jFrame, String message, CloseDialogApplication closeDialogApplication) {
+		super(jFrame, closeDialogApplication);
 		this.message = message;
 	}
 
@@ -48,6 +50,7 @@ public class MessageDialog extends CustomDialog {
 						dispose();
 					}
 				});
+				button.addActionListener(getCloseDialogActionListener());
 			}
 		}
 

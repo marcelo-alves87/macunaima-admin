@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.macunaima.client.application.CloseDialogApplication;
+
 public class ButtonsDialog extends CustomDialog {
 
 	/**
@@ -24,8 +26,9 @@ public class ButtonsDialog extends CustomDialog {
 
 	public ButtonsDialog(JFrame jFrame, String descontoCredito, String descontoAVista,
 			org.macunaima.client.gui.event.ActionListener descontoCreditoActionListener,
-			org.macunaima.client.gui.event.ActionListener descontoAVistaActionListener) {
-		super(jFrame);
+			org.macunaima.client.gui.event.ActionListener descontoAVistaActionListener,
+			CloseDialogApplication closeDialogApplication) {
+		super(jFrame, closeDialogApplication);
 		this.descontoCredito = descontoCredito;
 		this.descontoAVista = descontoAVista;
 		this.descontoCreditoActionListener = descontoCreditoActionListener;

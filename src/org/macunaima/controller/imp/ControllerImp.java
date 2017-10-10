@@ -158,6 +158,7 @@ public abstract class ControllerImp<T extends Entity> implements Controller<T> {
 
 	@SuppressWarnings("deprecation")
 	protected DB getDefaultDB() {
+		checkConnection();
 		return mongoClient.getDB(DEFAULT_DATABASE);
 	}
 
