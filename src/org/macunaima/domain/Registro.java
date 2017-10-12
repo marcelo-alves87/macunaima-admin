@@ -45,6 +45,10 @@ public class Registro extends Entity {
 		if (dbObject != null) {
 			Filial filial = new Filial();
 			filial.setId((String) dbObject.get("filialID"));
+			if (dbObject.containsField("filialName"))
+				filial.setNome((String) dbObject.get("filialName"));
+			if (dbObject.containsField("unidade"))
+				filial.setUnidade((String) dbObject.get("unidade"));
 			setFilial(filial);
 			Cliente cliente = new Cliente();
 			cliente.setId((String) dbObject.get("clienteID"));

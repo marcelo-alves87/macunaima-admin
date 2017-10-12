@@ -185,8 +185,10 @@ public class Application implements LocalizacaoApplication, ValidacaoClienteAppl
 
 	private void createRegistro(Cliente cliente, boolean desconto) {
 		Registro registro = new Registro();
+		int utilizacoes = cliente.getUtilizacoes();
 		DefaultService.getClienteController().incrementarUtilizacoes(cliente);
 		registro.setCliente(cliente);
+		cliente.setUtilizacoes(utilizacoes);
 		Filial filial = new Filial();
 		filial.setId(Resource.getFilialId());
 		registro.setFilial(filial);
