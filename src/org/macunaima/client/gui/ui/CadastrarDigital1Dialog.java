@@ -36,15 +36,15 @@ public class CadastrarDigital1Dialog extends CustomDialog {
 	public void initPane() {
 		JLabel lblNewLabel_1 = new JLabel("<html>Seja bem vindo " + (cliente.isGender() ? "Sr. " : "Srta. ")
 				+ cliente.getNome()
-				+ ".<br>Para continuar, por favor conclua seu cadastro inserindo uma digital de acesso.</html>");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 25));
+				+ ". Para continuar, por favor conclua seu cadastro inserindo uma digital de acesso.</html>");
+		lblNewLabel_1.setForeground(Color.BLACK);
+		lblNewLabel_1.setFont(new Font("Bernard MT Condensed", Font.BOLD, 25));
 		lblNewLabel_1.setHorizontalAlignment(JLabel.CENTER);
 		contentPanel.add(lblNewLabel_1, BorderLayout.NORTH);
 
 		JPanel jPanel = new JPanel();
 		jPanel.setLayout(new BorderLayout());
-		jPanel.setBackground(Color.ORANGE);
+		jPanel.setBackground(new Color(247, 213, 103));
 
 		JPasswordField passwordField = new JPasswordField();
 		passwordField.setColumns(100);
@@ -53,7 +53,7 @@ public class CadastrarDigital1Dialog extends CustomDialog {
 		contentPanel.add(jPanel, BorderLayout.CENTER);
 
 		JPanel buttonPane = new JPanel();
-		buttonPane.setBackground(Color.ORANGE);
+		buttonPane.setBackground(new Color(247, 213, 103));
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
 		buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		ClientButton button = new ClientButton("Continuar");

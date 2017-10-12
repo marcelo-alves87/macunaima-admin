@@ -63,17 +63,17 @@ public class ValidacaoClienteDialogBox extends CustomDialog {
 	public void initPane() {
 
 		JPanel jPanel = new JPanel();
-		jPanel.setBackground(Color.ORANGE);
+		jPanel.setBackground(new Color(247, 213, 103));
 		jPanel.setLayout(new BorderLayout());
 
 		JLabel lblNewLabel_1 = new JLabel("<html>Por favor, selecione o mês do seu nascimento</html>");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 25));
+		lblNewLabel_1.setForeground(Color.BLACK);
+		lblNewLabel_1.setFont(new Font("Bernard MT Condensed", Font.BOLD, 25));
 		lblNewLabel_1.setHorizontalAlignment(JLabel.CENTER);
 		jPanel.add(lblNewLabel_1, BorderLayout.NORTH);
 
 		JPanel center = new JPanel();
-		center.setBackground(Color.ORANGE);
+		center.setBackground(new Color(247, 213, 103));
 		center.setLayout(new FlowLayout());
 
 		List<Integer> listMeses = createMesesIntegers();

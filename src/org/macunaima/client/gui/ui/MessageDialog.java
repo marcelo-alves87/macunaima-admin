@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import org.macunaima.client.application.CloseDialogApplication;
 
@@ -30,14 +31,14 @@ public class MessageDialog extends CustomDialog {
 	public void initPane() {
 		{
 			JLabel lblNewLabel_1 = new JLabel("<html>" + message + "</html>");
-			lblNewLabel_1.setForeground(Color.WHITE);
-			lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 25));
-			lblNewLabel_1.setHorizontalAlignment(JLabel.CENTER);
+			lblNewLabel_1.setForeground(Color.BLACK);
+			lblNewLabel_1.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 30));
+			lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(Color.ORANGE);
+			buttonPane.setBackground(new Color(247, 213, 103));
 			contentPanel.add(buttonPane, BorderLayout.SOUTH);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			{

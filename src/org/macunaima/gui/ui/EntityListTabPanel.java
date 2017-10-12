@@ -84,7 +84,7 @@ public class EntityListTabPanel extends JPanel implements ListDisplay<Empresa> {
 
 		JLabel lblEmpresa = new JLabel("Empresas");
 		lblEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmpresa.setForeground(Color.ORANGE);
+		lblEmpresa.setForeground(new Color(247, 213, 103));
 		lblEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel_15.add(lblEmpresa);
 

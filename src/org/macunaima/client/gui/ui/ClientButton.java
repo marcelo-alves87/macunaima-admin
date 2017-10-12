@@ -14,10 +14,10 @@ public class ClientButton extends JButton {
 
 	public ClientButton(String title) {
 		super(title);
-		setBackground(new Color(170, 132, 0));
+		setBackground(Color.BLACK);
 		setForeground(Color.WHITE);
 		setFocusPainted(false);
-		setFont(new Font("Tahoma", Font.BOLD, 30));
+		setFont(new Font("Bernard MT Condensed", Font.PLAIN, 30));
 	}
 
 }

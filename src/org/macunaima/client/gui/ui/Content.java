@@ -2,7 +2,6 @@ package org.macunaima.client.gui.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.io.File;
 
@@ -52,26 +51,27 @@ public class Content extends JPanel implements Display {
 		add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblNewLabel_1 = new JLabel("Por favor, insira sua digital");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 45));
+		JLabel lblNewLabel_1 = new JLabel("POR FAVOR, INSIRA SUA DIGITAL");
+		lblNewLabel_1.setForeground(Color.BLACK);
+		lblNewLabel_1.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 20));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_1, BorderLayout.NORTH);
-
 		panel_2 = new JPanel();
+		panel_2.setLayout(new BorderLayout());
+		panel_2.add(lblNewLabel_1, BorderLayout.NORTH);
+
 		panel_2.setBorder(new EmptyBorder(50, 0, 0, 0));
 		panel.add(panel_2, BorderLayout.CENTER);
 
 		passwordField = new JPasswordField();
-		panel_2.add(passwordField);
+		panel_2.add(passwordField, BorderLayout.CENTER);
 		passwordField.setColumns(100);
+		passwordField.setBorder(new EmptyBorder(10, 0, 10, 0));
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 
-		lblNewLabel_2 = new JLabel("<HTML><U>Primeiro Acesso</U></HTML>");
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Calibri", Font.BOLD, 20));
+		lblNewLabel_2 = new JLabel("<HTML><U>PRIMEIRO ACESSO</U></HTML>");
+		lblNewLabel_2.setForeground(Color.BLACK);
+		lblNewLabel_2.setFont(new Font("Bernard MT Condensed", Font.BOLD, 25));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel.add(lblNewLabel_2, BorderLayout.SOUTH);
 
 		showDefaultTheme();
@@ -125,13 +125,13 @@ public class Content extends JPanel implements Display {
 
 	@Override
 	public void showDefaultTheme() {
-		setBackgroundColor(Color.ORANGE);
+		setBackgroundColor(new Color(247, 213, 103));
 
 	}
 
 	@Override
 	public void showDarkTheme() {
-		setBackgroundColor(Color.ORANGE.darker());
+		setBackgroundColor(new Color(34, 27, 2));
 
 	}
 
@@ -156,7 +156,7 @@ public class Content extends JPanel implements Display {
 
 	@Override
 	public boolean isEnabled() {
-		return passwordField.isEnabled();  
+		return passwordField.isEnabled();
 	}
 
 }

@@ -37,8 +37,8 @@ public class FilialDialog extends CustomDialog {
 	public void initPane() {
 		{
 			JLabel lblNewLabel_1 = new JLabel("<html>Selecione a filial desse terminal</html>");
-			lblNewLabel_1.setForeground(Color.WHITE);
-			lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 25));
+			lblNewLabel_1.setForeground(Color.BLACK);
+			lblNewLabel_1.setFont(new Font("Bernard MT Condensed", Font.BOLD, 25));
 			lblNewLabel_1.setHorizontalAlignment(JLabel.CENTER);
 			contentPanel.add(lblNewLabel_1, BorderLayout.NORTH);
 

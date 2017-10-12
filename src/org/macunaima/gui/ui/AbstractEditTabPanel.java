@@ -49,7 +49,7 @@ public abstract class AbstractEditTabPanel<T extends Entity> extends JScrollPane
 
 		JLabel lblEmpresa = new JLabel(name);
 		lblEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmpresa.setForeground(Color.ORANGE);
+		lblEmpresa.setForeground(new Color(247, 213, 103));
 		lblEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel_15.add(lblEmpresa);
 

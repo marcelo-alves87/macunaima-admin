@@ -47,7 +47,7 @@ public class JVirtualKeyboard extends JPanel implements ActionListener, ItemList
 
 		setLayout(new BorderLayout());
 
-		setBackground(Color.ORANGE);
+		setBackground(new Color(247, 213, 103));
 
 		add(bigPanel(), BorderLayout.CENTER);
 
@@ -60,7 +60,7 @@ public class JVirtualKeyboard extends JPanel implements ActionListener, ItemList
 	// adding left buttons in JPanel
 	private JPanel bigPanel() {
 		leftPanel = new JPanel();
-		leftPanel.setBackground(Color.ORANGE);
+		leftPanel.setBackground(new Color(247, 213, 103));
 		togglebuttons = new JToggleButton[toggleBtnNames.length];
 		for (int i = 0; i < toggleBtnNames.length; i++) {
 			togglebuttons[i] = new JToggleButton(toggleBtnNames[i]);

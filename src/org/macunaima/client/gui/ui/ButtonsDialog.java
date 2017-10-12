@@ -40,14 +40,14 @@ public class ButtonsDialog extends CustomDialog {
 	public void initPane() {
 		{
 			JLabel lblNewLabel_1 = new JLabel("<html>Por favor, selecione uma forma de desconto</html>");
-			lblNewLabel_1.setForeground(Color.WHITE);
-			lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 30));
+			lblNewLabel_1.setForeground(Color.BLACK);
+			lblNewLabel_1.setFont(new Font("Bernard MT Condensed", Font.BOLD, 30));
 			lblNewLabel_1.setHorizontalAlignment(JLabel.CENTER);
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(Color.ORANGE);
+			buttonPane.setBackground(new Color(247, 213, 103));
 			contentPanel.add(buttonPane, BorderLayout.SOUTH);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			{

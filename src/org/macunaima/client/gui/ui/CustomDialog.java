@@ -34,7 +34,7 @@ public abstract class CustomDialog extends JDialog {
 		setResizable(false);
 		setBounds(100, 100, 750, 400);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(Color.ORANGE);
+		contentPanel.setBackground(new Color(247, 213, 103));
 		contentPanel.setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(100, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

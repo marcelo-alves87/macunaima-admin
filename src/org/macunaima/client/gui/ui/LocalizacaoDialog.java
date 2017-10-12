@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -34,19 +35,19 @@ public class LocalizacaoDialog extends CustomDialog {
 	public void initPane() {
 
 		JPanel jPanel = new JPanel();
-		jPanel.setBackground(Color.ORANGE);
+		jPanel.setBackground(new Color(247, 213, 103));
 		jPanel.setLayout(new BorderLayout());
 
 		JLabel lblNewLabel_1 = new JLabel("<html>Por favor, digite seu código localizador</html>");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 25));
-		lblNewLabel_1.setHorizontalAlignment(JLabel.CENTER);
+		lblNewLabel_1.setForeground(Color.BLACK);
+		lblNewLabel_1.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 30));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		jPanel.add(lblNewLabel_1, BorderLayout.NORTH);
 
 		jTextField = new JTextField(30);
 		jTextField.getDocument().addDocumentListener(getLocalizadorDocumentListener());
 		jTextField.setEditable(false);
-		jTextField.setFont(new Font("Serif", Font.BOLD, 25));
+		jTextField.setFont(new Font("Bernard MT Condensed", Font.BOLD, 25));
 		jPanel.add(jTextField, BorderLayout.CENTER);
 
 		contentPanel.add(jPanel, BorderLayout.NORTH);
